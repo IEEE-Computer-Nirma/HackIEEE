@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Mail, Zap } from "lucide-react";
 import About from "./components/About";
 import Tracks from "./components/Tracks";
 import Timeline from "./components/Timeline";
@@ -23,17 +22,32 @@ export default function Home() {
   }, []);
 
   useGSAP(() => {
-    // Natural ocean tide wave
-    gsap.to(".gradient-bar", {
+    let mm = gsap.matchMedia();
+    
+    // Animation configuration
+    const animConfig = {
       y: -150, // Gentle but noticeable rise
       duration: 4.5, // Slow and smooth
       ease: "sine.inOut",
+      force3D: true, // Force GPU acceleration for Chrome SVG performance
       stagger: {
-        each: 0.3, // Sequential flow from left to right
+        each: 0.3,
         repeat: -1,
         yoyo: true,
       },
+    };
+
+    // Desktop
+    mm.add("(min-width: 768px)", () => {
+      gsap.to(".desktop-bar", animConfig);
     });
+
+    // Mobile
+    mm.add("(max-width: 767px)", () => {
+      gsap.to(".mobile-bar", animConfig);
+    });
+
+    return () => mm.revert();
   }, { scope: container });
 
   return (
@@ -43,9 +57,9 @@ export default function Home() {
       <div className="absolute top-0 inset-x-0 h-[100vh] overflow-hidden z-0 pointer-events-none hidden md:block">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
+          preserveAspectRatio="none"
           viewBox="0 0 1920 1080"
-          className="w-full h-full scale-[1.05]"
+          className="w-full h-full"
         >
           <defs>
             <linearGradient id="b0" gradientUnits="userSpaceOnUse" x1="0" y1="911" x2="0" y2="1080">
@@ -111,18 +125,18 @@ export default function Home() {
           </defs>
           <rect width="1920" height="1080" fill="#0a0a0f" />
           {/* GSAP animated bars */}
-          <rect className="gradient-bar origin-bottom" x="-17"  y="911" width="194" height="469"  fill="url(#b0)" />
-          <rect className="gradient-bar origin-bottom" x="143"  y="819" width="194" height="561"  fill="url(#b1)" />
-          <rect className="gradient-bar origin-bottom" x="303"  y="745" width="194" height="635"  fill="url(#b2)" />
-          <rect className="gradient-bar origin-bottom" x="463"  y="681" width="194" height="699"  fill="url(#b3)" />
-          <rect className="gradient-bar origin-bottom" x="623"  y="613" width="194" height="767"  fill="url(#b4)" />
-          <rect className="gradient-bar origin-bottom" x="783"  y="535" width="194" height="845"  fill="url(#b5)" />
-          <rect className="gradient-bar origin-bottom" x="943"  y="446" width="194" height="934"  fill="url(#b6)" />
-          <rect className="gradient-bar origin-bottom" x="1103" y="357" width="194" height="1023" fill="url(#b7)" />
-          <rect className="gradient-bar origin-bottom" x="1263" y="272" width="194" height="1108" fill="url(#b8)" />
-          <rect className="gradient-bar origin-bottom" x="1423" y="189" width="194" height="1191" fill="url(#b9)" />
-          <rect className="gradient-bar origin-bottom" x="1583" y="103" width="194" height="1277" fill="url(#b10)" />
-          <rect className="gradient-bar origin-bottom" x="1743" y="9"   width="194" height="1371" fill="url(#b11)" />
+          <rect className="desktop-bar" x="-17"  y="911" width="194" height="469"  fill="url(#b0)" />
+          <rect className="desktop-bar" x="143"  y="819" width="194" height="561"  fill="url(#b1)" />
+          <rect className="desktop-bar" x="303"  y="745" width="194" height="635"  fill="url(#b2)" />
+          <rect className="desktop-bar" x="463"  y="681" width="194" height="699"  fill="url(#b3)" />
+          <rect className="desktop-bar" x="623"  y="613" width="194" height="767"  fill="url(#b4)" />
+          <rect className="desktop-bar" x="783"  y="535" width="194" height="845"  fill="url(#b5)" />
+          <rect className="desktop-bar" x="943"  y="446" width="194" height="934"  fill="url(#b6)" />
+          <rect className="desktop-bar" x="1103" y="357" width="194" height="1023" fill="url(#b7)" />
+          <rect className="desktop-bar" x="1263" y="272" width="194" height="1108" fill="url(#b8)" />
+          <rect className="desktop-bar" x="1423" y="189" width="194" height="1191" fill="url(#b9)" />
+          <rect className="desktop-bar" x="1583" y="103" width="194" height="1277" fill="url(#b10)" />
+          <rect className="desktop-bar" x="1743" y="9"   width="194" height="1371" fill="url(#b11)" />
         </svg>
       </div>
 
@@ -130,9 +144,9 @@ export default function Home() {
       <div className="absolute top-0 inset-x-0 h-[100vh] overflow-hidden z-0 pointer-events-none block md:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
+          preserveAspectRatio="none"
           viewBox="0 0 1290 2796"
-          className="w-full h-full scale-[1.05]"
+          className="w-full h-full"
         >
           <defs>
             <linearGradient id="bar0" gradientUnits="userSpaceOnUse" x1="0" y1="2246.61" x2="0" y2="2796"><stop offset="0.0000" stopColor="rgb(9,18,63)"/><stop offset="0.2581" stopColor="rgb(60,76,201)"/><stop offset="0.5161" stopColor="rgb(181,129,223)"/><stop offset="0.7742" stopColor="rgb(244,93,151)"/><stop offset="1.0000" stopColor="rgb(248,76,96)"/></linearGradient>
@@ -149,18 +163,18 @@ export default function Home() {
             <linearGradient id="bar11" gradientUnits="userSpaceOnUse" x1="0" y1="346.38" x2="0" y2="2796"><stop offset="0.0000" stopColor="rgb(14,20,47)"/><stop offset="0.2581" stopColor="rgb(52,67,190)"/><stop offset="0.5161" stopColor="rgb(166,132,231)"/><stop offset="0.7742" stopColor="rgb(249,105,182)"/><stop offset="1.0000" stopColor="rgb(255,82,102)"/></linearGradient>
           </defs>
           <rect width="1290" height="2796" fill="#0a0a0f" />
-          <rect className="gradient-bar origin-bottom" x="-11.39" y="2246.61" width="130.29" height="549.39" fill="url(#bar0)" />
-          <rect className="gradient-bar origin-bottom" x="96.11"  y="2006.37" width="130.29" height="789.63" fill="url(#bar1)" />
-          <rect className="gradient-bar origin-bottom" x="203.60" y="1830.70" width="130.29" height="965.30" fill="url(#bar2)" />
-          <rect className="gradient-bar origin-bottom" x="311.11" y="1707.61" width="130.29" height="1088.39" fill="url(#bar3)" />
-          <rect className="gradient-bar origin-bottom" x="418.61" y="1596.89" width="130.29" height="1199.11" fill="url(#bar4)" />
-          <rect className="gradient-bar origin-bottom" x="526.11" y="1457.29" width="130.29" height="1338.71" fill="url(#bar5)" />
-          <rect className="gradient-bar origin-bottom" x="633.61" y="1273.87" width="130.29" height="1522.13" fill="url(#bar6)" />
-          <rect className="gradient-bar origin-bottom" x="741.11" y="1064.10" width="130.29" height="1731.90" fill="url(#bar7)" />
-          <rect className="gradient-bar origin-bottom" x="848.61" y="859.19" width="130.29" height="1936.81" fill="url(#bar8)" />
-          <rect className="gradient-bar origin-bottom" x="956.11" y="677.59" width="130.29" height="2118.41" fill="url(#bar9)" />
-          <rect className="gradient-bar origin-bottom" x="1063.61" y="513.14" width="130.29" height="2282.86" fill="url(#bar10)" />
-          <rect className="gradient-bar origin-bottom" x="1171.11" y="346.38" width="130.29" height="2449.62" fill="url(#bar11)" />
+          <rect className="mobile-bar" x="-11.39" y="2246.61" width="130.29" height="549.39" fill="url(#bar0)" />
+          <rect className="mobile-bar" x="96.11"  y="2006.37" width="130.29" height="789.63" fill="url(#bar1)" />
+          <rect className="mobile-bar" x="203.60" y="1830.70" width="130.29" height="965.30" fill="url(#bar2)" />
+          <rect className="mobile-bar" x="311.11" y="1707.61" width="130.29" height="1088.39" fill="url(#bar3)" />
+          <rect className="mobile-bar" x="418.61" y="1596.89" width="130.29" height="1199.11" fill="url(#bar4)" />
+          <rect className="mobile-bar" x="526.11" y="1457.29" width="130.29" height="1338.71" fill="url(#bar5)" />
+          <rect className="mobile-bar" x="633.61" y="1273.87" width="130.29" height="1522.13" fill="url(#bar6)" />
+          <rect className="mobile-bar" x="741.11" y="1064.10" width="130.29" height="1731.90" fill="url(#bar7)" />
+          <rect className="mobile-bar" x="848.61" y="859.19" width="130.29" height="1936.81" fill="url(#bar8)" />
+          <rect className="mobile-bar" x="956.11" y="677.59" width="130.29" height="2118.41" fill="url(#bar9)" />
+          <rect className="mobile-bar" x="1063.61" y="513.14" width="130.29" height="2282.86" fill="url(#bar10)" />
+          <rect className="mobile-bar" x="1171.11" y="346.38" width="130.29" height="2449.62" fill="url(#bar11)" />
         </svg>
       </div>
 
@@ -170,28 +184,26 @@ export default function Home() {
           
           {/* Left: Floating Logo */}
           <div className="pointer-events-auto mt-6 md:mt-8">
-            <a href="#" className="flex items-center gap-2 text-[#ffebe1] font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg">
-              <Zap className="w-5 h-5 md:w-6 md:h-6 text-[#ccff00]" />
+            <a href="#" className="flex items-center text-[#ffebe1] font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg">
               HackIEEE
             </a>
           </div>
 
-          {/* Center: The Notch (Frosted Glass) */}
-          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#0a0a0f]/40 backdrop-blur-2xl border border-t-0 border-white/10 rounded-b-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+          {/* Center: The Notch (Solid) */}
+          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
             <a href="#" className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors">About</a>
             <a href="#" className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors">Tracks</a>
-            <a href="#" className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors">Sponsors</a>
+            <a href="#" className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors">Sponsorship</a>
           </div>
 
           {/* Right: Contact Button */}
           <div className="pointer-events-auto mt-5 md:mt-6">
             <a
               href="#"
-              className="flex items-center gap-2 text-xs md:text-sm font-bold px-4 md:px-6 py-2 md:py-2.5 rounded-full text-black hover:scale-105 transition-transform shadow-[0_0_30px_rgba(204,255,0,0.2)]"
+              className="flex items-center text-xs md:text-sm font-bold px-4 md:px-6 py-2 md:py-2.5 rounded-full text-black hover:scale-105 transition-transform shadow-[0_0_30px_rgba(204,255,0,0.2)]"
               style={{ backgroundColor: "#ccff00" }} 
             >
               Contact Us
-              <Mail className="w-4 h-4 md:w-5 md:h-5" />
             </a>
           </div>
 
@@ -221,20 +233,20 @@ export default function Home() {
 
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-5 w-full md:w-auto">
           <a
-            href="#"
+            href="#tracks"
             className="w-full md:w-auto px-8 py-3.5 text-[15px] font-semibold rounded-2xl shadow-lg transition-opacity hover:opacity-90"
             style={{
               backgroundColor: "#ffebe1",
               color: "#0a0a0f",
             }}
           >
-            Start for free
+            See our tracks
           </a>
           <a
-            href="#"
+            href="#timeline"
             className="w-full md:w-auto px-8 py-3.5 text-[15px] font-semibold rounded-2xl shadow-lg transition-opacity hover:opacity-90 bg-white/10 backdrop-blur-md text-white border border-white/20 md:bg-white md:text-black md:border-transparent md:backdrop-blur-none"
           >
-            Get a demo
+            Timeline
           </a>
         </div>
       </div>

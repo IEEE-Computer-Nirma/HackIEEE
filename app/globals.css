@@ -42,8 +42,8 @@
 /* ── Base Reset ──────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: var(--hanada) var(--ink-blue);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body {
@@ -53,12 +53,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--ink-blue); }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--hanada), var(--pink-plum));
-  border-radius: 3px;
+/* Custom Scrollbar (Hidden) */
+::-webkit-scrollbar { 
+  display: none; 
 }
 
 /* ── Utility Classes ─────────────────────────────────────── */
