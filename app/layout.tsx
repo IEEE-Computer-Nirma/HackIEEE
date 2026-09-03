@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend, Orbitron, Sora } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 const lexend = Lexend({
   variable: "--font-lexend",
@@ -34,8 +35,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: any) {
   return (
-    <html lang="en" className={`${lexend.variable} ${orbitron.variable} ${sora.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <head>
+        <style>
+          {`@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Sora:wght@100..800&display=swap');`}
+        </style>
+      </head>
+      <body
+        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased`}
+        style={{ fontFamily: "'Lexend', sans-serif" }}
+      >
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,14 +1,5 @@
 const socialLinks = [
   {
-    name: "Twitter",
-    href: "#",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
-  {
     name: "Instagram",
     href: "#",
     icon: (
@@ -28,15 +19,6 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    name: "Discord",
-    href: "#",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z" />
-      </svg>
-    ),
-  },
 ];
 
 const footerLinks = [
@@ -46,50 +28,59 @@ const footerLinks = [
       { label: "About", href: "#about" },
       { label: "Tracks", href: "#tracks" },
       { label: "Timeline", href: "#timeline" },
-      { label: "Prizes", href: "#prizes" },
     ],
   },
   {
-    title: "Resources",
+    title: "Socials",
     links: [
-      { label: "FAQ", href: "#" },
-      { label: "Code of Conduct", href: "#" },
-      { label: "Judging Criteria", href: "#" },
-      { label: "Past Winners", href: "#" },
-    ],
-  },
-  {
-    title: "Connect",
-    links: [
-      { label: "Contact Us", href: "#" },
-      { label: "Sponsor Us", href: "#" },
-      { label: "Volunteer", href: "#" },
-      { label: "IEEE Chapter", href: "#" },
+      { 
+        label: (
+          <span className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" /></svg>
+            CS
+          </span>
+        ), 
+        href: "https://www.instagram.com/ieee.cs.sbnu/" 
+      },
+      { 
+        label: (
+          <span className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" /></svg>
+            ITSS
+          </span>
+        ), 
+        href: "https://www.instagram.com/ieee.itss.sbnu/" 
+      },
+      { 
+        label: (
+          <span className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" /></svg>
+            SPS
+          </span>
+        ), 
+        href: "https://www.instagram.com/ieee_sps_sbnu/" 
+      },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative pt-20 pb-8 px-6">
-      {/* Top border gradient */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[1px]"
-        style={{
-          background: "linear-gradient(90deg, transparent, rgba(76, 91, 224, 0.3), rgba(248, 106, 200, 0.3), transparent)",
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto">
+    <footer 
+      id="contact"
+      className="relative pt-24 pb-8 mt-16 overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/footer-bg.svg')" }}
+    >
+      <div className="w-full px-6 md:px-12 mx-auto relative z-10">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           {/* Brand Column */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-4">
             <div className="flex items-center gap-1 mb-4">
-              <span className="gradient-text font-extrabold text-2xl">Hack</span>
-              <span className="text-white font-extrabold text-2xl">IEEE</span>
+              <span className="text-[#4C5BE0] font-extrabold text-2xl">Hack</span>
+              <span className="text-black font-extrabold text-2xl">IEEE</span>
             </div>
-            <p className="text-sm text-[rgba(240,240,245,0.4)] leading-relaxed max-w-sm mb-6">
+            <p className="text-sm font-medium text-black leading-relaxed max-w-sm mb-6">
               Where innovation meets impact. HackIEEE 2026 brings together the
               brightest minds to build solutions that matter.
             </p>
@@ -99,7 +90,7 @@ export default function Footer() {
                 <a
                   key={social.name}
                   href={social.href}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-[rgba(240,240,245,0.35)] hover:text-white transition-all duration-300 hover:bg-[rgba(76,91,224,0.12)]"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-black hover:text-[#4C5BE0] transition-all duration-300 hover:bg-black/5"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -108,41 +99,66 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link Columns */}
-          {footerLinks.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-sm font-semibold text-[rgba(240,240,245,0.7)] mb-4 uppercase tracking-widest">
-                {col.title}
+          {/* Right Side Columns */}
+          <div className="lg:col-span-8 flex flex-col sm:flex-row justify-end gap-12 lg:gap-20">
+            {/* Link Columns */}
+            {footerLinks.map((col) => (
+              <div key={col.title} className="min-w-[120px]">
+                <h4 className="text-sm font-bold text-[#4C5BE0] mb-4 uppercase tracking-widest drop-shadow-sm">
+                  {col.title}
+                </h4>
+                <ul className="space-y-3">
+                  {col.links.map((link, index) => (
+                    <li key={index}>
+                      <a
+                        href={link.href}
+                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="text-sm font-medium text-black hover:text-[#4C5BE0] transition-colors duration-300"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            {/* Contact Info Column */}
+            <div className="max-w-xs">
+              <h4 className="text-sm font-bold text-[#4C5BE0] mb-4 uppercase tracking-widest drop-shadow-sm">
+                REACH US
               </h4>
-              <ul className="space-y-3">
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-[rgba(240,240,245,0.35)] hover:text-white transition-colors duration-300"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-4">
+                <a href="mailto:deep@computer.org" className="text-sm font-bold text-black hover:text-[#4C5BE0] transition-colors flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  deep@computer.org
+                </a>
+                <a href="tel:+919265641668" className="text-sm font-bold text-black hover:text-[#4C5BE0] transition-colors flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  +91 92656 41668
+                </a>
+                <a href="https://maps.google.com/?q=Nirma+University,+Sarkhej-Gandhinagar+Highway,+Gota,+Ahmedabad,+Gujarat+382481,+India" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-black hover:text-[#4C5BE0] transition-colors flex items-start gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span>Nirma University, Sarkhej - Gandhinagar Highway, Gota, Ahmedabad, Gujarat 382481, India</span>
+                </a>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Bottom Bar */}
         <div
           className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
           style={{
-            borderTop: "1px solid rgba(76, 91, 224, 0.08)",
+            borderTop: "1px solid rgba(0, 0, 0, 0.1)",
           }}
         >
-          <p className="text-xs text-[rgba(240,240,245,0.25)]">
-            © 2026 HackIEEE. All rights reserved. Built with ❤️ by IEEE Student
-            Chapter.
+          <p className="text-xs font-semibold text-black">
+            HackIEEE 2026
           </p>
-          <p className="text-xs text-[rgba(240,240,245,0.2)]">
-            Powered by IEEE
+          <p className="text-xs font-semibold text-black">
+            Powered by IEEE Student Chapters Nirma University
           </p>
         </div>
       </div>

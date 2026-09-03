@@ -178,38 +178,6 @@ export default function Home() {
         </svg>
       </div>
 
-      {/* ── Premium Full-Overlay Notch Navbar (Clean) ── */}
-      <nav className="fixed top-0 inset-x-0 z-50 pointer-events-none">
-        <div className="flex items-start justify-between px-6 md:px-12">
-          
-          {/* Left: Floating Logo */}
-          <div className="pointer-events-auto mt-6 md:mt-8">
-            <a href="#" className="flex items-center text-[#ffebe1] font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg">
-              HackIEEE
-            </a>
-          </div>
-
-          {/* Center: The Notch (Solid) */}
-          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
-            <a href="#" className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors">About</a>
-            <a href="#" className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors">Tracks</a>
-            <a href="#" className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors">Sponsorship</a>
-          </div>
-
-          {/* Right: Contact Button */}
-          <div className="pointer-events-auto mt-5 md:mt-6">
-            <a
-              href="#"
-              className="flex items-center text-xs md:text-sm font-bold px-4 md:px-6 py-2 md:py-2.5 rounded-full text-black hover:scale-105 transition-transform shadow-[0_0_30px_rgba(204,255,0,0.2)]"
-              style={{ backgroundColor: "#ccff00" }} 
-            >
-              Contact Us
-            </a>
-          </div>
-
-        </div>
-      </nav>
-
       {/* ── Hero Content ── */}
       <div
         className={`relative z-10 flex flex-col items-center justify-center text-center px-6 min-h-[90vh] md:min-h-screen transition-all duration-1000 ${
