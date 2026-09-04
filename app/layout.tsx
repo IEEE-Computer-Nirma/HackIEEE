@@ -24,14 +24,30 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "HackIEEE 2026 — Where Innovation Meets Impact",
+  title: "HackIEEE 2026 | Where Innovation Meets Impact",
   description:
     "Join HackIEEE 2026, the ultimate hackathon experience. Build, innovate, and compete with top developers from around the world. 48 hours. Limitless possibilities.",
   keywords: ["hackathon", "IEEE", "HackIEEE", "coding", "innovation", "2026"],
   openGraph: {
-    title: "HackIEEE 2026",
-    description: "Where Innovation Meets Impact — 48 Hours of Limitless Possibility",
+    title: "HackIEEE 2026 | Where Innovation Meets Impact",
+    description: "Join HackIEEE 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
+    siteName: "HackIEEE 2026",
+    images: [
+      {
+        url: "/og-image.png", // Next.js will automatically look for this in the public folder
+        width: 1200,
+        height: 630,
+        alt: "HackIEEE 2026 - Where Innovation Meets Impact",
+      },
+    ],
+    locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HackIEEE 2026 | Where Innovation Meets Impact",
+    description: "Join HackIEEE 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
+    images: ["/og-image.png"],
   },
 };
 
