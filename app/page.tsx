@@ -154,6 +154,11 @@ export default function Home() {
           <rect className="desktop-bar" x="1583" y="103" width="194" height="1277" fill="url(#b10)" />
           <rect className="desktop-bar" x="1743" y="9"   width="194" height="1371" fill="url(#b11)" />
         </svg>
+
+        {/* Top Fade Overlay to blend bar tops smoothly */}
+        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-[#0a0a0f] via-[#0a0a0f]/60 to-transparent pointer-events-none" />
+        {/* Bottom Fade Overlay to blend bar bottoms seamlessly into #05060f */}
+        <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#05060f] via-[#05060f]/80 to-transparent pointer-events-none" />
       </div>
 
       {/* ── Animated Neon Rise Bars Background (Mobile/Tablet) ── */}
@@ -192,6 +197,10 @@ export default function Home() {
           <rect className="mobile-bar" x="1063.61" y="513.14" width="130.29" height="2582.86" fill="url(#bar10)" />
           <rect className="mobile-bar" x="1171.11" y="346.38" width="130.29" height="2749.62" fill="url(#bar11)" />
         </svg>
+
+        {/* Mobile Top & Bottom Fade Overlays */}
+        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#0a0a0f] via-[#0a0a0f]/60 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#05060f] via-[#05060f]/80 to-transparent pointer-events-none" />
       </div>
 
       {/* ── Hero Content ── */}

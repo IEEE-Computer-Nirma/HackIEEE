@@ -37,6 +37,10 @@ export default function RootLayout({ children }: any) {
   return (
     <html lang="en">
       <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        />
         <style>
           {`@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Sora:wght@100..800&display=swap');`}
         </style>
