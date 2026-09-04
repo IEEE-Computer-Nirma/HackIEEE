@@ -65,7 +65,7 @@ export default function RootLayout({ children }: any) {
       </head>
       <body
         className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased`}
-        style={{ fontFamily: "'Lexend', sans-serif" }}
+        style={{ fontFamily: "Lexend, sans-serif" }}
       >
         <Navbar />
         {children}
