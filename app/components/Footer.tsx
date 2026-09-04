@@ -100,21 +100,24 @@ export default function Footer() {
   return (
     <footer 
       id="contact"
-      className="relative pt-24 pb-8 mt-16 overflow-hidden bg-slate-900 border-t border-slate-800 text-slate-100"
+      className="relative pt-32 pb-12 mt-12 overflow-visible bg-[#05060f] text-slate-100"
     >
-      {/* ── Subtle Shape-Changing Morphing Gradient Blobs ── */}
+      {/* Seamless top transition gradient leading into the footer */}
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#05060f] via-[#05060f]/90 to-[#05060f] pointer-events-none -translate-y-12" />
+
+      {/* ── Ambient Morphing Gradient Blobs Crossing Section Boundaries ── */}
       <div
-        className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full pointer-events-none opacity-20 blur-3xl animate-pulse"
+        className="absolute -top-48 -left-20 w-[650px] h-[650px] rounded-full pointer-events-none opacity-25 blur-3xl"
         style={{
           background: "radial-gradient(circle, #22c55e 0%, #06b6d4 50%, transparent 70%)",
-          animation: "blob-morph 12s ease-in-out infinite alternate",
+          animation: "blob-morph 14s ease-in-out infinite alternate",
         }}
       />
       <div
-        className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full pointer-events-none opacity-25 blur-3xl"
+        className="absolute top-10 -right-20 w-[600px] h-[600px] rounded-full pointer-events-none opacity-20 blur-3xl"
         style={{
           background: "radial-gradient(circle, #3b82f6 0%, #10b981 60%, transparent 70%)",
-          animation: "blob-morph-alt 14s ease-in-out infinite alternate",
+          animation: "blob-morph-alt 16s ease-in-out infinite alternate",
         }}
       />
 
@@ -125,11 +128,11 @@ export default function Footer() {
             border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%;
           }
           50% {
-            transform: translate(40px, -30px) scale(1.1) rotate(90deg);
+            transform: translate(50px, -40px) scale(1.15) rotate(90deg);
             border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
           }
           100% {
-            transform: translate(-20px, 40px) scale(0.95) rotate(180deg);
+            transform: translate(-30px, 50px) scale(0.9) rotate(180deg);
             border-radius: 30% 70% 50% 50% / 30% 60% 40% 70%;
           }
         }
@@ -139,11 +142,11 @@ export default function Footer() {
             border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
           }
           50% {
-            transform: translate(-50px, 20px) scale(1.15) rotate(-120deg);
+            transform: translate(-60px, 30px) scale(1.2) rotate(-120deg);
             border-radius: 70% 30% 50% 50% / 40% 60% 50% 50%;
           }
           100% {
-            transform: translate(30px, -40px) scale(0.9) rotate(-240deg);
+            transform: translate(40px, -50px) scale(0.85) rotate(-240deg);
             border-radius: 40% 60% 60% 40% / 50% 30% 70% 50%;
           }
         }
@@ -158,6 +161,9 @@ export default function Footer() {
       )}
 
       <div className="w-full px-6 md:px-12 mx-auto relative z-10">
+        {/* Subtle Ambient Glow Divider */}
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-sky-500/20 to-transparent mb-16" />
+
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           {/* Brand Column */}
@@ -166,7 +172,7 @@ export default function Footer() {
               <span className="text-sky-400 font-extrabold text-3xl tracking-tight">Hack</span>
               <span className="text-white font-extrabold text-3xl tracking-tight">IEEE</span>
             </div>
-            <p className="text-sm font-medium text-slate-300 leading-relaxed max-w-sm mb-6">
+            <p className="text-sm font-medium text-slate-400 leading-relaxed max-w-sm mb-6">
               Where innovation meets impact. HackIEEE 2026 brings together the
               brightest minds to build solutions that matter.
             </p>
@@ -178,7 +184,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-300 hover:text-sky-400 hover:bg-slate-800 transition-all duration-300 border border-slate-700/60"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-sky-400 hover:bg-slate-800/60 transition-all duration-300 border border-slate-800"
                   aria-label={social.name}
                   title={social.name}
                 >
@@ -203,7 +209,7 @@ export default function Footer() {
                         href={link.href}
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                         rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors duration-300"
+                        className="text-sm font-medium text-slate-400 hover:text-sky-400 transition-colors duration-300"
                       >
                         {link.label}
                       </a>
@@ -221,13 +227,13 @@ export default function Footer() {
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => copyToClipboard("deep@computer.org", "Email (deep@computer.org)")}
-                  className="text-sm font-bold text-slate-200 hover:text-sky-400 transition-colors flex items-center gap-2.5 text-left group"
+                  className="text-sm font-bold text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-2.5 text-left group"
                 >
                   <span className="material-symbols-outlined text-lg text-sky-400 group-hover:scale-110 transition-transform">
                     mail
                   </span>
                   <span>deep@computer.org</span>
-                  <span className="material-symbols-outlined text-xs text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
+                  <span className="material-symbols-outlined text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
                     content_copy
                   </span>
                 </button>
@@ -235,13 +241,13 @@ export default function Footer() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => copyToClipboard("+919265641668", "Phone number (+91 92656 41668)")}
-                    className="text-sm font-bold text-slate-200 hover:text-sky-400 transition-colors flex items-center gap-2.5 text-left group flex-1"
+                    className="text-sm font-bold text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-2.5 text-left group flex-1"
                   >
                     <span className="material-symbols-outlined text-lg text-sky-400 group-hover:scale-110 transition-transform">
                       call
                     </span>
                     <span>+91 92656 41668</span>
-                    <span className="material-symbols-outlined text-xs text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
+                    <span className="material-symbols-outlined text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
                       content_copy
                     </span>
                   </button>
@@ -263,7 +269,7 @@ export default function Footer() {
                   href="https://maps.google.com/?q=Nirma+University,+Sarkhej-Gandhinagar+Highway,+Gota,+Ahmedabad,+Gujarat+382481,+India"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors flex items-start gap-2.5"
+                  className="text-sm font-medium text-slate-400 hover:text-sky-400 transition-colors flex items-start gap-2.5"
                 >
                   <span className="material-symbols-outlined text-lg text-sky-400 shrink-0 mt-0.5">
                     location_on
@@ -277,12 +283,12 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div
-          className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800/80"
+          className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800/40"
         >
-          <p className="text-xs font-semibold text-slate-400">
+          <p className="text-xs font-semibold text-slate-500">
             HackIEEE 2026
           </p>
-          <p className="text-xs font-semibold text-slate-400">
+          <p className="text-xs font-semibold text-slate-500">
             Powered by IEEE Student Chapters Nirma University
           </p>
         </div>
