@@ -202,14 +202,14 @@ export default function Home() {
       >
         <h1
           className="text-[clamp(3rem,10vw,7.5rem)] font-bold tracking-tighter leading-[1.1] md:leading-[1] mb-6"
-          style={{ color: "#ffebe1" }}
+          style={{ color: "#ffffff" }}
         >
           HackIEEE
         </h1>
 
         <p
           className="text-base md:text-lg lg:text-xl max-w-lg font-medium leading-relaxed mb-10"
-          style={{ color: "rgba(255, 235, 225, 0.75)" }}
+          style={{ color: "rgba(255, 255, 255, 0.75)" }}
         >
           Build, stage and ship code that feels<br className="hidden md:block" />
           considered, from first draft to launch.
@@ -221,7 +221,7 @@ export default function Home() {
             onClick={(e) => handleSmoothScroll(e, "#tracks")}
             className="w-full md:w-auto px-8 py-3.5 text-[15px] font-semibold rounded-2xl shadow-lg transition-opacity hover:opacity-90"
             style={{
-              backgroundColor: "#ffebe1",
+              backgroundColor: "#ffffff",
               color: "#0a0a0f",
             }}
           >

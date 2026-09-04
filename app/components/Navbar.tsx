@@ -72,7 +72,7 @@ export default function Navbar() {
             <Link
               href="/"
               onClick={(e) => handleSmoothScroll(e, "#")}
-              className="flex items-center text-[#ffebe1] font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg"
+              className="flex items-center text-white font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg"
             >
               HackIEEE
             </Link>
@@ -83,21 +83,21 @@ export default function Navbar() {
             <Link
               href="/#about"
               onClick={(e) => handleSmoothScroll(e, "/#about")}
-              className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
             >
               About
             </Link>
             <Link
               href="/#tracks"
               onClick={(e) => handleSmoothScroll(e, "/#tracks")}
-              className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
             >
               Tracks
             </Link>
             <Link
               href="/#timeline"
               onClick={(e) => handleSmoothScroll(e, "/#timeline")}
-              className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
             >
               Timeline
             </Link>
