@@ -1,17 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 export default function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     // Register the plugin only on the client side
     gsap.registerPlugin(ScrollToPlugin);
   }, []);
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
+    // Close mobile menu if open
+    setIsMobileMenuOpen(false);
+
     // Only intercept if we are on the home page and targeting a hash, 
     // or if the target is a hash. For this landing page, they're all hashes.
     if (target.startsWith("#") || target.startsWith("/#")) {
@@ -33,56 +38,107 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 pointer-events-none">
-      <div className="flex items-start justify-between px-6 md:px-12">
-        {/* Left: Floating Logo */}
-        <div className="pointer-events-auto mt-6 md:mt-8">
-          <Link
-            href="/"
-            onClick={(e) => handleSmoothScroll(e, "#")}
-            className="flex items-center text-[#ffebe1] font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg"
-          >
-            HackIEEE
-          </Link>
-        </div>
+    <>
+      <nav className="fixed top-0 inset-x-0 z-[60] pointer-events-none">
+        <div className="flex items-start justify-between px-6 md:px-12">
+          {/* Left: Floating Logo */}
+          <div className="pointer-events-auto mt-6 md:mt-8">
+            <Link
+              href="/"
+              onClick={(e) => handleSmoothScroll(e, "#")}
+              className="flex items-center text-[#ffebe1] font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg"
+            >
+              HackIEEE
+            </Link>
+          </div>
 
-        {/* Center: The Notch (Solid) */}
-        <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+          {/* Center: The Notch (Solid) - Desktop Only */}
+          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+            <Link
+              href="/#about"
+              onClick={(e) => handleSmoothScroll(e, "/#about")}
+              className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+            >
+              About
+            </Link>
+            <Link
+              href="/#tracks"
+              onClick={(e) => handleSmoothScroll(e, "/#tracks")}
+              className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+            >
+              Tracks
+            </Link>
+            <Link
+              href="/#sponsorship"
+              onClick={(e) => handleSmoothScroll(e, "/#sponsorship")}
+              className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+            >
+              Sponsorship
+            </Link>
+          </div>
+
+          {/* Right: Contact Button & Mobile Hamburger */}
+          <div className="pointer-events-auto mt-5 md:mt-6 flex items-center gap-4">
+            <Link
+              href="#contact"
+              onClick={(e) => handleSmoothScroll(e, "#contact")}
+              className="hidden md:flex items-center text-xs md:text-sm font-bold px-4 md:px-6 py-2 md:py-2.5 rounded-full text-black hover:scale-105 transition-transform shadow-[0_0_30px_rgba(204,255,0,0.2)]"
+              style={{ backgroundColor: "#ccff00" }}
+            >
+              Contact Us
+            </Link>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              className="md:hidden flex flex-col justify-center items-center w-10 h-10 bg-white/10 rounded-xl border border-white/10 backdrop-blur-md relative"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <div className="relative w-5 h-3.5">
+                <span className={`absolute left-0 bg-white block transition-all duration-300 ease-in-out h-[2px] w-full rounded-full ${isMobileMenuOpen ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0'}`}></span>
+                <span className={`absolute left-0 top-1/2 -translate-y-1/2 bg-white block transition-all duration-300 ease-in-out h-[2px] w-full rounded-full ${isMobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}`}></span>
+                <span className={`absolute left-0 bg-white block transition-all duration-300 ease-in-out h-[2px] w-full rounded-full ${isMobileMenuOpen ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'bottom-0'}`}></span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 z-50 bg-[#05060f]/95 backdrop-blur-lg flex flex-col items-center justify-center transition-all duration-500 md:hidden ${isMobileMenuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
+      >
+        <div className="flex flex-col items-center gap-8 text-2xl font-semibold">
           <Link
             href="/#about"
             onClick={(e) => handleSmoothScroll(e, "/#about")}
-            className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+            className="text-white hover:text-sky-400 transition-colors"
           >
             About
           </Link>
           <Link
             href="/#tracks"
             onClick={(e) => handleSmoothScroll(e, "/#tracks")}
-            className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+            className="text-white hover:text-sky-400 transition-colors"
           >
             Tracks
           </Link>
           <Link
             href="/#sponsorship"
             onClick={(e) => handleSmoothScroll(e, "/#sponsorship")}
-            className="text-sm font-semibold text-[rgba(255,235,225,0.7)] hover:text-[#ffebe1] transition-colors"
+            className="text-white hover:text-sky-400 transition-colors"
           >
             Sponsorship
           </Link>
-        </div>
-
-        {/* Right: Contact Button */}
-        <div className="pointer-events-auto mt-5 md:mt-6">
           <Link
             href="#contact"
             onClick={(e) => handleSmoothScroll(e, "#contact")}
-            className="flex items-center text-xs md:text-sm font-bold px-4 md:px-6 py-2 md:py-2.5 rounded-full text-black hover:scale-105 transition-transform shadow-[0_0_30px_rgba(204,255,0,0.2)]"
+            className="mt-4 px-8 py-3 rounded-full text-black font-bold text-xl"
             style={{ backgroundColor: "#ccff00" }}
           >
             Contact Us
           </Link>
         </div>
       </div>
-    </nav>
+    </>
   );
 }

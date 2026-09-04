@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import About from "./components/About";
 import Tracks from "./components/Tracks";
 import Timeline from "./components/Timeline";
@@ -10,12 +11,27 @@ import Footer from "./components/Footer";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(useGSAP);
+  gsap.registerPlugin(useGSAP, ScrollToPlugin);
 }
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const container = useRef<HTMLDivElement>(null);
+
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
+    e.preventDefault();
+    const id = target.replace("/", "");
+    const element = document.querySelector(id);
+    
+    if (element) {
+      gsap.to(window, {
+        duration: 1.2,
+        scrollTo: { y: id, offsetY: 0 },
+        ease: "power3.inOut",
+      });
+      window.history.pushState(null, "", id);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -54,7 +70,7 @@ export default function Home() {
     <div className="relative min-h-screen overflow-x-hidden flex flex-col" style={{ background: "#0a0a0f" }} ref={container}>
       
       {/* ── Animated Neon Rise Bars Background (Desktop) ── */}
-      <div className="absolute top-0 inset-x-0 h-[100vh] overflow-hidden z-0 pointer-events-none hidden md:block">
+      <div className="absolute top-0 inset-x-0 h-[100dvh] overflow-hidden z-0 pointer-events-none hidden md:block">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
@@ -141,7 +157,7 @@ export default function Home() {
       </div>
 
       {/* ── Animated Neon Rise Bars Background (Mobile/Tablet) ── */}
-      <div className="absolute top-0 inset-x-0 h-[100vh] overflow-hidden z-0 pointer-events-none block md:hidden">
+      <div className="absolute top-0 inset-x-0 h-[100dvh] overflow-hidden z-0 pointer-events-none block md:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
@@ -163,24 +179,24 @@ export default function Home() {
             <linearGradient id="bar11" gradientUnits="userSpaceOnUse" x1="0" y1="346.38" x2="0" y2="2796"><stop offset="0.0000" stopColor="rgb(14,20,47)"/><stop offset="0.2581" stopColor="rgb(52,67,190)"/><stop offset="0.5161" stopColor="rgb(166,132,231)"/><stop offset="0.7742" stopColor="rgb(249,105,182)"/><stop offset="1.0000" stopColor="rgb(255,82,102)"/></linearGradient>
           </defs>
           <rect width="1290" height="2796" fill="#0a0a0f" />
-          <rect className="mobile-bar" x="-11.39" y="2246.61" width="130.29" height="549.39" fill="url(#bar0)" />
-          <rect className="mobile-bar" x="96.11"  y="2006.37" width="130.29" height="789.63" fill="url(#bar1)" />
-          <rect className="mobile-bar" x="203.60" y="1830.70" width="130.29" height="965.30" fill="url(#bar2)" />
-          <rect className="mobile-bar" x="311.11" y="1707.61" width="130.29" height="1088.39" fill="url(#bar3)" />
-          <rect className="mobile-bar" x="418.61" y="1596.89" width="130.29" height="1199.11" fill="url(#bar4)" />
-          <rect className="mobile-bar" x="526.11" y="1457.29" width="130.29" height="1338.71" fill="url(#bar5)" />
-          <rect className="mobile-bar" x="633.61" y="1273.87" width="130.29" height="1522.13" fill="url(#bar6)" />
-          <rect className="mobile-bar" x="741.11" y="1064.10" width="130.29" height="1731.90" fill="url(#bar7)" />
-          <rect className="mobile-bar" x="848.61" y="859.19" width="130.29" height="1936.81" fill="url(#bar8)" />
-          <rect className="mobile-bar" x="956.11" y="677.59" width="130.29" height="2118.41" fill="url(#bar9)" />
-          <rect className="mobile-bar" x="1063.61" y="513.14" width="130.29" height="2282.86" fill="url(#bar10)" />
-          <rect className="mobile-bar" x="1171.11" y="346.38" width="130.29" height="2449.62" fill="url(#bar11)" />
+          <rect className="mobile-bar" x="-11.39" y="2246.61" width="130.29" height="849.39" fill="url(#bar0)" />
+          <rect className="mobile-bar" x="96.11"  y="2006.37" width="130.29" height="1089.63" fill="url(#bar1)" />
+          <rect className="mobile-bar" x="203.60" y="1830.70" width="130.29" height="1265.30" fill="url(#bar2)" />
+          <rect className="mobile-bar" x="311.11" y="1707.61" width="130.29" height="1388.39" fill="url(#bar3)" />
+          <rect className="mobile-bar" x="418.61" y="1596.89" width="130.29" height="1499.11" fill="url(#bar4)" />
+          <rect className="mobile-bar" x="526.11" y="1457.29" width="130.29" height="1638.71" fill="url(#bar5)" />
+          <rect className="mobile-bar" x="633.61" y="1273.87" width="130.29" height="1822.13" fill="url(#bar6)" />
+          <rect className="mobile-bar" x="741.11" y="1064.10" width="130.29" height="2031.90" fill="url(#bar7)" />
+          <rect className="mobile-bar" x="848.61" y="859.19" width="130.29" height="2236.81" fill="url(#bar8)" />
+          <rect className="mobile-bar" x="956.11" y="677.59" width="130.29" height="2418.41" fill="url(#bar9)" />
+          <rect className="mobile-bar" x="1063.61" y="513.14" width="130.29" height="2582.86" fill="url(#bar10)" />
+          <rect className="mobile-bar" x="1171.11" y="346.38" width="130.29" height="2749.62" fill="url(#bar11)" />
         </svg>
       </div>
 
       {/* ── Hero Content ── */}
       <div
-        className={`relative z-10 flex flex-col items-center justify-center text-center px-6 min-h-[90vh] md:min-h-screen transition-all duration-1000 ${
+        className={`relative z-10 flex flex-col items-center justify-center text-center px-6 min-h-[100dvh] transition-all duration-1000 ${
           mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
@@ -202,6 +218,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-5 w-full md:w-auto">
           <a
             href="#tracks"
+            onClick={(e) => handleSmoothScroll(e, "#tracks")}
             className="w-full md:w-auto px-8 py-3.5 text-[15px] font-semibold rounded-2xl shadow-lg transition-opacity hover:opacity-90"
             style={{
               backgroundColor: "#ffebe1",
@@ -212,6 +229,7 @@ export default function Home() {
           </a>
           <a
             href="#timeline"
+            onClick={(e) => handleSmoothScroll(e, "#timeline")}
             className="w-full md:w-auto px-8 py-3.5 text-[15px] font-semibold rounded-2xl shadow-lg transition-opacity hover:opacity-90 bg-white/10 backdrop-blur-md text-white border border-white/20 md:bg-white md:text-black md:border-transparent md:backdrop-blur-none"
           >
             Timeline
