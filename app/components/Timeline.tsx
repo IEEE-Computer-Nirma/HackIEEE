@@ -30,7 +30,7 @@ export default function Timeline() {
   ];
 
   return (
-    <section id="timeline" className="relative py-28 px-6">
+    <section id="timeline" className="relative py-28 px-6 scroll-mt-24">
       <div className="max-w-4xl mx-auto text-center mb-16">
         <h2 className="section-heading mb-4">
           <span className="gradient-text">Event Timeline</span>

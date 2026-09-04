@@ -14,24 +14,6 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/company/ieee-computer-nirma-university/",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-  },
-  {
-    name: "WhatsApp",
-    href: "https://wa.me/919265641668",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.101.573-.104 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.733 1.484h.005c6.554 0 11.89-5.335 11.893-11.893 0-3.18-1.238-6.163-3.485-8.412" />
-      </svg>
-    ),
-  },
 ];
 
 const footerLinks = [
@@ -54,15 +36,6 @@ const footerLinks = [
           </span>
         ), 
         href: "https://www.instagram.com/ieee.cs.sbnu/" 
-      },
-      {
-        label: (
-          <span className="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-            LinkedIn
-          </span>
-        ),
-        href: "https://www.linkedin.com/company/ieee-computer-nirma-university/"
       },
       { 
         label: (
@@ -100,57 +73,21 @@ export default function Footer() {
   return (
     <footer 
       id="contact"
-      className="relative pt-32 pb-12 mt-12 overflow-visible bg-[#05060f] text-slate-100"
+      className="relative pt-20 pb-12 overflow-hidden bg-[#05060f] text-slate-100"
     >
-      {/* Seamless top transition gradient leading into the footer */}
-      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#05060f] via-[#05060f]/90 to-[#05060f] pointer-events-none -translate-y-12" />
-
-      {/* ── Ambient Morphing Gradient Blobs Crossing Section Boundaries ── */}
+      {/* ── Dynamic Ambient Floating Blobs ── */}
       <div
-        className="absolute -top-48 -left-20 w-[650px] h-[650px] rounded-full pointer-events-none opacity-25 blur-3xl"
+        className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none opacity-20 blur-3xl animate-blob-1"
         style={{
-          background: "radial-gradient(circle, #22c55e 0%, #06b6d4 50%, transparent 70%)",
-          animation: "blob-morph 14s ease-in-out infinite alternate",
+          background: "radial-gradient(circle, #3b82f6 0%, #06b6d4 50%, transparent 70%)",
         }}
       />
       <div
-        className="absolute top-10 -right-20 w-[600px] h-[600px] rounded-full pointer-events-none opacity-20 blur-3xl"
+        className="absolute bottom-10 right-1/4 w-[450px] h-[450px] rounded-full pointer-events-none opacity-20 blur-3xl animate-blob-2"
         style={{
-          background: "radial-gradient(circle, #3b82f6 0%, #10b981 60%, transparent 70%)",
-          animation: "blob-morph-alt 16s ease-in-out infinite alternate",
+          background: "radial-gradient(circle, #10b981 0%, #3b82f6 60%, transparent 70%)",
         }}
       />
-
-      <style jsx>{`
-        @keyframes blob-morph {
-          0% {
-            transform: translate(0px, 0px) scale(1) rotate(0deg);
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%;
-          }
-          50% {
-            transform: translate(50px, -40px) scale(1.15) rotate(90deg);
-            border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
-          }
-          100% {
-            transform: translate(-30px, 50px) scale(0.9) rotate(180deg);
-            border-radius: 30% 70% 50% 50% / 30% 60% 40% 70%;
-          }
-        }
-        @keyframes blob-morph-alt {
-          0% {
-            transform: translate(0px, 0px) scale(1) rotate(0deg);
-            border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-          }
-          50% {
-            transform: translate(-60px, 30px) scale(1.2) rotate(-120deg);
-            border-radius: 70% 30% 50% 50% / 40% 60% 50% 50%;
-          }
-          100% {
-            transform: translate(40px, -50px) scale(0.85) rotate(-240deg);
-            border-radius: 40% 60% 60% 40% / 50% 30% 70% 50%;
-          }
-        }
-      `}</style>
 
       {/* Copy Toast Notification */}
       {copiedText && (
@@ -161,8 +98,8 @@ export default function Footer() {
       )}
 
       <div className="w-full px-6 md:px-12 mx-auto relative z-10">
-        {/* Subtle Ambient Glow Divider */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-sky-500/20 to-transparent mb-16" />
+        {/* Subtle Accent Separator */}
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-800 to-transparent mb-16" />
 
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
@@ -238,32 +175,18 @@ export default function Footer() {
                   </span>
                 </button>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => copyToClipboard("+919265641668", "Phone number (+91 92656 41668)")}
-                    className="text-sm font-bold text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-2.5 text-left group flex-1"
-                  >
-                    <span className="material-symbols-outlined text-lg text-sky-400 group-hover:scale-110 transition-transform">
-                      call
-                    </span>
-                    <span>+91 92656 41668</span>
-                    <span className="material-symbols-outlined text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
-                      content_copy
-                    </span>
-                  </button>
-
-                  <a
-                    href="https://wa.me/919265641668"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/30 transition-colors"
-                    title="Chat on WhatsApp"
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.101.573-.104 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.733 1.484h.005c6.554 0 11.89-5.335 11.893-11.893 0-3.18-1.238-6.163-3.485-8.412" />
-                    </svg>
-                  </a>
-                </div>
+                <button
+                  onClick={() => copyToClipboard("+919265641668", "Phone number (+91 92656 41668)")}
+                  className="text-sm font-bold text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-2.5 text-left group"
+                >
+                  <span className="material-symbols-outlined text-lg text-sky-400 group-hover:scale-110 transition-transform">
+                    call
+                  </span>
+                  <span>+91 92656 41668</span>
+                  <span className="material-symbols-outlined text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
+                    content_copy
+                  </span>
+                </button>
 
                 <a
                   href="https://maps.google.com/?q=Nirma+University,+Sarkhej-Gandhinagar+Highway,+Gota,+Ahmedabad,+Gujarat+382481,+India"
