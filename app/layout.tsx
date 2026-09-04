@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Lexend, Orbitron, Sora } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const lexend = Lexend({
   variable: "--font-lexend",
@@ -47,6 +49,8 @@ export default function RootLayout({ children }: any) {
       >
         <Navbar />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
