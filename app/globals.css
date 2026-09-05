@@ -461,7 +461,7 @@ textarea.sponsor-form__input {
 }
 .sponsor-success__subtitle {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: rgba(0, 0, 0, 0.6);
 }
 .sponsor-success svg {
   color: #10b981;

@@ -58,7 +58,7 @@ export default function SponsorshipForm() {
         <div>
           <p className="sponsor-success__title">Request Received!</p>
           <p className="sponsor-success__subtitle">
-            We&apos;ll send you the sponsorship pack within 24 hours.
+            We&apos;ve received your details and will be in touch shortly!
           </p>
         </div>
       </div>
