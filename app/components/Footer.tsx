@@ -2,19 +2,6 @@
 
 import { useState } from "react";
 
-const socialLinks = [
-  {
-    name: "Instagram",
-    href: "https://www.instagram.com/ieee.cs.sbnu/",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" />
-        <circle cx="12" cy="12" r="5" />
-        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-];
 
 const footerLinks = [
   {
@@ -113,22 +100,7 @@ export default function Footer() {
               Where innovation meets impact. HackIEEE 2026 brings together the
               brightest minds to build solutions that matter.
             </p>
-            {/* Social Links */}
-            <div className="flex items-center gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-sky-400 hover:bg-slate-800/60 transition-all duration-300 border border-slate-800"
-                  aria-label={social.name}
-                  title={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+
           </div>
 
           {/* Right Side Columns */}
