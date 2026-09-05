@@ -65,7 +65,7 @@ export default function RootLayout({ children }: any) {
         </style>
       </head>
       <body
-        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased`}
+        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased font-sans`}
       >
         <PageTransition />
         <Navbar />
