@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState, useTransition } from "react";
 import { submitSponsorshipForm, type ActionResult } from "@/lib/actions";
 import { ChevronDown, CheckCircle, Loader2 } from "lucide-react";
 
@@ -46,12 +46,31 @@ const fields: FieldConfig[] = [
 const initialState: ActionResult = { ok: false };
 
 export default function SponsorshipForm() {
-  const [state, formAction, pending] = useActionState(
-    submitSponsorshipForm,
-    initialState
-  );
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]> | null>(null);
+  const [pending, startTransition] = useTransition();
 
-  if (state.ok) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    
+    startTransition(async () => {
+      setError(null);
+      setFieldErrors(null);
+      
+      const result = await submitSponsorshipForm({ ok: false }, formData);
+      
+      if (result.ok) {
+        setIsSuccess(true);
+      } else {
+        if (result.error) setError(result.error);
+        if (result.fieldErrors) setFieldErrors(result.fieldErrors);
+      }
+    });
+  };
+
+  if (isSuccess) {
     return (
       <div className="sponsor-success">
         <CheckCircle size={32} strokeWidth={2} />
@@ -66,7 +85,7 @@ export default function SponsorshipForm() {
   }
 
   return (
-    <form action={formAction} className="sponsor-form">
+    <form onSubmit={handleSubmit} className="sponsor-form">
       {/* Honeypot — hidden from real users, bots will fill it */}
       <div
         aria-hidden="true"
@@ -137,16 +156,16 @@ export default function SponsorshipForm() {
             />
           )}
 
-          {state.fieldErrors?.[f.name] && (
+          {fieldErrors?.[f.name] && (
             <span className="sponsor-form__error">
-              {state.fieldErrors[f.name][0]}
+              {fieldErrors[f.name][0]}
             </span>
           )}
         </div>
       ))}
 
-      {state.error && !state.fieldErrors && (
-        <p className="sponsor-form__form-error">{state.error}</p>
+      {error && !fieldErrors && (
+        <p className="sponsor-form__form-error">{error}</p>
       )}
 
       <button
