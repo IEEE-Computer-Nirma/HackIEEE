@@ -37,7 +37,6 @@ export async function submitSponsorshipForm(
     org_name: d.orgName,
     contact_person: d.contactPerson,
     email: d.email,
-    tier_interest: d.tierInterest,
     message: d.message,
   });
 

@@ -35,20 +35,6 @@ const fields: FieldConfig[] = [
     required: true,
   },
   {
-    name: "tierInterest",
-    label: "Tier of Interest",
-    type: "select",
-    required: true,
-    fullWidth: true,
-    placeholder: "Select a tier…",
-    options: [
-      { value: "silver", label: "Silver Partner" },
-      { value: "gold", label: "Gold Partner" },
-      { value: "platinum", label: "Platinum Partner" },
-      { value: "custom", label: "Custom / Let's Discuss" },
-    ],
-  },
-  {
     name: "message",
     label: "Additional Information (Optional)",
     type: "textarea",

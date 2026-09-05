@@ -6,7 +6,6 @@ export const sponsorshipSchema = z.object({
   orgName: z.string().min(1, "Organization name is required").max(200),
   contactPerson: z.string().min(1, "Contact person is required").max(200),
   email,
-  tierInterest: z.string().min(1, "Please select a tier"),
   message: z.string().max(5000).optional().default(""),
 });
 

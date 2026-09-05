@@ -3,7 +3,6 @@ create table public.sponsorship_submissions (
   org_name text not null,
   contact_person text not null,
   email text not null,
-  tier_interest text not null,
   message text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
