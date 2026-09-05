@@ -45,8 +45,9 @@ const tiers = [
 
 export default function SponsorshipPage() {
   return (
-    <main className="sponsor-page">
-      {/* Background Video — same pattern as About section */}
+    <>
+      <main className="sponsor-page">
+        {/* Background Video — same pattern as About section */}
       <div className="absolute inset-0 w-full h-full z-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {/* Desktop Video */}
@@ -154,11 +155,8 @@ export default function SponsorshipPage() {
           <SponsorshipForm />
         </section>
       </div>
-
-      {/* Footer added to bottom of page */}
-      <div className="relative z-10 w-full mt-24">
-        <Footer />
-      </div>
     </main>
+    <Footer />
+    </>
   );
 }
