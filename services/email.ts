@@ -11,7 +11,7 @@ export async function sendSponsorshipEmail(data: {
   try {
     await resend.emails.send({
       from: "HackIEEE Sponsorships <onboarding@resend.dev>",
-      to: "deep@computer.org",
+      to: "deepensify@gmail.com",
       subject: `New Sponsorship Inquiry from ${data.orgName}`,
       html: `
         <div style="font-family: sans-serif; line-height: 1.5; color: #333;">
