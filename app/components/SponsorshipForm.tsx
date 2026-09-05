@@ -18,20 +18,20 @@ const fields: FieldConfig[] = [
   {
     name: "orgName",
     label: "Organization Name",
-    placeholder: "e.g. Acme Corp",
+    placeholder: "e.g. XYZ Corp",
     required: true,
   },
   {
     name: "contactPerson",
     label: "Contact Person",
-    placeholder: "e.g. Jane Doe",
+    placeholder: "e.g. John Doe",
     required: true,
   },
   {
     name: "email",
     label: "Email Address",
     type: "email",
-    placeholder: "e.g. hello@example.com",
+    placeholder: "e.g. hello@xyz.com",
     required: true,
   },
   {
