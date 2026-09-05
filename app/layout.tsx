@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lexend, Orbitron, Sora } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import PageTransition from "./components/PageTransition";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -64,9 +65,10 @@ export default function RootLayout({ children }: any) {
         </style>
       </head>
       <body
-        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased`}
-        style={{ fontFamily: "Lexend, sans-serif" }}
+        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased font-sans`}
+        style={{ fontFamily: "'Lexend', sans-serif" }}
       >
+        <PageTransition />
         <Navbar />
         {children}
         <Analytics />

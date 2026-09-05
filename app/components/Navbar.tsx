@@ -26,7 +26,7 @@ export default function Navbar() {
         e.preventDefault();
         gsap.to(window, {
           duration: 1.2,
-          scrollTo: { y: id, offsetY: 80 },
+          scrollTo: { y: id, offsetY: 0 },
           ease: "power3.inOut",
         });
         
@@ -79,7 +79,7 @@ export default function Navbar() {
           </div>
 
           {/* Center: The Notch (Solid) - Desktop Only */}
-          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px]">
             <Link
               href="/#about"
               onClick={(e) => handleSmoothScroll(e, "/#about")}
@@ -100,6 +100,12 @@ export default function Navbar() {
               className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
             >
               Timeline
+            </Link>
+            <Link
+              href="/sponsorship"
+              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
+            >
+              Sponsor
             </Link>
           </div>
 
@@ -155,6 +161,12 @@ export default function Navbar() {
             className="text-white hover:text-sky-400 transition-colors"
           >
             Timeline
+          </Link>
+          <Link
+            href="/sponsorship"
+            className="text-white hover:text-sky-400 transition-colors"
+          >
+            Sponsor
           </Link>
           <a
             href="#contact"
