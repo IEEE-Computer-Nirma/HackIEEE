@@ -56,6 +56,14 @@ export default function RootLayout({ children }: any) {
   return (
     <html lang="en">
       <head>
+        <link rel="preload" href="/about-video-mobile.mp4" as="video" type="video/mp4" />
+        <link rel="preload" href="/about-video.mp4" as="video" type="video/mp4" />
+        <link rel="preload" href="/sponser-video-mobile.mp4" as="video" type="video/mp4" />
+        <link rel="preload" href="/sponser-video.mp4" as="video" type="video/mp4" />
+        <link rel="preload" href="/footer-bg.png" as="image" />
+        <link rel="preload" href="/footer-bg.svg" as="image" />
+        <link rel="preload" href="/tracks-bg-mobile.png" as="image" />
+        <link rel="preload" href="/tracks-bg.png" as="image" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
