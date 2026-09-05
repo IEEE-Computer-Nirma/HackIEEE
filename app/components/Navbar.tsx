@@ -26,7 +26,7 @@ export default function Navbar() {
         e.preventDefault();
         gsap.to(window, {
           duration: 1.2,
-          scrollTo: { y: id, offsetY: 80 },
+          scrollTo: { y: id, offsetY: 0 },
           ease: "power3.inOut",
         });
         
