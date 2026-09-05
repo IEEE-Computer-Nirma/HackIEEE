@@ -352,7 +352,7 @@ section {
 .sponsor-form__field label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: rgba(0, 0, 0, 0.6);
   letter-spacing: 0.02em;
 }
 .sponsor-form__required {
@@ -362,21 +362,21 @@ section {
 
 .sponsor-form__input {
   padding: 0.85rem 1rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   font-family: inherit;
   font-size: 0.95rem;
-  color: var(--text-primary);
+  color: #000;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   appearance: none;
   outline: none;
 }
 .sponsor-form__input::placeholder {
-  color: var(--text-muted);
+  color: rgba(0, 0, 0, 0.4);
 }
 .sponsor-form__input:focus {
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(0, 0, 0, 0.05);
   border-color: var(--hanada);
   box-shadow: 0 0 0 3px rgba(76, 91, 224, 0.15), 0 0 20px rgba(76, 91, 224, 0.08);
 }
@@ -398,14 +398,14 @@ textarea.sponsor-form__input {
   cursor: pointer;
 }
 .sponsor-form__select-wrap select option {
-  background: var(--bg);
-  color: var(--text-primary);
+  background: #fff;
+  color: #000;
 }
 .sponsor-form__select-icon {
   position: absolute;
   right: 0.85rem;
   pointer-events: none;
-  color: var(--text-muted);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* Validation Errors */

@@ -176,7 +176,7 @@ export default function PageTransition() {
 
       event.preventDefault();
       event.stopPropagation();
-      cover(url.pathname + url.search);
+      cover(url.pathname + url.search + url.hash);
     };
 
     document.addEventListener("click", onCapture, true);
