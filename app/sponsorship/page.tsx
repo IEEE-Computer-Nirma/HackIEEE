@@ -45,9 +45,21 @@ const tiers = [
 export default function SponsorshipPage() {
   return (
     <main className="sponsor-page">
-      {/* Background ambient glow */}
-      <div className="sponsor-page__glow sponsor-page__glow--1" />
-      <div className="sponsor-page__glow sponsor-page__glow--2" />
+      {/* Background Video — same pattern as About section */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/sponser-video.mp4" type="video/mp4" />
+        </video>
+        {/* Dark scrim for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-[#05060f]" />
+      </div>
 
       <div className="sponsor-page__container">
         {/* Hero Header — clean white like main page */}
