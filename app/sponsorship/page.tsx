@@ -44,13 +44,13 @@ export default function SponsorshipPage() {
       <div className="sponsor-page__container">
         {/* Hero Header */}
         <header className="sponsor-page__header animate-slide-up">
-          <p className="text-sm font-semibold tracking-widest uppercase text-[#ccff00] mb-6">
+          <p className="text-sm font-semibold tracking-widest uppercase text-black mb-6">
             Partnership Opportunities
           </p>
           <h1 className="text-[clamp(2.5rem,7vw,5rem)] font-bold tracking-tighter leading-[1.1] text-black mb-6">
             Sponsor HackIEEE
           </h1>
-          <p className="text-base md:text-lg text-[#ccff00] max-w-xl mx-auto leading-relaxed font-medium">
+          <p className="text-base md:text-lg text-black max-w-xl mx-auto leading-relaxed font-medium">
             Partner with us to power the next generation of builders; become a Title, Track, or Goodies/Swag Sponsor!
           </p>
         </header>
