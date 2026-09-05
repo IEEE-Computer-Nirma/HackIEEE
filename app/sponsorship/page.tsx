@@ -51,8 +51,7 @@ export default function SponsorshipPage() {
             Sponsor HackIEEE
           </h1>
           <p className="text-base md:text-lg text-black/60 max-w-xl mx-auto leading-relaxed font-medium">
-            Partner with us to reach top computing talent. Support our hackathon,
-            workshops, and research initiatives — and make a lasting impact.
+            Partner with us to power the next generation of builders; become a Title, Track, or Goodies/Swag Sponsor!
           </p>
         </header>
 
@@ -69,8 +68,7 @@ export default function SponsorshipPage() {
             Interested? <span className="text-sky-500">Let&apos;s talk.</span>
           </h2>
           <p className="text-base text-black/50 mb-8 max-w-lg leading-relaxed font-medium">
-            Fill out the form below and we&apos;ll send you our detailed
-            sponsorship deck within 24 hours.
+            Interested in teaming up? Drop your details below and we&apos;ll get back to you shortly!
           </p>
           <SponsorshipForm />
         </section>

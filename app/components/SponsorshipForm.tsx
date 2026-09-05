@@ -162,7 +162,7 @@ export default function SponsorshipForm() {
               Processing…
             </span>
           ) : (
-            "Request Sponsorship Pack"
+            "Submit"
           )}
         </span>
       </button>
