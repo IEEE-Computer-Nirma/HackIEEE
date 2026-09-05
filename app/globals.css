@@ -525,10 +525,7 @@ textarea.sponsor-form__input {
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #e0e0ff, var(--plum), var(--pink-plum));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: white;
   user-select: none;
 }
 
