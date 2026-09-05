@@ -79,7 +79,7 @@ export default function Navbar() {
           </div>
 
           {/* Center: The Notch (Solid) - Desktop Only */}
-          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px]">
             <Link
               href="/#about"
               onClick={(e) => handleSmoothScroll(e, "/#about")}
