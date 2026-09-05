@@ -101,6 +101,12 @@ export default function Navbar() {
             >
               Timeline
             </Link>
+            <Link
+              href="/sponsorship"
+              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
+            >
+              Sponsor
+            </Link>
           </div>
 
           {/* Right: Contact Button & Mobile Hamburger */}
@@ -155,6 +161,12 @@ export default function Navbar() {
             className="text-white hover:text-sky-400 transition-colors"
           >
             Timeline
+          </Link>
+          <Link
+            href="/sponsorship"
+            className="text-white hover:text-sky-400 transition-colors"
+          >
+            Sponsor
           </Link>
           <a
             href="#contact"

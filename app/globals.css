@@ -281,3 +281,269 @@ section {
   border-top-left-radius: 20px;
   box-shadow: -10px -10px 0 10px rgba(10, 10, 15, 0.85);
 }
+
+/* ── Sponsorship Page ────────────────────────────────────── */
+.sponsor-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 8rem 1.5rem 6rem;
+}
+
+.sponsor-page__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.sponsor-page__glow--1 {
+  top: -10%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: var(--hanada);
+}
+.sponsor-page__glow--2 {
+  bottom: 10%;
+  left: -5%;
+  width: 400px;
+  height: 400px;
+  background: var(--pink-plum);
+}
+
+.sponsor-page__container {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.sponsor-page__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* ── Tier Cards Grid ─────────────────────────────────────── */
+.sponsor-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+/* ── Sponsorship Form ────────────────────────────────────── */
+.sponsor-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  position: relative;
+}
+.sponsor-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sponsor-form__full {
+  grid-column: 1 / -1;
+}
+
+.sponsor-form__field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+.sponsor-form__required {
+  color: var(--sappan);
+  margin-left: 2px;
+}
+
+.sponsor-form__input {
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  appearance: none;
+  outline: none;
+}
+.sponsor-form__input::placeholder {
+  color: var(--text-muted);
+}
+.sponsor-form__input:focus {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: var(--hanada);
+  box-shadow: 0 0 0 3px rgba(76, 91, 224, 0.15), 0 0 20px rgba(76, 91, 224, 0.08);
+}
+
+textarea.sponsor-form__input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Select Wrapper */
+.sponsor-form__select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.sponsor-form__select-wrap select {
+  width: 100%;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+.sponsor-form__select-wrap select option {
+  background: var(--bg);
+  color: var(--text-primary);
+}
+.sponsor-form__select-icon {
+  position: absolute;
+  right: 0.85rem;
+  pointer-events: none;
+  color: var(--text-muted);
+}
+
+/* Validation Errors */
+.sponsor-form__error {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--sappan);
+  padding: 2px 0;
+}
+.sponsor-form__form-error {
+  grid-column: 1 / -1;
+  padding: 1rem;
+  background: rgba(255, 78, 99, 0.1);
+  border: 1px solid rgba(255, 78, 99, 0.25);
+  border-radius: 12px;
+  color: var(--sappan);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Submit Button */
+.sponsor-form__submit {
+  grid-column: 1 / -1;
+  align-self: flex-start;
+  font-size: 1rem;
+}
+
+/* Loading */
+.sponsor-form__loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sponsor-form__spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Success State */
+.sponsor-success {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 16px;
+}
+.sponsor-success__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #10b981;
+  margin-bottom: 4px;
+}
+.sponsor-success__subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.sponsor-success svg {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Sponsorship Responsive ──────────────────────────────── */
+@media (max-width: 768px) {
+  .sponsor-page {
+    padding: 7rem 1rem 4rem;
+  }
+  .sponsor-form {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .sponsor-form-section {
+    padding: 2rem 1.25rem;
+  }
+  .sponsor-tiers {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Page Curtain Transition ─────────────────────────────── */
+.page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page-curtain.is-active {
+  pointer-events: auto;
+}
+.page-curtain__cols {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.page-curtain__col {
+  flex: 1;
+  background: linear-gradient(180deg, var(--storm-blue), var(--ink-blue));
+  transform-origin: bottom center;
+  transform: scaleY(0);
+}
+.page-curtain__mark {
+  position: relative;
+  z-index: 10;
+  opacity: 0;
+}
+.page-curtain__logo-text {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #e0e0ff, var(--plum), var(--pink-plum));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .page-curtain__cols {
+    flex-direction: column;
+  }
+  .page-curtain__col {
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--storm-blue), var(--ink-blue));
+  }
+  .page-curtain__col:nth-child(n+5) {
+    display: none;
+  }
+  .page-curtain__logo-text {
+    font-size: 1.5rem;
+  }
+}
