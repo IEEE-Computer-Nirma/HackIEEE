@@ -103,6 +103,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="/sponsorship"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
             >
               Sponsor
@@ -164,6 +165,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/sponsorship"
+            onClick={() => setIsMobileMenuOpen(false)}
             className="text-white hover:text-sky-400 transition-colors"
           >
             Sponsor
