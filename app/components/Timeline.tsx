@@ -4,60 +4,21 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { UserPlus, CalendarX, FileCode, Code, Trophy } from "lucide-react";
+import { timelineEvents, type TimelineEvent } from "../data/timeline";
+import BellReminder from "./BellReminder";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-const events = [
-  {
-    date: "October 20, 2026",
-    title: "Registration Opens",
-    description: "Sign up and form your team of up to 4 members.",
-    icon: "how_to_reg",
-    phase: "Phase 0",
-  },
-  {
-    date: "November 28, 2026",
-    title: "Registration Closes",
-    description: "Last day to register. Late entries will not be accepted.",
-    icon: "event_busy",
-    phase: "Phase 0",
-  },
-  {
-    date: "December 20–25, 2026",
-    title: "Idea Submission + Quiz / CTF",
-    description:
-      "Submit your project proposal along with participation in the preliminary Quiz / CTF challenges.",
-    icon: "assignment",
-    phase: "Phase 1",
-  },
-  {
-    date: "January 2–3, 2027",
-    title: "Hackathon",
-    description:
-      "Intense coding and product building phase with mentor support and technical checkpoints.",
-    icon: "code",
-    phase: "Phase 2",
-  },
-  {
-    date: "January 4, 2027",
-    title: "Results & Award Ceremony",
-    description:
-      "Project presentations, judge evaluations, winner announcements, and prize distributions.",
-    icon: "emoji_events",
-    phase: "Finale",
-  },
-];
-
-/* Color palette matching the Neon Rise design system */
-const palette = [
-  { accent: "#4C5BE0", glow: "rgba(76, 91, 224, 0.35)" },
-  { accent: "#6E6FE8", glow: "rgba(110, 111, 232, 0.35)" },
-  { accent: "#B387E8", glow: "rgba(179, 135, 232, 0.35)" },
-  { accent: "#F86AC8", glow: "rgba(248, 106, 200, 0.35)" },
-  { accent: "#FF4E63", glow: "rgba(255, 78, 99, 0.35)" },
-];
+const icons: Record<TimelineEvent["icon"], typeof Code> = {
+  register: UserPlus,
+  closed: CalendarX,
+  idea: FileCode,
+  code: Code,
+  trophy: Trophy,
+};
 
 export default function Timeline() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -67,23 +28,22 @@ export default function Timeline() {
 
   useGSAP(
     () => {
-      if (!sectionRef.current) return;
+      const section = sectionRef.current;
+      if (!section) return;
 
-      /* ── Set line height to end at the last dot ── */
-      const dots = sectionRef.current.querySelectorAll<HTMLElement>(".tl-dot");
-      const spine = spineRef.current;
-      if (dots.length > 0 && spine) {
-        const lastDot = dots[dots.length - 1];
-        const spineTop = spine.getBoundingClientRect().top;
-        const lastDotTop = lastDot.getBoundingClientRect().top;
-        const lineHeight = lastDotTop - spineTop + 9; // +9 to center on the dot
+      /* ── Lines end exactly at the last marker; re-measured on every refresh ── */
+      const setHeights = () => {
+        const dots = section.querySelectorAll<HTMLElement>(".tl-dot");
+        const spine = spineRef.current;
+        if (!dots.length || !spine) return;
+        const last = dots[dots.length - 1].getBoundingClientRect();
+        const h = last.top + last.height / 2 - spine.getBoundingClientRect().top;
+        if (trackRef.current) trackRef.current.style.height = `${h}px`;
+        if (lineRef.current) lineRef.current.style.height = `${h}px`;
+      };
+      setHeights();
+      ScrollTrigger.addEventListener("refreshInit", setHeights);
 
-        // Set both lines to end at the last dot
-        if (trackRef.current) trackRef.current.style.height = `${lineHeight}px`;
-        if (lineRef.current) lineRef.current.style.height = `${lineHeight}px`;
-      }
-
-      /* ── Animate the glowing progress line ── */
       if (lineRef.current) {
         gsap.fromTo(
           lineRef.current,
@@ -91,244 +51,110 @@ export default function Timeline() {
           {
             scaleY: 1,
             ease: "none",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 60%",
-              end: "bottom 70%",
-              scrub: 0.8,
-            },
+            scrollTrigger: { trigger: spineRef.current, start: "top 65%", end: "bottom 65%", scrub: 0.8 },
           }
         );
       }
 
-      /* ── Section heading fade-in ── */
-      gsap.from(".tl-heading", {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".tl-heading",
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      });
-
-      /* ── Stagger-reveal each timeline card ── */
-      const cards = gsap.utils.toArray<HTMLElement>(".tl-card");
-      cards.forEach((card, i) => {
-        const isLeft = i % 2 === 0;
-
-        // Card slide-in
-        gsap.from(card, {
-          x: isLeft ? -80 : 80,
-          opacity: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        });
-
-        // Dot pop-in
-        const dot = sectionRef.current!.querySelectorAll(".tl-dot")[i];
-        if (dot) {
-          gsap.from(dot, {
-            scale: 0,
-            opacity: 0,
-            duration: 0.5,
-            ease: "back.out(3)",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
+      const mm = gsap.matchMedia();
+      mm.add(
+        { desktop: "(min-width: 768px)", reduce: "(prefers-reduced-motion: reduce)" },
+        (ctx) => {
+          const { desktop, reduce } = ctx.conditions as { desktop: boolean; reduce: boolean };
+          if (reduce) return;
+          gsap.utils.toArray<HTMLElement>(".tl-item").forEach((item, i) => {
+            const card = item.querySelector(".tl-card");
+            const dot = item.querySelector(".tl-dot");
+            const trigger = { trigger: item, start: "top 85%", toggleActions: "play none none reverse" };
+            gsap.from(card, {
+              ...(desktop ? { x: i % 2 === 0 ? -70 : 70 } : { y: 40 }),
+              opacity: 0,
+              duration: 0.9,
+              ease: "power3.out",
+              scrollTrigger: trigger,
+            });
+            gsap.from(dot, { scale: 0, opacity: 0, duration: 0.6, ease: "back.out(2.5)", scrollTrigger: trigger });
           });
         }
-      });
+      );
 
-      /* ── Note badge ── */
-      gsap.from(".tl-note", {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".tl-note",
-          start: "top 90%",
-          toggleActions: "play none none reverse",
-        },
-      });
+      return () => {
+        ScrollTrigger.removeEventListener("refreshInit", setHeights);
+        mm.revert();
+      };
     },
     { scope: sectionRef }
   );
 
   return (
-    <section
-      ref={sectionRef}
-      id="timeline"
-      className="relative py-28 md:py-36 px-6 scroll-mt-24 overflow-hidden"
-    >
-      {/* ── Ambient background glow ── */}
+    <section ref={sectionRef} id="timeline" className="scroll-mt-4 overflow-hidden px-5 py-20 md:px-8 md:py-32">
       <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.04] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, #B387E8, transparent 70%)",
-        }}
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-spice opacity-[0.05] blur-3xl"
       />
 
-      {/* ── Section Heading ── */}
-      <div className="tl-heading max-w-4xl mx-auto text-center mb-20 md:mb-28">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-5">
-          Event <span style={{ color: "#ccff00" }}>Timeline</span>
-        </h2>
-        <p className="text-base md:text-lg text-white/60 max-w-xl mx-auto leading-relaxed">
-          Key milestones on your journey from idea to impact.
+      <div className="reveal relative mx-auto mb-14 max-w-6xl md:mb-24 md:text-center">
+        <p className="eyebrow">03 — Timeline</p>
+        <h2 className="display mt-5 text-[1.8rem] text-ink sm:text-4xl md:text-5xl">Event Timeline</h2>
+        <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-2 md:mx-auto md:text-lg">
+          Key milestones on the long walk from idea to impact.
         </p>
+        <div className="mt-7">
+          <BellReminder />
+        </div>
       </div>
 
-      {/* ── Timeline Spine ── */}
-      <div className="max-w-5xl mx-auto relative" ref={spineRef}>
-        {/* Static track line (subtle) */}
-        <div
-          ref={trackRef}
-          className="absolute left-[28px] md:left-1/2 md:-translate-x-[1px] top-0 w-[2px]"
-          style={{ background: "rgba(204, 255, 0, 0.08)" }}
-        />
-
-        {/* Animated glowing progress line */}
+      <div className="relative mx-auto max-w-5xl" ref={spineRef}>
+        <div ref={trackRef} className="tl-spine absolute left-[19px] top-0 w-[2px] md:left-1/2 md:-translate-x-1/2" />
         <div
           ref={lineRef}
-          className="absolute left-[28px] md:left-1/2 md:-translate-x-[1px] top-0 w-[2px] origin-top"
+          className="absolute left-[19px] top-0 w-[2px] origin-top md:left-1/2 md:-translate-x-1/2"
           style={{
-            background:
-              "linear-gradient(to bottom, #4C5BE0 0%, #6E6FE8 25%, #B387E8 50%, #F86AC8 75%, #FF4E63 100%)",
-            boxShadow:
-              "0 0 8px rgba(179, 135, 232, 0.4), 0 0 20px rgba(248, 106, 200, 0.2)",
+            background: "linear-gradient(to bottom, var(--sand), var(--spice) 60%, var(--ember))",
+            boxShadow: "0 0 10px var(--glow), 0 0 24px var(--glow)",
           }}
         />
 
-        {/* ── Event Cards ── */}
-        {events.map((event, i) => {
+        {timelineEvents.map((event, i) => {
           const isLeft = i % 2 === 0;
-          const { accent, glow } = palette[i];
-
+          const Icon = icons[event.icon];
           return (
             <div
               key={event.title}
-              className={`relative flex items-start mb-16 md:mb-20 last:mb-0 ${
-                isLeft
-                  ? "md:flex-row"
-                  : "md:flex-row-reverse"
-              } flex-row`}
+              className={`tl-item relative mb-10 flex items-start last:mb-0 md:mb-16 ${
+                isLeft ? "md:flex-row" : "md:flex-row-reverse"
+              }`}
             >
-              {/* ── Dot on the line ── */}
-              <div className="tl-dot absolute left-[28px] md:left-1/2 -translate-x-1/2 z-20">
-                <div
-                  className="relative w-[18px] h-[18px] rounded-full border-[2.5px] flex items-center justify-center"
-                  style={{
-                    borderColor: accent,
-                    background: "#0a0a0f",
-                    boxShadow: `0 0 16px ${glow}, 0 0 40px ${glow}`,
-                  }}
-                >
-                  <div
-                    className="w-[6px] h-[6px] rounded-full"
-                    style={{ background: accent }}
-                  />
-                </div>
+              <div className="tl-dot absolute left-[20px] top-6 z-20 -translate-x-1/2 md:left-1/2">
+                <div className="eclipse h-[18px] w-[18px]" />
               </div>
 
-              {/* ── Card ── */}
-              <div
-                className={`tl-card ml-16 md:ml-0 ${
-                  isLeft
-                    ? "md:w-[calc(50%-48px)] md:pr-0 md:text-right"
-                    : "md:w-[calc(50%-48px)] md:pl-0 md:text-left"
-                } w-full`}
-              >
-                <div
-                  className="group relative rounded-2xl p-6 md:p-7 transition-all duration-400 ease-out hover:-translate-y-1"
-                  style={{
-                    background: "rgba(5, 6, 15, 0.55)",
-                    backdropFilter: "blur(20px)",
-                    WebkitBackdropFilter: "blur(20px)",
-                    border: `1px solid ${accent}20`,
-                  }}
-                >
-
-
-                  {/* Content */}
-                  <div className="relative z-10">
-                    {/* Phase badge + Date */}
-                    <div
-                      className={`flex items-center gap-3 mb-3 ${
-                        isLeft ? "md:justify-end" : "md:justify-start"
-                      }`}
-                    >
-                      <span
-                        className="text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded-full"
-                        style={{
-                          color: accent,
-                          background: `${accent}15`,
-                          border: `1px solid ${accent}30`,
-                        }}
-                      >
-                        {event.phase}
-                      </span>
-                      <span
-                        className="text-xs font-semibold uppercase tracking-widest"
-                        style={{ color: `${accent}CC` }}
-                      >
-                        {event.date}
-                      </span>
-                    </div>
-
-                    <div
-                      className={`flex items-center gap-3 mb-2 ${
-                        isLeft ? "md:justify-end" : "md:justify-start"
-                      }`}
-                    >
-                      <span
-                        className="material-symbols-outlined text-2xl"
-                        style={{ color: accent }}
-                      >
-                        {event.icon}
-                      </span>
-                      <h3 className="text-lg md:text-xl font-bold text-white tracking-tight">
-                        {event.title}
-                      </h3>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-sm text-white/55 leading-relaxed">
-                      {event.description}
-                    </p>
+              <div className={`tl-card ml-12 w-full md:ml-0 md:w-[calc(50%-48px)] ${isLeft ? "md:text-right" : ""}`}>
+                <article className="card group p-5 transition-colors duration-500 hover:border-line-strong md:p-7">
+                  <div className={`flex flex-wrap items-center gap-x-3 gap-y-2 ${isLeft ? "md:justify-end" : ""}`}>
+                    <span className="rounded-full border border-spice/40 px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-spice">
+                      {event.phase}
+                    </span>
+                    <span className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-2">{event.date}</span>
                   </div>
-                </div>
+                  <div className={`mt-3 flex items-center gap-3 ${isLeft ? "md:flex-row-reverse" : ""}`}>
+                    <Icon size={20} strokeWidth={1.5} className="shrink-0 text-spice" />
+                    <h3 className="text-lg font-medium tracking-tight text-ink md:text-xl">{event.title}</h3>
+                  </div>
+                  <p className="mt-2 text-[0.93rem] leading-relaxed text-ink-2">{event.description}</p>
+                </article>
               </div>
 
-              {/* Spacer for the opposite side on desktop */}
               <div className="hidden md:block md:w-[calc(50%-48px)]" />
             </div>
           );
         })}
       </div>
 
-      {/* ── Note Badge ── */}
-      <div className="tl-note max-w-2xl mx-auto mt-16 text-center">
-        <p className="text-xs md:text-sm text-sky-300/80 bg-sky-950/30 border border-sky-500/20 rounded-xl py-3 px-5 inline-block backdrop-blur-sm shadow-md">
-          <span className="text-amber-400 font-bold mr-1.5">*</span>
-          <span className="font-medium">
-            Note: All dates are tentative and may shift by ±1 week.
-            <br />
-            Final schedule will be confirmed 1 month prior to the event.
-          </span>
-        </p>
-      </div>
+      <p className="reveal relative mx-auto mt-14 max-w-xl rounded-2xl border border-line px-5 py-4 text-sm leading-relaxed text-ink-2 md:mt-20 md:text-center">
+        <span className="mr-1.5 text-spice">*</span>
+        All dates are tentative and may shift by ±1 week. Final schedule will be confirmed 1 month prior to the event.
+      </p>
     </section>
   );
 }
