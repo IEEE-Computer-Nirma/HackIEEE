@@ -73,20 +73,13 @@ export default function Navbar() {
       )}
 
       <nav className="fixed top-0 inset-x-0 z-[60] pointer-events-none">
-        <div className="flex items-start justify-between px-6 md:px-12">
-          {/* Left: Floating Logo */}
-          <div className="pointer-events-auto mt-6 md:mt-8">
-            <Link
-              href="/"
-              onClick={(e) => handleSmoothScroll(e, "#")}
-              className="flex items-center text-white font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg"
-            >
-              HackIEEE
-            </Link>
+        <div className="flex items-start justify-between px-6 md:px-12 relative">
+          {/* Left: Empty space */}
+          <div className="pointer-events-none mt-6 md:mt-8 w-24">
           </div>
 
           {/* Center: The Notch (Solid) - Desktop Only */}
-          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px]">
+          <div className="pointer-events-auto hidden md:flex absolute left-1/2 -translate-x-1/2 top-0 items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px]">
             <Link
               href="/#about"
               onClick={(e) => handleSmoothScroll(e, "/#about")}
@@ -119,14 +112,19 @@ export default function Navbar() {
 
           {/* Right: Contact Button & Mobile Hamburger */}
           <div className="pointer-events-auto mt-5 md:mt-6 flex items-center gap-4">
-            <a
-              href="#contact"
-              onClick={handleContactClick}
-              className="hidden md:flex items-center gap-2 text-xs md:text-sm font-bold px-4 md:px-6 py-2 md:py-2.5 rounded-full text-black hover:scale-105 transition-transform shadow-[0_0_30px_rgba(204,255,0,0.2)]"
-              style={{ backgroundColor: "#ccff00" }}
-            >
-              <span className="material-symbols-outlined text-lg">mail</span>
-              <span>Contact Us</span>
+            <a href="#contact" onClick={handleContactClick} className="hidden md:block">
+              <div 
+                className="flex items-center justify-center gap-2 px-4 md:px-6 h-10 md:h-11 rounded-full hover:scale-105 transition-transform shadow-[0_0_30px_rgba(165,102,58,0.2)] cursor-pointer"
+                style={{ backgroundColor: "#A5663A", color: "#f7d16b" }}
+              >
+                <span className="material-symbols-outlined text-lg">mail</span>
+                <span 
+                  className="text-[10px] md:text-[11px] whitespace-nowrap tracking-wide leading-none pt-[3px]" 
+                  style={{ fontFamily: "var(--font-dune-rise), sans-serif", fontWeight: "bold" }}
+                >
+                  Contact Us
+                </span>
+              </div>
             </a>
 
             {/* Mobile Hamburger Button */}
@@ -177,14 +175,19 @@ export default function Navbar() {
           >
             Sponsor
           </Link>
-          <a
-            href="#contact"
-            onClick={handleContactClick}
-            className="mt-4 px-8 py-3 rounded-full text-black font-bold text-xl flex items-center gap-2"
-            style={{ backgroundColor: "#ccff00" }}
-          >
-            <span className="material-symbols-outlined">mail</span>
-            Contact Us
+          <a href="#contact" onClick={handleContactClick} className="mt-4 block">
+            <div 
+              className="flex items-center justify-center gap-2 px-8 h-12 rounded-full cursor-pointer"
+              style={{ backgroundColor: "#A5663A", color: "#f7d16b" }}
+            >
+              <span className="material-symbols-outlined">mail</span>
+              <span 
+                className="text-sm whitespace-nowrap tracking-wide leading-none pt-[3px]" 
+                style={{ fontFamily: "var(--font-dune-rise), sans-serif", fontWeight: "bold" }}
+              >
+                Contact Us
+              </span>
+            </div>
           </a>
         </div>
       </div>

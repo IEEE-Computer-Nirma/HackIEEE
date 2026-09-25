@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Lexend, Orbitron, Sora } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
@@ -22,6 +23,11 @@ const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+});
+
+const duneRise = localFont({
+  src: "../public/fonts/Dune_Rise.otf",
+  variable: "--font-dune-rise",
 });
 
 export const metadata: Metadata = {
@@ -73,7 +79,7 @@ export default function RootLayout({ children }: any) {
         </style>
       </head>
       <body
-        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased font-sans`}
+        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} ${duneRise.variable} antialiased font-sans`}
         style={{ fontFamily: "'Lexend', sans-serif" }}
       >
         <PageTransition />
