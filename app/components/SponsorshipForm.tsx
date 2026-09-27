@@ -171,8 +171,7 @@ export default function SponsorshipForm() {
       <button
         type="submit"
         disabled={pending}
-        className="sponsor-form__submit rounded-2xl font-bold text-black text-base px-8 py-3.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(204,255,0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-        style={{ backgroundColor: "#ccff00" }}
+        className="sponsor-form__submit btn btn-sand disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span>
           {pending ? (

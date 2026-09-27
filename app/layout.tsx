@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
-import { Lexend, Orbitron, Sora } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { IBM_Plex_Mono, Lexend } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
@@ -9,36 +10,48 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 const lexend = Lexend({
   variable: "--font-lexend",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600"],
 });
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+// Dune Rise (Fontswan, SIL OFL 1.1 — see app/fonts/Dune_Rise-License.txt).
+// Shipped unmodified; metrics pinned so every browser puts the baseline in the same place.
+const duneRise = localFont({
+  src: "./fonts/Dune_Rise.otf",
+  variable: "--font-dune",
+  display: "swap",
+  declarations: [
+    { prop: "ascent-override", value: "80%" },
+    { prop: "descent-override", value: "20%" },
+    { prop: "line-gap-override", value: "0%" },
+  ],
 });
 
-const sora = Sora({
-  variable: "--font-sora",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500"],
 });
+
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "HackIEEE 2026 | Where Innovation Meets Impact",
+  metadataBase: new URL(siteUrl),
+  title: "hackieee 2026 | Where Innovation Meets Impact",
   description:
-    "Join HackIEEE 2026, the ultimate hackathon experience. Build, innovate, and compete with top developers from around the world. 48 hours. Limitless possibilities.",
-  keywords: ["hackathon", "IEEE", "HackIEEE", "coding", "innovation", "2026"],
+    "Join hackieee 2026, the ultimate hackathon experience. Build, innovate, and compete with top developers from around the world. 48 hours. Limitless possibilities.",
+  keywords: ["hackathon", "IEEE", "hackieee", "coding", "innovation", "2026"],
   openGraph: {
-    title: "HackIEEE 2026 | Where Innovation Meets Impact",
-    description: "Join HackIEEE 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
-    siteName: "HackIEEE 2026",
+    title: "hackieee 2026 | Where Innovation Meets Impact",
+    description: "Join hackieee 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
+    siteName: "hackieee 2026",
     images: [
       {
-        url: "/OG-Tag.png", // Next.js will automatically look for this in the public folder
+        url: "/OG-Tag.png",
         width: 1200,
         height: 630,
-        alt: "HackIEEE 2026 - Where Innovation Meets Impact",
+        alt: "hackieee 2026 - Where Innovation Meets Impact",
       },
     ],
     locale: "en_US",
@@ -46,35 +59,26 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HackIEEE 2026 | Where Innovation Meets Impact",
-    description: "Join HackIEEE 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
+    title: "hackieee 2026 | Where Innovation Meets Impact",
+    description: "Join hackieee 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
     images: ["/OG-Tag.png"],
   },
 };
 
-export default function RootLayout({ children }: any) {
+export const viewport: Viewport = {
+  themeColor: "#0b0906",
+  viewportFit: "cover",
+};
+
+
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/about-video-mobile.mp4" as="video" type="video/mp4" />
-        <link rel="preload" href="/about-video.mp4" as="video" type="video/mp4" />
-        <link rel="preload" href="/sponser-video-mobile.mp4" as="video" type="video/mp4" />
-        <link rel="preload" href="/sponser-video.mp4" as="video" type="video/mp4" />
-        <link rel="preload" href="/footer-bg.png" as="image" />
-        <link rel="preload" href="/footer-bg.svg" as="image" />
-        <link rel="preload" href="/tracks-bg-mobile.png" as="image" />
-        <link rel="preload" href="/tracks-bg.png" as="image" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-        />
-        <style>
-          {`@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Sora:wght@100..800&display=swap');`}
-        </style>
       </head>
       <body
-        className={`${lexend.variable} ${orbitron.variable} ${sora.variable} antialiased font-sans`}
-        style={{ fontFamily: "'Lexend', sans-serif" }}
+        className={`${lexend.variable} ${duneRise.variable} ${plexMono.variable} antialiased font-sans`}
       >
         <PageTransition />
         <Navbar />

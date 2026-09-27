@@ -1,193 +1,136 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { gsap } from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { Mail, Copy } from "lucide-react";
+import SmoothLink, { smoothScrollTo } from "./SmoothLink";
+import { CONTACT_EMAIL } from "../data/timeline";
+
+const links = [
+  { label: "About", href: "/#about", section: "about" },
+  { label: "Tracks", href: "/#tracks", section: "tracks" },
+  { label: "Timeline", href: "/#timeline", section: "timeline" },
+  { label: "Sponsor", href: "/sponsorship", section: null },
+];
+
+function LogoMark() {
+  return (
+    <svg width="46" height="46" viewBox="0 0 46 46" fill="none" aria-hidden="true">
+      <circle cx="21" cy="23" r="17.5" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="21" cy="23" r="3.2" fill="currentColor" />
+      <path d="M26 23h32" stroke="url(#logo-flare)" strokeWidth="1.2" />
+      <circle cx="33" cy="23" r="2" fill="#fff1dc" />
+      <defs>
+        <linearGradient id="logo-flare" x1="26" x2="58" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#ffb061" stopOpacity="0" />
+          <stop offset="0.25" stopColor="#ffb061" />
+          <stop offset="1" stopColor="#ffb061" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [copyNotice, setCopyNotice] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Register the plugin only on the client side
-    gsap.registerPlugin(ScrollToPlugin);
-  }, []);
-
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [active, setActive] = useState<string | null>(null);
+  const [hidden, setHidden] = useState(false);
+  const [onHero, setOnHero] = useState(isHome);
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  /* Top bar: hide while scrolling down, return on scroll up. */
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setHidden(y > 120 && y > lastY + 4 ? true : y < lastY - 4 || y < 120 ? false : (h) => h);
+      setOnHero(isHome && y < window.innerHeight * 0.8);
+      lastY = y;
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
 
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
-    // Close mobile menu if open
-    setIsMobileMenuOpen(false);
+  /* Active pill follows the section in view. */
+  useEffect(() => {
+    if (!isHome) return;
+    const ids = ["top", "about", "tracks", "timeline", "contact"];
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const id = e.target.id;
+          setActive(links.some((l) => l.section === id) ? id : null);
+        }),
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, [isHome]);
 
-    if (target.startsWith("#") || target.startsWith("/#")) {
-      const id = target.replace("/", ""); // clean "/#about" to "#about"
-      const element = document.querySelector(id);
-      
-      if (element) {
-        e.preventDefault();
-        gsap.to(window, {
-          duration: 1.2,
-          scrollTo: { y: id, offsetY: 0 },
-          ease: "power3.inOut",
-        });
-        
-        window.history.pushState(null, "", id);
-      }
-    }
-  };
+  useEffect(() => () => {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+  }, []);
 
   const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
-
-    // Copy email to clipboard and scroll to contact
-    navigator.clipboard.writeText("deep@computer.org");
-    setCopyNotice("deep@computer.org copied to clipboard!");
-    setTimeout(() => {
-      setCopyNotice(null);
-    }, 3000);
-
-    const contactEl = document.querySelector("#contact");
-    if (contactEl) {
-      gsap.to(window, {
-        duration: 1.2,
-        scrollTo: { y: "#contact", offsetY: 0 },
-        ease: "power3.inOut",
-      });
-    }
+    navigator.clipboard?.writeText(CONTACT_EMAIL).catch(() => {});
+    setToast(`${CONTACT_EMAIL} copied to clipboard`);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 3000);
+    smoothScrollTo("#contact");
   };
+
+  const isActive = (l: (typeof links)[number]) =>
+    l.section ? isHome && active === l.section : pathname === l.href;
+
+  const pills = (
+    <>
+      {links.map((l) => (
+        <SmoothLink
+          key={l.label}
+          href={l.href}
+          className={`pill ${isActive(l) ? "active" : ""}`}
+          aria-current={isActive(l) ? (l.section ? "true" : "page") : undefined}
+        >
+          {l.label}
+        </SmoothLink>
+      ))}
+    </>
+  );
 
   return (
     <>
-      {copyNotice && (
-        <div className="fixed top-20 right-6 z-[100] bg-sky-500 text-slate-950 font-bold px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-sky-300 animate-bounce">
-          <span className="material-symbols-outlined text-xl">content_copy</span>
-          <span>{copyNotice}</span>
+      {toast && (
+        <div className="toast" role="status">
+          <Copy size={16} strokeWidth={1.8} />
+          <span>{toast}</span>
         </div>
       )}
 
-      <nav className="fixed top-0 inset-x-0 z-[60] pointer-events-none">
-        <div className="flex items-start justify-between px-6 md:px-12">
-          {/* Left: Floating Logo */}
-          <div className="pointer-events-auto mt-6 md:mt-8">
-            <Link
-              href="/"
-              onClick={(e) => handleSmoothScroll(e, "#")}
-              className="flex items-center text-white font-bold text-xl md:text-2xl tracking-tight drop-shadow-lg"
-            >
-              HackIEEE
-            </Link>
-          </div>
+      <header className={`topbar ${hidden ? "is-hidden" : ""} ${onHero ? "on-hero" : ""}`}>
+        {/* Spacer for grid balance on desktop */}
+        <div className="topbar-spacer" aria-hidden="true" />
 
-          {/* Center: The Notch (Solid) - Desktop Only */}
-          <div className="pointer-events-auto hidden md:flex items-center justify-center gap-10 px-12 h-16 bg-[#05060f] border border-t-0 border-white/10 rounded-b-[32px]">
-            <Link
-              href="/#about"
-              onClick={(e) => handleSmoothScroll(e, "/#about")}
-              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
-            >
-              About
-            </Link>
-            <Link
-              href="/#tracks"
-              onClick={(e) => handleSmoothScroll(e, "/#tracks")}
-              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
-            >
-              Tracks
-            </Link>
-            <Link
-              href="/#timeline"
-              onClick={(e) => handleSmoothScroll(e, "/#timeline")}
-              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
-            >
-              Timeline
-            </Link>
-            <Link
-              href="/sponsorship"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
-            >
-              Sponsor
-            </Link>
-          </div>
+        <nav className="pill-nav" aria-label="Main">
+          {pills}
+        </nav>
 
-          {/* Right: Contact Button & Mobile Hamburger */}
-          <div className="pointer-events-auto mt-5 md:mt-6 flex items-center gap-4">
-            <a
-              href="#contact"
-              onClick={handleContactClick}
-              className="hidden md:flex items-center gap-2 text-xs md:text-sm font-bold px-4 md:px-6 py-2 md:py-2.5 rounded-full text-black hover:scale-105 transition-transform shadow-[0_0_30px_rgba(204,255,0,0.2)]"
-              style={{ backgroundColor: "#ccff00" }}
-            >
-              <span className="material-symbols-outlined text-lg">mail</span>
-              <span>Contact Us</span>
-            </a>
-
-            {/* Mobile Hamburger Button */}
-            <button
-              className="md:hidden flex flex-col justify-center items-center w-10 h-10 bg-white/10 rounded-xl border border-white/10 backdrop-blur-md relative"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <div className="relative w-5 h-3.5">
-                <span className={`absolute left-0 bg-white block transition-all duration-300 ease-in-out h-[2px] w-full rounded-full ${isMobileMenuOpen ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0'}`}></span>
-                <span className={`absolute left-0 top-1/2 -translate-y-1/2 bg-white block transition-all duration-300 ease-in-out h-[2px] w-full rounded-full ${isMobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}`}></span>
-                <span className={`absolute left-0 bg-white block transition-all duration-300 ease-in-out h-[2px] w-full rounded-full ${isMobileMenuOpen ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'bottom-0'}`}></span>
-              </div>
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
-      <div 
-        className={`fixed inset-0 z-50 bg-[#05060f]/95 backdrop-blur-lg flex flex-col items-center justify-center transition-all duration-500 md:hidden ${isMobileMenuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
-      >
-        <div className="flex flex-col items-center gap-8 text-2xl font-semibold">
-          <Link
-            href="/#about"
-            onClick={(e) => handleSmoothScroll(e, "/#about")}
-            className="text-white hover:text-sky-400 transition-colors"
-          >
-            About
-          </Link>
-          <Link
-            href="/#tracks"
-            onClick={(e) => handleSmoothScroll(e, "/#tracks")}
-            className="text-white hover:text-sky-400 transition-colors"
-          >
-            Tracks
-          </Link>
-          <Link
-            href="/#timeline"
-            onClick={(e) => handleSmoothScroll(e, "/#timeline")}
-            className="text-white hover:text-sky-400 transition-colors"
-          >
-            Timeline
-          </Link>
-          <Link
-            href="/sponsorship"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-white hover:text-sky-400 transition-colors"
-          >
-            Sponsor
-          </Link>
-          <a
-            href="#contact"
-            onClick={handleContactClick}
-            className="mt-4 px-8 py-3 rounded-full text-black font-bold text-xl flex items-center gap-2"
-            style={{ backgroundColor: "#ccff00" }}
-          >
-            <span className="material-symbols-outlined">mail</span>
-            Contact Us
+        <div className="topbar-actions">
+          <a href="#contact" onClick={handleContactClick} className="contact-btn">
+            <Mail size={17} strokeWidth={1.75} />
+            <span>
+              Contact<span className="hidden sm:inline"> Us</span>
+            </span>
           </a>
         </div>
-      </div>
+      </header>
     </>
   );
 }
