@@ -95,7 +95,7 @@ export default function Timeline() {
 
       <div className="reveal relative mx-auto mb-14 max-w-6xl md:mb-24 md:text-center">
         <p className="eyebrow">03 — Timeline</p>
-        <h2 className="display mt-5 text-[1.8rem] text-ink sm:text-4xl md:text-5xl">Event Timeline</h2>
+        <h2 className="display mt-5 text-[1.8rem] text-ink sm:text-4xl md:text-5xl">event Timeline</h2>
         <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-2 md:mx-auto md:text-lg">
           Key milestones on the long walk from idea to impact.
         </p>

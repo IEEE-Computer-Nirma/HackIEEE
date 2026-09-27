@@ -82,10 +82,6 @@ export default function Tracks() {
     <section id="tracks" className="scroll-mt-4 overflow-hidden px-5 py-20 md:px-8 md:py-32">
       <div
         aria-hidden="true"
-        className="eclipse pointer-events-none absolute -right-40 top-6 h-80 w-80 opacity-60 md:-right-24 md:top-16 md:h-[30rem] md:w-[30rem]"
-      />
-      <div
-        aria-hidden="true"
         className="pointer-events-none absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-spice opacity-[0.07] blur-3xl"
       />
 

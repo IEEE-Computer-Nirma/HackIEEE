@@ -16,7 +16,7 @@ const lexend = Lexend({
 // Dune Rise (Fontswan, SIL OFL 1.1 — see app/fonts/Dune_Rise-License.txt).
 // Shipped unmodified; metrics pinned so every browser puts the baseline in the same place.
 const duneRise = localFont({
-  src: "./fonts/Dune_Rise.ttf",
+  src: "./fonts/Dune_Rise.otf",
   variable: "--font-dune",
   display: "swap",
   declarations: [
@@ -38,20 +38,20 @@ const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "HackIEEE 2026 | Where Innovation Meets Impact",
+  title: "hackieee 2026 | Where Innovation Meets Impact",
   description:
-    "Join HackIEEE 2026, the ultimate hackathon experience. Build, innovate, and compete with top developers from around the world. 48 hours. Limitless possibilities.",
-  keywords: ["hackathon", "IEEE", "HackIEEE", "coding", "innovation", "2026"],
+    "Join hackieee 2026, the ultimate hackathon experience. Build, innovate, and compete with top developers from around the world. 48 hours. Limitless possibilities.",
+  keywords: ["hackathon", "IEEE", "hackieee", "coding", "innovation", "2026"],
   openGraph: {
-    title: "HackIEEE 2026 | Where Innovation Meets Impact",
-    description: "Join HackIEEE 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
-    siteName: "HackIEEE 2026",
+    title: "hackieee 2026 | Where Innovation Meets Impact",
+    description: "Join hackieee 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
+    siteName: "hackieee 2026",
     images: [
       {
         url: "/OG-Tag.png",
         width: 1200,
         height: 630,
-        alt: "HackIEEE 2026 - Where Innovation Meets Impact",
+        alt: "hackieee 2026 - Where Innovation Meets Impact",
       },
     ],
     locale: "en_US",
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HackIEEE 2026 | Where Innovation Meets Impact",
-    description: "Join HackIEEE 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
+    title: "hackieee 2026 | Where Innovation Meets Impact",
+    description: "Join hackieee 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
     images: ["/OG-Tag.png"],
   },
 };
@@ -70,14 +70,12 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-// Runs before paint so a saved day theme never flashes night first.
-const themeScript = `try{if(localStorage.getItem("hackieee-theme")==="day")document.documentElement.dataset.theme="day"}catch(e){}`;
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body
         className={`${lexend.variable} ${duneRise.variable} ${plexMono.variable} antialiased font-sans`}

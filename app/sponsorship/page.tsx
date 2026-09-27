@@ -5,9 +5,9 @@ import ShapeWaves from "../components/ShapeWaves";
 import { Award, Crown, Gem } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Sponsor HackIEEE 2026 | Partner With Innovation",
+  title: "Sponsor hackieee 2026 | Partner With Innovation",
   description:
-    "Partner with HackIEEE 2026 to reach top computing students. Support our hackathon and make an impact.",
+    "Partner with hackieee 2026 to reach top computing students. Support our hackathon and make an impact.",
 };
 
 const tiers = [
@@ -23,16 +23,12 @@ export default function SponsorshipPage() {
         <div className="absolute inset-x-0 top-0 h-[34rem] md:h-[40rem]">
           <ShapeWaves className="waves--frame" />
         </div>
-        <div
-          aria-hidden="true"
-          className="eclipse pointer-events-none absolute -right-32 top-16 h-56 w-56 opacity-70 md:-right-16 md:top-12 md:h-80 md:w-80"
-        />
 
         <div className="sponsor-page__container">
           <header className="sponsor-page__header animate-slide-up">
             <p className="eyebrow">Partnership Opportunities</p>
             <h1 className="display mt-6 text-[2rem] leading-tight text-ink sm:text-5xl md:text-6xl">
-              Sponsor HackIEEE
+              Sponsor hackieee
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ink-2 md:text-lg">
               Partner with us to power the next generation of builders; become a Title, Track, or Goodies/Swag

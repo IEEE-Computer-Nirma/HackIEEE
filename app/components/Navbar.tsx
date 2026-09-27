@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Mail, Copy } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
-import ThemeSwitch from "./ThemeSwitch";
 import { CONTACT_EMAIL } from "../data/timeline";
 
 const links = [
@@ -116,16 +115,14 @@ export default function Navbar() {
       )}
 
       <header className={`topbar ${hidden ? "is-hidden" : ""} ${onHero ? "on-hero" : ""}`}>
-        <SmoothLink href="/#" className="logo-mark" aria-label="HackIEEE home" style={{ color: "var(--text)" }}>
-          <LogoMark />
-        </SmoothLink>
+        {/* Spacer for grid balance on desktop */}
+        <div className="topbar-spacer" aria-hidden="true" />
 
-        <nav className="pill-nav hidden md:flex" aria-label="Main">
+        <nav className="pill-nav" aria-label="Main">
           {pills}
         </nav>
 
-        <div className="flex items-center gap-2.5 md:gap-4">
-          <ThemeSwitch />
+        <div className="topbar-actions">
           <a href="#contact" onClick={handleContactClick} className="contact-btn">
             <Mail size={17} strokeWidth={1.75} />
             <span>
@@ -134,10 +131,6 @@ export default function Navbar() {
           </a>
         </div>
       </header>
-
-      <nav className="pill-nav pill-nav--dock" aria-label="Sections">
-        {pills}
-      </nav>
     </>
   );
 }
