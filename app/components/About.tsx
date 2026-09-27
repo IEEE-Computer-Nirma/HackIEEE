@@ -42,7 +42,7 @@ export default function About() {
         <div className="reveal max-w-3xl">
           <p className="eyebrow">01 — About</p>
           <h2 className="display mt-5 text-[1.8rem] text-ink sm:text-4xl md:text-5xl">
-            What is <span className="text-spice">HackIEEE</span>?
+            What is <span className="text-spice">hackieee</span>?
           </h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-2 md:text-lg">
             More than a hackathon — it&apos;s a launchpad for the next generation of innovators, builders, and
