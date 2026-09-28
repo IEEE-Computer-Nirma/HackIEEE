@@ -38,20 +38,20 @@ const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "hackieee 2026 | Where Innovation Meets Impact",
+  title: "HackIEEE 2026-27",
   description:
     "Join hackieee 2026, the ultimate hackathon experience. Build, innovate, and compete with top developers from around the world. 48 hours. Limitless possibilities.",
   keywords: ["hackathon", "IEEE", "hackieee", "coding", "innovation", "2026"],
   openGraph: {
-    title: "hackieee 2026 | Where Innovation Meets Impact",
+    title: "HackIEEE 2026-27",
     description: "Join hackieee 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
-    siteName: "hackieee 2026",
+    siteName: "HackIEEE 2026-27",
     images: [
       {
         url: "/OG-Tag.png",
         width: 1200,
         height: 630,
-        alt: "hackieee 2026 - Where Innovation Meets Impact",
+        alt: "HackIEEE 2026-27",
       },
     ],
     locale: "en_US",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "hackieee 2026 | Where Innovation Meets Impact",
+    title: "HackIEEE 2026-27",
     description: "Join hackieee 2026, the ultimate hackathon experience. 48 hours. Limitless possibilities.",
     images: ["/OG-Tag.png"],
   },
