@@ -7,10 +7,10 @@ function Backdrop() {
   const common = { alt: "", sizes: "100vw", quality: 80 };
   const {
     props: { srcSet: desktop },
-  } = getImageProps({ ...common, width: 1600, height: 900, src: "/hero/dunes-desktop.jpg" });
+  } = getImageProps({ ...common, width: 1600, height: 900, src: "/hero/dunes-desktop.webp" });
   const {
     props: { srcSet: mobile, ...rest },
-  } = getImageProps({ ...common, width: 900, height: 1600, src: "/hero/dunes-mobile.jpg" });
+  } = getImageProps({ ...common, width: 900, height: 1600, src: "/hero/dunes-mobile.webp" });
 
   return (
     <picture>
