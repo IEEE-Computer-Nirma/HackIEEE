@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
+import Intro from "./components/Intro";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -71,7 +72,6 @@ export const viewport: Viewport = {
 };
 
 
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -80,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${lexend.variable} ${duneRise.variable} ${plexMono.variable} antialiased font-sans`}
       >
+        <Intro />
         <PageTransition />
         <Navbar />
         {children}
