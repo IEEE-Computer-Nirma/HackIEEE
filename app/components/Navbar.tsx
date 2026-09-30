@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Mail, Copy } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
-import SoundToggle from "./SoundToggle";
 import { CONTACT_EMAIL } from "../data/timeline";
 
 const links = [
@@ -158,8 +157,6 @@ export default function Navbar() {
         </nav>
 
         <div className="topbar-actions col-start-3 flex items-center gap-2 md:gap-3">
-          <SoundToggle />
-
           <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">
             <Mail size={17} strokeWidth={1.75} />
             <span>
