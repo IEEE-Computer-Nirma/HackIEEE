@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
 import Intro from "./components/Intro";
+import SoundToggle from "./components/SoundToggle";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -83,6 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Intro />
         <PageTransition />
         <Navbar />
+        <SoundToggle />
         {children}
         <Analytics />
         <SpeedInsights />
