@@ -716,6 +716,124 @@ body::after {
   display: block;
 }
 
+/* ── Intro (first visit per tab) ──────────────────────────── */
+/* Covers the page from first paint; Intro.tsx fades or drops it. The video's
+   own background is pure black, so `contain` letterboxes invisibly. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: #000;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.intro.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+.intro.is-instant {
+  transition: none;
+}
+.intro__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.intro__video[data-playing] {
+  opacity: 1;
+}
+/* Hold the hero's entry choreography (and scrolling) until the intro lifts. */
+:root:has(.intro:not(.is-done)) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+:root:has(.intro:not(.is-done)) .hero *,
+:root:has(.intro:not(.is-done)) .hero *::before,
+:root:has(.intro:not(.is-done)) .hero *::after {
+  animation-play-state: paused;
+}
+
+/* ── Sound Toggle (background music) ──────────────────────── */
+.sound-btn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s;
+}
+.sound-btn:active {
+  transform: scale(0.94);
+}
+.sound-btn[aria-pressed="true"] {
+  color: var(--spice-hot);
+}
+@media (min-width: 768px) {
+  .sound-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+  }
+}
+.sound-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 14px;
+}
+.sound-bars i {
+  width: 2px;
+  height: 100%;
+  border-radius: 1px;
+  background: currentColor;
+  transform: scaleY(0.2);
+  transform-origin: bottom;
+  opacity: 0.75;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s;
+}
+/* Resting heights double as the reduced-motion "playing" state. */
+.sound-btn[aria-pressed="true"] .sound-bars i {
+  opacity: 1;
+  animation: sound-bar 0.9s ease-in-out infinite alternate;
+}
+.sound-btn[aria-pressed="true"] .sound-bars i:nth-child(1) {
+  transform: scaleY(0.55);
+  animation-duration: 0.8s;
+}
+.sound-btn[aria-pressed="true"] .sound-bars i:nth-child(2) {
+  transform: scaleY(1);
+  animation-duration: 1.1s;
+  animation-delay: -0.4s;
+}
+.sound-btn[aria-pressed="true"] .sound-bars i:nth-child(3) {
+  transform: scaleY(0.7);
+  animation-duration: 0.7s;
+  animation-delay: -0.2s;
+}
+.sound-btn[aria-pressed="true"] .sound-bars i:nth-child(4) {
+  transform: scaleY(0.4);
+  animation-duration: 1s;
+  animation-delay: -0.6s;
+}
+@keyframes sound-bar {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
 /* ── Bell Toggle (add to calendar) ────────────────────────── */
 .bell {
   display: inline-flex;
