@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/logo.svg" alt="HackIEEE Logo" width="120" />
+  <img src="public/HackIEEE-Typography.png" alt="HackIEEE Logo" width="120" />
 </p>
 
 <h1 align="center">HackIEEE</h1>
