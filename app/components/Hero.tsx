@@ -1,6 +1,6 @@
 import { getImageProps } from "next/image";
 import { ArrowRight } from "lucide-react";
-import Wordmark from "./Wordmark";
+import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
 
 function Backdrop() {
@@ -54,7 +54,7 @@ export default function Hero() {
         <div className="hero__lift flex w-full flex-col items-center">
           <h1 className="w-full">
             <span className="sr-only">hackieee</span>
-            <Wordmark />
+            <HeroTitle />
           </h1>
 
           <p className="hero__tagline rise mt-9 md:mt-10" style={{ "--d": "1100ms" } as React.CSSProperties}>

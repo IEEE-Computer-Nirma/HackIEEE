@@ -368,41 +368,27 @@ body::after {
   }
 }
 
-/* Wordmark — Dune Rise, tracked wide. Stacks to two rows on phones.
-   Letters surface out of a blur, then the eclipse on the last E ignites. */
-.wordmark {
-  --track: 0.4em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.34em;
-  font-family: var(--font-dune), sans-serif;
-  font-family: var(--font-dune), sans-serif;
-  font-size: clamp(2.6rem, 14.5vw, 4.4rem);
-  line-height: 1;
-  letter-spacing: var(--track);
-  color: #f6e6cb;
-  text-shadow: 0 0 22px rgba(255, 170, 90, 0.22);
-  user-select: none;
+/* Hero title (HeroTitle.tsx): the 3D reveal that settles into the flat
+   Dune Rise wordmark. Sized off the old type size; the box keeps the title's
+   aspect ratio (10912 x 1080 font units, padding for the bevels included), and
+   the negative margin cancels that padding so the layout spacing is unchanged. */
+.hero-title {
+  --fs: 8.2vw; /* phones: one row across the screen */
+  width: calc(var(--fs) * 10.912);
+  aspect-ratio: 10912 / 1080;
+  margin: calc(var(--fs) * -0.14) auto;
+  opacity: 0; /* until its turn starts; see HeroTitle */
 }
-.wordmark__row {
-  display: block;
-  white-space: nowrap;
-  margin-right: calc(-1 * var(--track)); /* cancel trailing tracking so rows centre */
+.hero-title.is-live {
+  opacity: 1;
+}
+/* The settled wordmark keeps the old glow (not on the canvas: it repaints every frame). */
+.hero-title svg {
+  filter: drop-shadow(0 0 22px rgba(255, 170, 90, 0.22));
 }
 @media (min-width: 640px) {
-  .wordmark {
-    --track: 0.5em;
-    flex-direction: row;
-    gap: 0;
-    font-size: clamp(2.4rem, 5.6vw, 5.6rem);
-  }
-  .wordmark__row {
-    margin-right: 0;
-  }
-  .wordmark__row:last-child {
-    margin-right: calc(-1 * var(--track));
+  .hero-title {
+    --fs: clamp(2.4rem, 5.6vw, 5.6rem);
   }
 }
 
