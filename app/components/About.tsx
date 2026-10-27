@@ -1,4 +1,4 @@
-import { Layers, Users, Sparkles, Handshake, Rocket, Gem, Building2, ArrowRight } from "lucide-react";
+import { Layers, Users, Sparkles, Handshake, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import SmoothLink from "./SmoothLink";
 import ShapeWaves from "./ShapeWaves";
@@ -30,17 +30,17 @@ const facts = [
 
 export default function About() {
   return (
-    <section id="about" className="scroll-mt-4 px-5 pb-12 pt-14 md:px-8 md:pb-20 md:pt-24">
+    <section id="about" className="scroll-mt-4 px-5 pb-16 pt-20 md:px-8 md:pb-28 md:pt-32">
       <DuneEdge id="about-edge" />
       <ShapeWaves className="waves--calm-top" />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl">
         <div className="reveal max-w-3xl">
           <p className="eyebrow">01 — About</p>
-          <h2 className="display mt-5 text-[1.8rem] text-ink sm:text-4xl md:text-5xl">
+          <h2 className="section-title mt-5">
             What is <span className="text-spice">hackieee</span>?
           </h2>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-2 md:text-lg">
+          <p className="section-lead mt-6">
             More than a hackathon — it&apos;s a launchpad for the next generation of innovators, builders, and
             changemakers.
           </p>
@@ -61,17 +61,17 @@ export default function About() {
             return (
               <article
                 key={feat.title}
-                className="reveal card group relative overflow-hidden p-6 transition-colors duration-500 hover:border-line-strong md:p-8"
+                className="reveal card group relative overflow-hidden p-8 transition-colors duration-500 hover:border-line-strong md:p-10"
                 style={{ "--i": i } as React.CSSProperties}
               >
                 <div className="flex items-start justify-between">
-                  <span className="grid h-12 w-12 place-items-center rounded-full border border-line-strong text-spice transition-transform duration-500 group-hover:scale-110">
+                  <span className="grid h-14 w-14 place-items-center rounded-full border border-line-strong text-spice transition-transform duration-500 group-hover:scale-110">
                     <Icon size={20} strokeWidth={1.5} />
                   </span>
                   <span className="font-mono text-xs tracking-[0.3em] text-ink-3">0{i + 1}</span>
                 </div>
-                <h3 className="mt-6 text-xl font-medium tracking-tight text-ink md:mt-8 md:text-2xl">{feat.title}</h3>
-                <p className="mt-3 text-[0.95rem] leading-relaxed text-ink-2">{feat.description}</p>
+                <h3 className="mt-8 text-2xl font-medium tracking-tight text-ink">{feat.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-ink-2">{feat.description}</p>
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute -bottom-24 left-1/2 h-40 w-3/4 -translate-x-1/2 rounded-full bg-spice opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-20"
@@ -118,11 +118,11 @@ export default function About() {
 
         <div className="reveal mt-16 md:mt-24 max-w-3xl mx-auto flex flex-col gap-10 md:gap-14">
           
-          {/* Contact Us block (Under IN COLLABORATION WITH) */}
+          {/* Contact Us block */}
           <div className="flex flex-col gap-6 md:gap-8">
             <p className="mono-meta flex items-center justify-center gap-4 text-center text-[0.62rem] text-ink-3 md:text-[0.7rem] w-full">
               <span className="h-px flex-1 bg-line-strong" />
-              IN COLLABORATION WITH
+              GET IN TOUCH
               <span className="h-px flex-1 bg-line-strong" />
             </p>
             <SmoothLink href="#contact" className="card group relative overflow-hidden p-6 md:p-8 transition-colors duration-500 hover:border-line-strong flex flex-col sm:flex-row items-start sm:items-center gap-6 md:gap-8 min-h-[140px]">

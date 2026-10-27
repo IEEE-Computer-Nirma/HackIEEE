@@ -170,6 +170,27 @@ body::after {
   text-transform: uppercase;
 }
 
+/* Section headings and lead copy, at the DUNE/Priyansh scale. */
+.section-title {
+  font-family: var(--font-dune), sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  font-size: clamp(2.1rem, 1.2rem + 4.2vw, 4.4rem);
+  color: var(--text);
+}
+.section-lead {
+  max-width: 40rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+@media (min-width: 768px) {
+  .section-lead {
+    font-size: 1.25rem;
+  }
+}
+
 /* ── Buttons ──────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
@@ -388,7 +409,7 @@ body::after {
 }
 @media (min-width: 640px) {
   .hero-title {
-    --fs: clamp(2.4rem, 5.6vw, 5.6rem);
+    --fs: clamp(2.4rem, 7.2vw, 7.5rem); /* the DUNE/Priyansh hero scale */
   }
 }
 
@@ -1101,6 +1122,19 @@ body::after {
 :root[data-theme="day"] .tl-dot .eclipse {
   background: var(--spice);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--spice) 22%, transparent);
+}
+
+/* ── Track explorer autoplay timer ── */
+.track-timer {
+  transform: scaleX(0);
+  animation-name: track-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes track-fill {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* ── Timeline ─────────────────────────────────────────────── */
