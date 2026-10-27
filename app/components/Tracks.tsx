@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ShieldCheck, HeartPulse, Leaf, Landmark, ChevronDown, FileText } from "lucide-react";
+import { ShieldCheck, HeartPulse, Leaf, Landmark, ChevronDown } from "lucide-react";
+import { Vault } from "@lucasmarkes/hairline/react";
 import MorphSlider, { type MorphItem } from "./MorphSlider";
 
 const tracks = [
@@ -185,15 +186,17 @@ export default function Tracks() {
         </div>
 
         {/* Problem statements stay sealed until the track declaration (see Timeline). */}
-        <div className="reveal card mt-6 flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center md:mt-10 md:p-8">
-          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-line-strong text-spice">
-            <FileText size={20} strokeWidth={1.5} />
-          </span>
+        <div className="reveal card mt-6 flex flex-col-reverse items-stretch gap-6 p-5 sm:flex-row sm:items-center sm:p-6 md:mt-10 md:gap-10 md:p-8">
           <div className="flex-1">
-            <h3 className="text-xl font-medium tracking-tight text-ink md:text-2xl">Problem Statements: Coming Soon</h3>
-            <p className="mt-1.5 text-[0.95rem] leading-relaxed text-ink-2">
+            <p className="eyebrow">Sealed</p>
+            <h3 className="mt-4 text-2xl font-medium tracking-tight text-ink md:text-3xl">Problem Statements: Coming Soon</h3>
+            <p className="mt-3 max-w-md text-base leading-relaxed text-ink-2">
               Each track&apos;s problem statement is revealed with the track declaration on December 20, 2026.
             </p>
+          </div>
+          {/* A vault: its dial turns with the pointer until the bolts draw back. */}
+          <div className="hl-panel w-full shrink-0 sm:w-72">
+            <Vault label="A vault door; its dial turns with the pointer until the bolts draw back" play />
           </div>
         </div>
       </div>

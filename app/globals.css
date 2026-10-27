@@ -191,6 +191,38 @@ body::after {
   }
 }
 
+/* Hairline micro icons: every Lucide icon draws one thin, even line, the same
+   weight at any size, to match the Hairline figures. */
+svg.lucide {
+  stroke-width: 1.25;
+}
+svg.lucide * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Hairline figures (@lucasmarkes/hairline). Plates are filled, not
+   transparent, so each figure sits on a solid panel in the card's colour as
+   it lands on the page; the dune palette replaces the package's greys, with
+   the spice as the one highlight. */
+.hl-panel {
+  --hairline-plate: #191310;
+  --hairline-hi: var(--spice-hot);
+  --hairline-edge: rgba(243, 230, 207, 0.66);
+  --hairline-mid: rgba(243, 230, 207, 0.34);
+  --hairline-lo: rgba(243, 230, 207, 0.14);
+  --hairline-stroke: 0.9;
+  background: var(--hairline-plate);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+:root[data-theme="day"] .hl-panel {
+  --hairline-plate: #f9f0dc;
+  --hairline-edge: rgba(27, 34, 72, 0.66);
+  --hairline-mid: rgba(27, 34, 72, 0.34);
+  --hairline-lo: rgba(27, 34, 72, 0.14);
+}
+
 /* ── Buttons ──────────────────────────────────────────────── */
 .btn {
   display: inline-flex;

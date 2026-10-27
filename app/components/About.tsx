@@ -1,4 +1,5 @@
-import { Layers, Users, Sparkles, Handshake, ArrowRight } from "lucide-react";
+import { Handshake, ArrowRight } from "lucide-react";
+import { Branches, Hub, Laptop } from "@lucasmarkes/hairline/react";
 import Image from "next/image";
 import SmoothLink from "./SmoothLink";
 import ShapeWaves from "./ShapeWaves";
@@ -6,17 +7,20 @@ import DuneEdge from "./DuneEdge";
 
 const features = [
   {
-    icon: Layers,
+    figure: Laptop,
+    label: "A laptop whose lid opens toward the pointer",
     title: "Build & Ship",
     description: "Transform your ideas into working products in 48 hours with cutting-edge tools and technologies.",
   },
   {
-    icon: Users,
+    figure: Hub,
+    label: "A hub with tiles on links; the tile under the pointer rises",
     title: "Connect & Network",
     description: "Meet fellow innovators, industry experts, and potential co-founders from across the globe.",
   },
   {
-    icon: Sparkles,
+    figure: Branches,
+    label: "A commit graph; the commit under the pointer rises with its history",
     title: "Learn & Grow",
     description: "Attend expert workshops, gain hands-on experience with new frameworks, and level up your skills.",
   },
@@ -55,23 +59,27 @@ export default function About() {
           ))}
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-3 md:gap-6">
+        {/* Each card leads with a Hairline figure: a line drawing that answers the
+            pointer. Side by side with the copy until lg, where there's room to stack. */}
+        <div className="mt-10 grid grid-cols-1 gap-4 md:mt-14 md:gap-6 lg:grid-cols-3">
           {features.map((feat, i) => {
-            const Icon = feat.icon;
+            const Figure = feat.figure;
             return (
               <article
                 key={feat.title}
-                className="reveal card group relative overflow-hidden p-8 transition-colors duration-500 hover:border-line-strong md:p-10"
+                className="reveal card group relative flex flex-col gap-6 overflow-hidden p-5 transition-colors duration-500 hover:border-line-strong sm:flex-row sm:items-center sm:p-6 lg:flex-col lg:items-stretch lg:p-7"
                 style={{ "--i": i } as React.CSSProperties}
               >
-                <div className="flex items-start justify-between">
-                  <span className="grid h-14 w-14 place-items-center rounded-full border border-line-strong text-spice transition-transform duration-500 group-hover:scale-110">
-                    <Icon size={20} strokeWidth={1.5} />
-                  </span>
-                  <span className="font-mono text-xs tracking-[0.3em] text-ink-3">0{i + 1}</span>
+                <div className="hl-panel w-full shrink-0 sm:w-64 lg:w-full">
+                  <Figure label={feat.label} play />
                 </div>
-                <h3 className="mt-8 text-2xl font-medium tracking-tight text-ink">{feat.title}</h3>
-                <p className="mt-3 text-base leading-relaxed text-ink-2">{feat.description}</p>
+                <div className="flex-1">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <h3 className="text-2xl font-medium tracking-tight text-ink">{feat.title}</h3>
+                    <span className="font-mono text-xs tracking-[0.3em] text-ink-3">0{i + 1}</span>
+                  </div>
+                  <p className="mt-3 text-base leading-relaxed text-ink-2">{feat.description}</p>
+                </div>
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute -bottom-24 left-1/2 h-40 w-3/4 -translate-x-1/2 rounded-full bg-spice opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-20"
