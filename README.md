@@ -35,7 +35,7 @@
 
 This repository contains the landing page — a fully immersive, Dune-inspired web experience built to capture the spirit of the event: innovation under pressure, collaboration across the sands, and the will to build something extraordinary.
 
-The site features cinematic hero sections, GSAP-powered animations, a custom Morph Slider, ambient soundscapes, light/dark Dune-themed palettes, and a sponsorship pipeline backed by Supabase + Resend.
+The site features cinematic hero sections, a 3D title reveal, GSAP-powered animations, ambient soundscapes and light/dark Dune-themed palettes.
 
 ---
 
@@ -44,9 +44,7 @@ The site features cinematic hero sections, GSAP-powered animations, a custom Mor
 - 🎬 **Cinematic Hero** — Full-screen Dune-themed hero with particle effects and parallax
 - 🎨 **Dual Theme** — Light (desert) and dark (night) Arrakis-inspired palettes
 - 🔊 **Ambient Sound** — Toggle-able soundscapes using Howler.js
-- 🎠 **Morph Slider** — Custom WebGL-powered track showcase with OGL
 - ⏳ **Interactive Timeline** — GSAP-animated event timeline
-- 📬 **Sponsorship Portal** — Form with Zod validation, Supabase storage, and Resend emails
 - 📱 **Fully Responsive** — Mobile-first design with smooth page transitions
 - 📊 **Analytics** — Vercel Analytics and Speed Insights baked in
 
@@ -60,10 +58,8 @@ The site features cinematic hero sections, GSAP-powered animations, a custom Mor
 | Language      | TypeScript 5                                            |
 | Styling       | Tailwind CSS 4                                          |
 | Animations    | GSAP 3 + `@gsap/react`                                 |
-| 3D / WebGL    | OGL                                                     |
+| 3D / WebGL    | three.js                                                |
 | Audio         | Howler.js                                               |
-| Backend       | Supabase (DB + Storage) · Resend (Emails)               |
-| Validation    | Zod                                                     |
 | Icons         | Lucide React                                            |
 | Analytics     | Vercel Analytics · Vercel Speed Insights                |
 
@@ -86,11 +82,7 @@ cd HackIEEE
 # 2. Install dependencies
 npm install
 
-# 3. Create your env file
-cp .env.local.example .env.local
-# Fill in Supabase and Resend keys
-
-# 4. Start the dev server
+# 3. Start the dev server
 npm run dev
 ```
 
@@ -106,13 +98,9 @@ hackieee/
 │   ├── components/      # All UI components (Hero, Navbar, Tracks, etc.)
 │   ├── data/            # Static data and content
 │   ├── fonts/           # Custom typefaces
-│   ├── sponsorship/     # /sponsorship route
 │   ├── globals.css      # Design tokens and global styles
 │   ├── layout.tsx       # Root layout with metadata and providers
 │   └── page.tsx         # Home page composition
-├── lib/                 # Shared utilities
-├── services/            # Backend service layer
-├── supabase/            # Supabase config and migrations
 ├── public/              # Static assets (images, audio, SVGs)
 ├── docs/                # Project documentation
 └── next.config.ts       # Next.js configuration

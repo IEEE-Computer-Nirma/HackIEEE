@@ -392,6 +392,50 @@ body::after {
   }
 }
 
+/* Kiro collaboration (hero) and the organisers' logo (About) share one size
+   scale. The IEEE CS emblem is 76% of its lockup's height, so the lockup is set
+   at Kiro's height / 0.75: the emblem is never smaller than the Kiro logo. */
+:root {
+  --kiro-h: clamp(3rem, 15vw, 6rem);
+}
+.hero-collab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 0.75rem; /* clear space around the logo */
+  margin-bottom: clamp(1.75rem, 5vw, 3rem);
+}
+.hero-collab__label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(246, 232, 208, 0.78);
+}
+@media (min-width: 768px) {
+  .hero-collab__label {
+    font-size: 0.7rem;
+  }
+}
+.hero-collab__logo {
+  height: var(--kiro-h);
+  width: auto;
+}
+.org-logo {
+  height: calc(var(--kiro-h) / 0.75);
+  width: auto;
+}
+.org-logo--day {
+  display: none;
+}
+:root[data-theme="day"] .org-logo--night {
+  display: none;
+}
+:root[data-theme="day"] .org-logo--day {
+  display: block;
+}
+
 .twinkle {
   animation: twinkle 5s ease-in-out infinite;
   animation-delay: var(--d, 0s);
@@ -1027,13 +1071,6 @@ body::after {
   -webkit-mask-image: var(--waves-mask);
   mask-image: var(--waves-mask);
 }
-/* Frame a headline: clear oval around the copy, fading out at the bottom. */
-.waves--frame {
-  -webkit-mask-image: radial-gradient(ellipse 58% 48% at 50% 42%, transparent 35%, #000 85%), linear-gradient(180deg, #000 55%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: radial-gradient(ellipse 58% 48% at 50% 42%, transparent 35%, #000 85%), linear-gradient(180deg, #000 55%, transparent);
-  mask-composite: intersect;
-}
 /* Keep text-heavy tops calm; let the field build up behind the cards. */
 .waves--calm-top {
   --waves-mask: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 30%, #000 58%, #000 78%, transparent 100%);
@@ -1066,199 +1103,10 @@ body::after {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--spice) 22%, transparent);
 }
 
-/* ── Track explorer autoplay timer ── */
-.track-timer {
-  transform: scaleX(0);
-  animation-name: track-fill;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-}
-@keyframes track-fill {
-  to {
-    transform: scaleX(1);
-  }
-}
-
 /* ── Timeline ─────────────────────────────────────────────── */
 .tl-spine {
   background-image: linear-gradient(180deg, var(--line-strong) 50%, transparent 50%);
   background-size: 2px 10px;
-}
-
-/* ── Sponsorship Page ─────────────────────────────────────── */
-.sponsor-page {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  padding: 7.5rem 1rem 7rem;
-}
-
-.sponsor-page__container {
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-.sponsor-page__header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-@media (min-width: 768px) {
-  .sponsor-page {
-    padding: 9rem 1.5rem 6rem;
-  }
-  .sponsor-page__header {
-    margin-bottom: 4rem;
-  }
-}
-
-/* ── Sponsorship Form ─────────────────────────────────────── */
-.sponsor-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  position: relative;
-}
-.sponsor-form__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.sponsor-form__full {
-  grid-column: 1 / -1;
-}
-
-.sponsor-form__field label {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-2);
-}
-.sponsor-form__required {
-  color: var(--spice);
-  margin-left: 4px;
-}
-
-.sponsor-form__input {
-  padding: 0.9rem 1rem;
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: 1rem;
-  color: var(--text);
-  transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
-  appearance: none;
-  outline: none;
-}
-.sponsor-form__input::placeholder {
-  color: var(--text-3);
-}
-.sponsor-form__input:focus {
-  border-color: var(--spice);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--spice) 22%, transparent);
-}
-
-textarea.sponsor-form__input {
-  resize: vertical;
-  min-height: 110px;
-}
-
-.sponsor-form__select-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.sponsor-form__select-wrap select {
-  width: 100%;
-  padding-right: 2.5rem;
-  cursor: pointer;
-}
-.sponsor-form__select-wrap select option {
-  background: var(--surface-solid);
-  color: var(--text);
-}
-.sponsor-form__select-icon {
-  position: absolute;
-  right: 0.85rem;
-  pointer-events: none;
-  color: var(--text-3);
-}
-
-.sponsor-form__error {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--spice-hot);
-  padding: 2px 0;
-}
-.sponsor-form__form-error {
-  grid-column: 1 / -1;
-  padding: 1rem;
-  background: color-mix(in srgb, var(--ember) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ember) 40%, transparent);
-  border-radius: var(--radius-sm);
-  color: var(--spice-hot);
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.sponsor-form__submit {
-  grid-column: 1 / -1;
-  width: 100%;
-}
-
-.sponsor-form__loading {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.sponsor-form__spinner {
-  animation: spin 1s linear infinite;
-}
-
-.sponsor-success {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: color-mix(in srgb, var(--spice) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--spice) 35%, transparent);
-  border-radius: var(--radius);
-}
-.sponsor-success__title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--spice);
-  margin-bottom: 4px;
-}
-.sponsor-success__subtitle {
-  font-size: 0.9rem;
-  color: var(--text-2);
-}
-.sponsor-success svg {
-  color: var(--spice);
-  flex-shrink: 0;
-}
-
-@media (min-width: 768px) {
-  .sponsor-form {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.6rem;
-  }
-  .sponsor-form__submit {
-    width: auto;
-    justify-self: start;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* ── Page transition: the eclipse ─────────────────────────── */
@@ -1352,21 +1200,6 @@ textarea.sponsor-form__input {
     width: 200px;
     height: 200px;
   }
-}
-
-/* ── Utilities kept from before ───────────────────────────── */
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-slide-up {
-  animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 } /* end components */

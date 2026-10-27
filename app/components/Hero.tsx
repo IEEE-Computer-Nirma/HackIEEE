@@ -1,7 +1,11 @@
-import { getImageProps } from "next/image";
+import Image, { getImageProps } from "next/image";
 import { ArrowRight } from "lucide-react";
 import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
+
+/* The Kiro logo exactly as supplied: its intrinsic size sets the aspect ratio,
+   CSS sets only the height (.hero-collab__logo). */
+const KIRO_LOGO = { src: "/collab/kiro-logo.svg", width: 1200, height: 1200 };
 
 function Backdrop() {
   const common = { alt: "", sizes: "100vw", quality: 80 };
@@ -52,6 +56,20 @@ export default function Hero() {
 
       <div className="hero__content">
         <div className="hero__lift flex w-full flex-col items-center">
+          {/* Kiro stands alone: its own block, never beside another logo. */}
+          <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
+            <p className="hero-collab__label">In Collaboration With</p>
+            <Image
+              src={KIRO_LOGO.src}
+              alt="Kiro"
+              width={KIRO_LOGO.width}
+              height={KIRO_LOGO.height}
+              unoptimized
+              loading="eager"
+              className="hero-collab__logo"
+            />
+          </div>
+
           <h1 className="w-full">
             <span className="sr-only">hackieee</span>
             <HeroTitle />

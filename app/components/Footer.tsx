@@ -17,7 +17,6 @@ const eventLinks = [
   { label: "About", href: "/#about" },
   { label: "Tracks", href: "/#tracks" },
   { label: "Timeline", href: "/#timeline" },
-  { label: "Sponsor", href: "/sponsorship" },
 ];
 
 const socials = [
@@ -149,7 +148,7 @@ export default function Footer() {
 
         <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-line pt-6 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-ink-3 sm:flex-row">
           <p>hackieee 2026</p>
-          <p className="text-center">Powered by IEEE Student Chapters Nirma University</p>
+          <p className="text-center">Organised by: IEEE Computer Society at Nirma University</p>
         </div>
       </div>
     </footer>
