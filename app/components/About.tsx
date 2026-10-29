@@ -27,8 +27,8 @@ const features = [
 ];
 
 const facts = [
+  { value: "01", label: "Inaugural edition" },
   { value: "48", label: "Hours to build" },
-  { value: "04", label: "Tracks" },
   { value: "04", label: "Max team size" },
 ];
 

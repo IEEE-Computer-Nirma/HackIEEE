@@ -84,7 +84,7 @@ export default function Hero() {
             style={{ "--d": "1350ms" } as React.CSSProperties}
           >
             <SmoothLink href="#tracks" className="btn btn-sand w-full min-[360px]:w-auto">
-              See our tracks <ArrowRight size={18} strokeWidth={1.75} />
+              Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
             </SmoothLink>
             <SmoothLink href="#timeline" className="btn btn-ghost w-full min-[360px]:w-auto">
               Timeline <ArrowRight size={18} strokeWidth={1.75} />
