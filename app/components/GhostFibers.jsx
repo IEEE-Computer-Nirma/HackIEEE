@@ -536,8 +536,8 @@ const applyMat3 = (m, v) => [
 
 const GhostFibers = ({
   glowColor = '#8b5cf6',
-  lineColor,
-  secondaryColor,
+  lineColor = undefined,
+  secondaryColor = undefined,
   gradient = 'depth',
   speed = 0.5,
   scale = 1,
@@ -571,7 +571,7 @@ const GhostFibers = ({
   intro = true,
   lightMode = false,
   paused = false,
-  dpr,
+  dpr = undefined,
   ...rest
 }) => {
   const containerRef = useRef(null);
