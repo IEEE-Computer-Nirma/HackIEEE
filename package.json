@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@flags-sdk/vercel": "^1.6.0",
     "@gsap/react": "^2.1.2",
     "@lucasmarkes/hairline": "^0.5.1",
     "@types/three": "^0.186.0",
