@@ -1,7 +1,8 @@
-import { Layers, Users, Sparkles, Cpu, Route, AudioWaveform, Handshake, Rocket, Gem, Building2, Megaphone, ArrowRight } from "lucide-react";
+import { Layers, Users, Sparkles, Cpu, Route, AudioWaveform, Handshake, Megaphone, ArrowRight } from "lucide-react";
 import SmoothLink from "./SmoothLink";
 import ShapeWaves from "./ShapeWaves";
 import DuneEdge from "./DuneEdge";
+import SpiceMelange from "./SpiceMelange";
 
 const features = [
   {
@@ -38,6 +39,7 @@ export default function About() {
     <section id="about" className="scroll-mt-4 px-5 pb-12 pt-14 md:px-8 md:pb-20 md:pt-24">
       <DuneEdge id="about-edge" />
       <ShapeWaves className="waves--calm-top" />
+      <SpiceMelange />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl">
         <div className="reveal max-w-3xl">

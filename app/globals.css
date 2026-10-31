@@ -1058,6 +1058,22 @@ body::after {
   height: 100%;
 }
 
+/* ── Spice Melange particle simulation ────────────────────── */
+.spice-melange {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 88%, transparent 100%);
+}
+.spice-melange canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* ── Eclipse (shared by timeline motes and page transition) ─ */
 .eclipse {
   position: relative;
