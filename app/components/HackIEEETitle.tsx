@@ -120,10 +120,10 @@ const BEVELS: Record<Bevel, { on: boolean; t: number; s: number; seg: number }> 
   round: { on: true, t: 0.14, s: 0.12, seg: 6 }
 };
 
-// Long lens (near-orthographic) so every letter starts as a true side profile.
-const HALF_H = VB_H / U / 2;
-const CAM_Z = HALF_H * 13;
-const FOV = (2 * Math.atan(HALF_H / CAM_Z) * 180) / Math.PI;
+// True orthographic camera — every letter is viewed dead-on, no perspective distortion.
+const ORTHO_HALF_H = VB_H / U / 2;
+const ORTHO_HALF_W = VB_W / U / 2;
+const CAM_Z = 200; // far enough for depth + bevel clearance
 const CAM_X = (VB_X + VB_W / 2) / U;
 const CAM_Y = CAP / 2 / U;
 
@@ -343,7 +343,11 @@ const HackIEEETitle = forwardRef<HackIEEETitleHandle, HackIEEETitleProps>(functi
     const hold = ending === 'hold';
 
     const scene = new THREE.Scene(); // no scene.background: stays transparent
-    const camera = new THREE.PerspectiveCamera(FOV, VB_W / VB_H, 0.1, CAM_Z * 3);
+    const camera = new THREE.OrthographicCamera(
+      -ORTHO_HALF_W, ORTHO_HALF_W,
+      ORTHO_HALF_H, -ORTHO_HALF_H,
+      0.1, CAM_Z * 3
+    );
     camera.position.set(CAM_X, CAM_Y, CAM_Z);
 
     scene.environment = makeEnvironment(renderer);
@@ -394,8 +398,9 @@ const HackIEEETitle = forwardRef<HackIEEETitleHandle, HackIEEETitleProps>(functi
       const x = (ORIGINS[i] + gcx) / U;
       mesh.position.set(x, gcy / U, 0); // fixed: never leaves its wordmark position
       scene.add(mesh);
-      // Start exactly edge-on to this letter's line of sight, right side wall facing the camera.
-      const startQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.atan2(-CAM_Z, -(x - CAM_X)), 0));
+      // Start turned 70° — dramatic reveal but uniform across all letters with ortho camera.
+      const TILT = (70 * Math.PI) / 180;
+      const startQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -TILT, 0));
       mesh.quaternion.copy(startQ);
       return { mesh, x, startQ, delay: START_DELAY };
     });
@@ -451,7 +456,12 @@ const HackIEEETitle = forwardRef<HackIEEETitleHandle, HackIEEETitleProps>(functi
       const h = stage.clientHeight;
       if (!w || !h) return;
       renderer.setSize(w, h, false);
-      camera.aspect = w / h;
+      // Keep vertical extent fixed, adjust horizontal to match container aspect
+      const aspect = w / h;
+      camera.left = -ORTHO_HALF_H * aspect;
+      camera.right = ORTHO_HALF_H * aspect;
+      camera.top = ORTHO_HALF_H;
+      camera.bottom = -ORTHO_HALF_H;
       camera.updateProjectionMatrix();
       if (!running) renderer.render(scene, camera);
     };
