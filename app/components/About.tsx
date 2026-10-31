@@ -2,7 +2,7 @@ import { Handshake, ArrowRight } from "lucide-react";
 import { Branches, Hub, Laptop } from "@lucasmarkes/hairline/react";
 import Image from "next/image";
 import SmoothLink from "./SmoothLink";
-import ShapeWaves from "./ShapeWaves";
+import GhostFibers from "./GhostFibers";
 import DuneEdge from "./DuneEdge";
 
 const features = [
@@ -34,9 +34,11 @@ const facts = [
 
 export default function About() {
   return (
-    <section id="about" className="scroll-mt-4 px-5 pb-16 pt-20 md:px-8 md:pb-28 md:pt-32">
+    <section id="about" className="relative scroll-mt-4 overflow-hidden px-5 pb-16 pt-20 md:px-8 md:pb-28 md:pt-32">
       <DuneEdge id="about-edge" />
-      <ShapeWaves className="waves--calm-top" />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <GhostFibers />
+      </div>
 
       <div className="relative z-10 mx-auto w-full max-w-6xl">
         <div className="reveal max-w-3xl">

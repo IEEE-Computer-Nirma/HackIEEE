@@ -49,7 +49,12 @@ function Decorations() {
 }
 
 export default async function Hero() {
-  const showCollaboration = Boolean(await showKiroCollaboration());
+  let showCollaboration = true;
+  try {
+    showCollaboration = Boolean(await showKiroCollaboration());
+  } catch {
+    showCollaboration = process.env.SHOW_KIRO_COLLABORATION !== "false";
+  }
   const currentYear = new Date().getFullYear();
   return (
     <section id="top" className="hero" aria-label={`hackieee ${currentYear}`}>
