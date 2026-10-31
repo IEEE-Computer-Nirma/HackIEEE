@@ -1,7 +1,12 @@
-import { getImageProps } from "next/image";
+import Image, { getImageProps } from "next/image";
 import { ArrowRight } from "lucide-react";
-import Wordmark from "./Wordmark";
+import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
+import { showKiroCollaboration } from "../flags";
+
+/* The Kiro logo exactly as supplied: its intrinsic size sets the aspect ratio,
+   CSS sets only the height (.hero-collab__logo). */
+const KIRO_LOGO = { src: "/collab/kiro-logo.svg", width: 1200, height: 1200 };
 
 function Backdrop() {
   const common = { alt: "", sizes: "100vw", quality: 80 };
@@ -43,18 +48,36 @@ function Decorations() {
   );
 }
 
-export default function Hero() {
+export default async function Hero() {
+  const showCollaboration = Boolean(await showKiroCollaboration());
+  const currentYear = new Date().getFullYear();
   return (
-    <section id="top" className="hero" aria-label="hackieee 2026">
+    <section id="top" className="hero" aria-label={`hackieee ${currentYear}`}>
       <Backdrop />
       <div className="hero__scrim" />
       <Decorations />
 
       <div className="hero__content">
-        <div className="hero__lift flex w-full flex-col items-center">
+        <div className={`hero__lift flex w-full flex-col items-center ${!showCollaboration ? "-mt-8 md:-mt-14" : ""}`}>
+          {showCollaboration && (
+            /* Kiro stands alone: its own block, never beside another logo. */
+          <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
+            <p className="hero-collab__label">In Collaboration With</p>
+            <Image
+              src={KIRO_LOGO.src}
+              alt="Kiro"
+              width={KIRO_LOGO.width}
+              height={KIRO_LOGO.height}
+              unoptimized
+              loading="eager"
+              className="hero-collab__logo"
+            />
+          </div>
+          )}
+
           <h1 className="w-full">
             <span className="sr-only">hackieee</span>
-            <Wordmark />
+            <HeroTitle />
           </h1>
 
           <p className="hero__tagline rise mt-9 md:mt-10" style={{ "--d": "1100ms" } as React.CSSProperties}>
@@ -66,7 +89,7 @@ export default function Hero() {
             style={{ "--d": "1350ms" } as React.CSSProperties}
           >
             <SmoothLink href="#tracks" className="btn btn-sand w-full min-[360px]:w-auto">
-              See our tracks <ArrowRight size={18} strokeWidth={1.75} />
+              Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
             </SmoothLink>
             <SmoothLink href="#timeline" className="btn btn-ghost w-full min-[360px]:w-auto">
               Timeline <ArrowRight size={18} strokeWidth={1.75} />
@@ -83,7 +106,7 @@ export default function Hero() {
         University
       </p>
       <p className="hero__corner hero__corner--r rise" style={{ "--d": "1600ms" } as React.CSSProperties}>
-        2026
+        {currentYear}
       </p>
     </section>
   );

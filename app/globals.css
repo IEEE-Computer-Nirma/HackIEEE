@@ -170,6 +170,59 @@ body::after {
   text-transform: uppercase;
 }
 
+/* Section headings and lead copy, at the DUNE/Priyansh scale. */
+.section-title {
+  font-family: var(--font-dune), sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  font-size: clamp(2.1rem, 1.2rem + 4.2vw, 4.4rem);
+  color: var(--text);
+}
+.section-lead {
+  max-width: 40rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+@media (min-width: 768px) {
+  .section-lead {
+    font-size: 1.25rem;
+  }
+}
+
+/* Hairline micro icons: every Lucide icon draws one thin, even line, the same
+   weight at any size, to match the Hairline figures. */
+svg.lucide {
+  stroke-width: 1.25;
+}
+svg.lucide * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Hairline figures (@lucasmarkes/hairline). Plates are filled, not
+   transparent, so each figure sits on a solid panel in the card's colour as
+   it lands on the page; the dune palette replaces the package's greys, with
+   the spice as the one highlight. */
+.hl-panel {
+  --hairline-plate: #191310;
+  --hairline-hi: var(--spice-hot);
+  --hairline-edge: rgba(243, 230, 207, 0.66);
+  --hairline-mid: rgba(243, 230, 207, 0.34);
+  --hairline-lo: rgba(243, 230, 207, 0.14);
+  --hairline-stroke: 0.9;
+  background: var(--hairline-plate);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+:root[data-theme="day"] .hl-panel {
+  --hairline-plate: #f9f0dc;
+  --hairline-edge: rgba(27, 34, 72, 0.66);
+  --hairline-mid: rgba(27, 34, 72, 0.34);
+  --hairline-lo: rgba(27, 34, 72, 0.14);
+}
+
 /* ── Buttons ──────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
@@ -368,42 +421,72 @@ body::after {
   }
 }
 
-/* Wordmark — Dune Rise, tracked wide. Stacks to two rows on phones.
-   Letters surface out of a blur, then the eclipse on the last E ignites. */
-.wordmark {
-  --track: 0.4em;
+/* Hero title (HeroTitle.tsx): the 3D reveal that settles into the flat
+   Dune Rise wordmark. Sized off the old type size; the box keeps the title's
+   aspect ratio (10912 x 1080 font units, padding for the bevels included), and
+   the negative margin cancels that padding so the layout spacing is unchanged. */
+.hero-title {
+  --fs: 8.2vw; /* phones: one row across the screen */
+  width: calc(var(--fs) * 10.912);
+  aspect-ratio: 10912 / 1080;
+  margin: calc(var(--fs) * -0.14) auto;
+  opacity: 0; /* until its turn starts; see HeroTitle */
+}
+.hero-title.is-live {
+  opacity: 1;
+}
+/* The settled wordmark keeps the old glow (not on the canvas: it repaints every frame). */
+.hero-title svg {
+  filter: drop-shadow(0 0 22px rgba(255, 170, 90, 0.22));
+}
+@media (min-width: 640px) {
+  .hero-title {
+    --fs: clamp(2.4rem, 7.2vw, 7.5rem); /* the DUNE/Priyansh hero scale */
+  }
+}
+
+/* Kiro collaboration (hero) and the organisers' logo (About) share one size
+   scale. The IEEE CS emblem is 76% of its lockup's height, so the lockup is set
+   at Kiro's height / 0.75: the emblem is never smaller than the Kiro logo. */
+:root {
+  --kiro-h: clamp(3rem, 15vw, 6rem);
+}
+.hero-collab {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.34em;
-  font-family: var(--font-dune), sans-serif;
-  font-family: var(--font-dune), sans-serif;
-  font-size: clamp(2.6rem, 14.5vw, 4.4rem);
-  line-height: 1;
-  letter-spacing: var(--track);
-  color: #f6e6cb;
-  text-shadow: 0 0 22px rgba(255, 170, 90, 0.22);
-  user-select: none;
+  gap: 1.1rem;
+  padding: 0.75rem; /* clear space around the logo */
+  margin-bottom: clamp(1.75rem, 5vw, 3rem);
 }
-.wordmark__row {
+.hero-collab__label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(246, 232, 208, 0.78);
+}
+@media (min-width: 768px) {
+  .hero-collab__label {
+    font-size: 0.7rem;
+  }
+}
+.hero-collab__logo {
+  height: var(--kiro-h);
+  width: auto;
+}
+.org-logo {
+  height: calc(var(--kiro-h) / 0.75);
+  width: auto;
+}
+.org-logo--day {
+  display: none;
+}
+:root[data-theme="day"] .org-logo--night {
+  display: none;
+}
+:root[data-theme="day"] .org-logo--day {
   display: block;
-  white-space: nowrap;
-  margin-right: calc(-1 * var(--track)); /* cancel trailing tracking so rows centre */
-}
-@media (min-width: 640px) {
-  .wordmark {
-    --track: 0.5em;
-    flex-direction: row;
-    gap: 0;
-    font-size: clamp(2.4rem, 5.6vw, 5.6rem);
-  }
-  .wordmark__row {
-    margin-right: 0;
-  }
-  .wordmark__row:last-child {
-    margin-right: calc(-1 * var(--track));
-  }
 }
 
 .twinkle {
@@ -1041,13 +1124,6 @@ body::after {
   -webkit-mask-image: var(--waves-mask);
   mask-image: var(--waves-mask);
 }
-/* Frame a headline: clear oval around the copy, fading out at the bottom. */
-.waves--frame {
-  -webkit-mask-image: radial-gradient(ellipse 58% 48% at 50% 42%, transparent 35%, #000 85%), linear-gradient(180deg, #000 55%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: radial-gradient(ellipse 58% 48% at 50% 42%, transparent 35%, #000 85%), linear-gradient(180deg, #000 55%, transparent);
-  mask-composite: intersect;
-}
 /* Keep text-heavy tops calm; let the field build up behind the cards. */
 .waves--calm-top {
   --waves-mask: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 30%, #000 58%, #000 78%, transparent 100%);
@@ -1097,182 +1173,6 @@ body::after {
 .tl-spine {
   background-image: linear-gradient(180deg, var(--line-strong) 50%, transparent 50%);
   background-size: 2px 10px;
-}
-
-/* ── Sponsorship Page ─────────────────────────────────────── */
-.sponsor-page {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  padding: 7.5rem 1rem 7rem;
-}
-
-.sponsor-page__container {
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-.sponsor-page__header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-@media (min-width: 768px) {
-  .sponsor-page {
-    padding: 9rem 1.5rem 6rem;
-  }
-  .sponsor-page__header {
-    margin-bottom: 4rem;
-  }
-}
-
-/* ── Sponsorship Form ─────────────────────────────────────── */
-.sponsor-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  position: relative;
-}
-.sponsor-form__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.sponsor-form__full {
-  grid-column: 1 / -1;
-}
-
-.sponsor-form__field label {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-2);
-}
-.sponsor-form__required {
-  color: var(--spice);
-  margin-left: 4px;
-}
-
-.sponsor-form__input {
-  padding: 0.9rem 1rem;
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: 1rem;
-  color: var(--text);
-  transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
-  appearance: none;
-  outline: none;
-}
-.sponsor-form__input::placeholder {
-  color: var(--text-3);
-}
-.sponsor-form__input:focus {
-  border-color: var(--spice);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--spice) 22%, transparent);
-}
-
-textarea.sponsor-form__input {
-  resize: vertical;
-  min-height: 110px;
-}
-
-.sponsor-form__select-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.sponsor-form__select-wrap select {
-  width: 100%;
-  padding-right: 2.5rem;
-  cursor: pointer;
-}
-.sponsor-form__select-wrap select option {
-  background: var(--surface-solid);
-  color: var(--text);
-}
-.sponsor-form__select-icon {
-  position: absolute;
-  right: 0.85rem;
-  pointer-events: none;
-  color: var(--text-3);
-}
-
-.sponsor-form__error {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--spice-hot);
-  padding: 2px 0;
-}
-.sponsor-form__form-error {
-  grid-column: 1 / -1;
-  padding: 1rem;
-  background: color-mix(in srgb, var(--ember) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ember) 40%, transparent);
-  border-radius: var(--radius-sm);
-  color: var(--spice-hot);
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.sponsor-form__submit {
-  grid-column: 1 / -1;
-  width: 100%;
-}
-
-.sponsor-form__loading {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.sponsor-form__spinner {
-  animation: spin 1s linear infinite;
-}
-
-.sponsor-success {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: color-mix(in srgb, var(--spice) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--spice) 35%, transparent);
-  border-radius: var(--radius);
-}
-.sponsor-success__title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--spice);
-  margin-bottom: 4px;
-}
-.sponsor-success__subtitle {
-  font-size: 0.9rem;
-  color: var(--text-2);
-}
-.sponsor-success svg {
-  color: var(--spice);
-  flex-shrink: 0;
-}
-
-@media (min-width: 768px) {
-  .sponsor-form {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.6rem;
-  }
-  .sponsor-form__submit {
-    width: auto;
-    justify-self: start;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* ── Page transition: the eclipse ─────────────────────────── */
@@ -1366,21 +1266,6 @@ textarea.sponsor-form__input {
     width: 200px;
     height: 200px;
   }
-}
-
-/* ── Utilities kept from before ───────────────────────────── */
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-slide-up {
-  animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 } /* end components */

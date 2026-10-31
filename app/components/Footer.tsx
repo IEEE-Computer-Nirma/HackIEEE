@@ -13,17 +13,23 @@ const InstagramIcon = () => (
   </svg>
 );
 
+const LinkedinIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 const eventLinks = [
   { label: "About", href: "/#about" },
   { label: "Tracks", href: "/#tracks" },
   { label: "Timeline", href: "/#timeline" },
-  { label: "Sponsor", href: "/sponsorship" },
 ];
 
 const socials = [
-  { label: "CS Instagram", href: "https://www.instagram.com/ieee.cs.sbnu/" },
-  { label: "ITSS Instagram", href: "https://www.instagram.com/ieee.itss.sbnu/" },
-  { label: "SPS Instagram", href: "https://www.instagram.com/ieee_sps_sbnu/" },
+  { label: "CS Instagram", href: "https://www.instagram.com/ieee.cs.sbnu/", icon: InstagramIcon },
+  { label: "CS LinkedIn", href: "https://www.linkedin.com/company/ieee-computer-nirma-university/", icon: LinkedinIcon },
 ];
 
 const PHONE = "+919265641668";
@@ -64,7 +70,7 @@ export default function Footer() {
           <div className="lg:col-span-4">
             <p className="display text-3xl tracking-[0.3em] text-ink">hackieee</p>
             <p className="mt-5 max-w-sm text-[0.95rem] leading-relaxed text-ink-2">
-              Where innovation meets impact. hackieee 2026 brings together the brightest minds to build solutions
+              Where innovation meets impact. hackieee 2027 brings together the brightest minds to build solutions
               that matter.
             </p>
           </div>
@@ -86,14 +92,17 @@ export default function Footer() {
             <div>
               <h4 className={heading}>Socials</h4>
               <ul className="space-y-3">
-                {socials.map((s) => (
-                  <li key={s.label}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" className={`${link} inline-flex items-center gap-2`}>
-                      <InstagramIcon />
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
+                {socials.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <li key={s.label}>
+                      <a href={s.href} target="_blank" rel="noopener noreferrer" className={`${link} inline-flex items-center gap-2`}>
+                        <Icon />
+                        {s.label}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
@@ -148,8 +157,8 @@ export default function Footer() {
         </p>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-line pt-6 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-ink-3 sm:flex-row">
-          <p>hackieee 2026</p>
-          <p className="text-center">Powered by IEEE Student Chapters Nirma University</p>
+          <p>hackieee 2027</p>
+          <p className="text-center">Organised by: IEEE Computer Society at Nirma University</p>
         </div>
       </div>
     </footer>
