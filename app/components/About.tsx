@@ -37,7 +37,43 @@ export default function About() {
     <section id="about" className="relative scroll-mt-4 overflow-hidden px-5 pb-16 pt-20 md:px-8 md:pb-28 md:pt-32">
       <DuneEdge id="about-edge" />
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-        <GhostFibers />
+        <GhostFibers
+          glowColor="#e9cb8e"
+          layers={3}
+          twist={1.2}
+          threads={72}
+          fiberStyle="dots"
+          depthOfField={0.85}
+          hoverEffect="focus"
+          intro
+          mouseInteraction
+          lineColor="#66280c"
+          secondaryColor="#a5663a"
+          gradient="depth"
+          waves={1}
+          volume={0.7}
+          spread={1}
+          scale={1}
+          rotation={18}
+          perspective={0.65}
+          density={1}
+          thickness={1}
+          tips={0}
+          foldGlow={1}
+          speed={0.5}
+          flow={0.4}
+          rollSpeed={0.15}
+          focusDepth={0}
+          particles={0.5}
+          sparkle={0.5}
+          glow={0.8}
+          brightness={1}
+          vignette={0.3}
+          grain={0.06}
+          mouseStrength={1}
+          pulseOnClick
+          lightMode={false}
+        />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-6xl">
