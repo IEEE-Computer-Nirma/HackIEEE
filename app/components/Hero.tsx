@@ -2,6 +2,7 @@ import Image, { getImageProps } from "next/image";
 import { ArrowRight } from "lucide-react";
 import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
+import { showKiroCollaboration } from "../flags";
 
 /* The Kiro logo exactly as supplied: its intrinsic size sets the aspect ratio,
    CSS sets only the height (.hero-collab__logo). */
@@ -47,16 +48,19 @@ function Decorations() {
   );
 }
 
-export default function Hero() {
+export default async function Hero() {
+  const showCollaboration = await showKiroCollaboration();
+  const currentYear = new Date().getFullYear();
   return (
-    <section id="top" className="hero" aria-label="hackieee 2026">
+    <section id="top" className="hero" aria-label={`hackieee ${currentYear}`}>
       <Backdrop />
       <div className="hero__scrim" />
       <Decorations />
 
       <div className="hero__content">
-        <div className="hero__lift flex w-full flex-col items-center">
-          {/* Kiro stands alone: its own block, never beside another logo. */}
+        <div className={`hero__lift flex w-full flex-col items-center ${!showCollaboration ? "-mt-8 md:-mt-14" : ""}`}>
+          {showCollaboration && (
+            /* Kiro stands alone: its own block, never beside another logo. */
           <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
             <p className="hero-collab__label">In Collaboration With</p>
             <Image
@@ -69,6 +73,7 @@ export default function Hero() {
               className="hero-collab__logo"
             />
           </div>
+          )}
 
           <h1 className="w-full">
             <span className="sr-only">hackieee</span>
@@ -101,7 +106,7 @@ export default function Hero() {
         University
       </p>
       <p className="hero__corner hero__corner--r rise" style={{ "--d": "1600ms" } as React.CSSProperties}>
-        2026
+        {currentYear}
       </p>
     </section>
   );
