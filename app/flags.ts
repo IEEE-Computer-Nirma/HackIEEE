@@ -6,28 +6,15 @@ function createSafeVercelAdapter() {
   return {
     ...base,
     async decide(args: any) {
-      if (process.env.SHOW_KIRO_COLLABORATION === "false") return false;
-      if (process.env.SHOW_KIRO_COLLABORATION === "true") return true;
-
       try {
         const value = await base.decide(args);
         return Boolean(value);
       } catch {
+        // Fallback when Vercel OIDC is unavailable (e.g. local dev without vercel env pull)
         return false;
       }
     },
     async bulkDecide(args: any): Promise<Record<string, any>> {
-      if (process.env.SHOW_KIRO_COLLABORATION === "false") {
-        const result: Record<string, boolean> = {};
-        for (const f of args.flags) result[f.key] = false;
-        return result;
-      }
-      if (process.env.SHOW_KIRO_COLLABORATION === "true") {
-        const result: Record<string, boolean> = {};
-        for (const f of args.flags) result[f.key] = true;
-        return result;
-      }
-
       try {
         if (base.bulkDecide) {
           const res = await base.bulkDecide(args);
@@ -45,7 +32,7 @@ function createSafeVercelAdapter() {
   };
 }
 
-export const showKiroCollaboration = flag({
+export const showKiroCollaboration = flag<boolean>({
   key: "showKiroCollaboration",
   adapter: createSafeVercelAdapter(),
   defaultValue: false,
