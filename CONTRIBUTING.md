@@ -140,6 +140,6 @@ git push
 
 - Do **not** run `git commit`, `git push`, or `gh pr create` unless the user asks for that specific action in that turn.
 - Never run any command containing `--force`, `-f` on a push, or `reset --hard` on pushed history.
-- Never commit `.env*`, keys, or Supabase/Resend credentials.
+- Never commit `.env*`, keys, or any credentials.
 - Never commit generated or vendored directories (`.next/`, `node_modules/`).
 - Report honestly when lint or build fails; do not describe unverified work as done.

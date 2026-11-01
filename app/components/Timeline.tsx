@@ -87,7 +87,7 @@ export default function Timeline() {
   );
 
   return (
-    <section ref={sectionRef} id="timeline" className="scroll-mt-4 overflow-hidden px-5 py-20 md:px-8 md:py-32">
+    <section ref={sectionRef} id="timeline" className="relative scroll-mt-4 overflow-hidden px-5 py-24 md:px-8 md:py-36">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/3 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-spice opacity-[0.05] blur-3xl"
@@ -95,8 +95,8 @@ export default function Timeline() {
 
       <div className="reveal relative mx-auto mb-14 max-w-6xl md:mb-24 md:text-center">
         <p className="eyebrow">03 — Timeline</p>
-        <h2 className="display mt-5 text-[1.8rem] text-ink sm:text-4xl md:text-5xl">event Timeline</h2>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-2 md:mx-auto md:text-lg">
+        <h2 className="section-title mt-5">event Timeline</h2>
+        <p className="section-lead mt-6 md:mx-auto">
           Key milestones on the long walk from idea to impact.
         </p>
         <div className="mt-7">
@@ -139,9 +139,9 @@ export default function Timeline() {
                   </div>
                   <div className={`mt-3 flex items-center gap-3 ${isLeft ? "md:flex-row-reverse" : ""}`}>
                     <Icon size={20} strokeWidth={1.5} className="shrink-0 text-spice" />
-                    <h3 className="text-lg font-medium tracking-tight text-ink md:text-xl">{event.title}</h3>
+                    <h3 className="text-xl font-medium tracking-tight text-ink md:text-2xl">{event.title}</h3>
                   </div>
-                  <p className="mt-2 text-[0.93rem] leading-relaxed text-ink-2">{event.description}</p>
+                  <p className="mt-2 text-base leading-relaxed text-ink-2">{event.description}</p>
                 </article>
               </div>
 

@@ -36,7 +36,8 @@
     left: 18px;
     bottom: 18px;
     z-index: 2;
-    max-width: 75%;
+    /* stop short of the two arrow buttons (2 x 38px + gaps) */
+    max-width: calc(100% - 132px);
     pointer-events: none;
     display: grid;
   }

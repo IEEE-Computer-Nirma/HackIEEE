@@ -10,7 +10,7 @@ const links = [
   { label: "About", href: "/#about", section: "about" },
   { label: "Tracks", href: "/#tracks", section: "tracks" },
   { label: "Timeline", href: "/#timeline", section: "timeline" },
-  { label: "Sponsor", href: "/sponsorship", section: null },
+  { label: "Speakers", href: "/#speakers", section: "speakers" },
 ];
 
 function LogoMark() {
@@ -63,7 +63,7 @@ export default function Navbar() {
   /* Active pill follows the section in view. */
   useEffect(() => {
     if (!isHome) return;
-    const ids = ["top", "about", "tracks", "timeline", "contact"];
+    const ids = ["top", "about", "tracks", "timeline", "speakers", "contact"];
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
