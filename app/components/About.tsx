@@ -1,5 +1,5 @@
 import { Handshake, ArrowRight } from "lucide-react";
-import { Branches, Hub, Laptop } from "@lucasmarkes/hairline/react";
+import { Branches, Hub, Exploded } from "@lucasmarkes/hairline/react";
 import Image from "next/image";
 import SmoothLink from "./SmoothLink";
 import GhostFibers from "./GhostFibers";
@@ -7,8 +7,8 @@ import DuneEdge from "./DuneEdge";
 
 const features = [
   {
-    figure: Laptop,
-    label: "A laptop whose lid opens toward the pointer",
+    figure: Exploded,
+    label: "An application taken apart into four layers; the pointer opens the gap and selects each component",
     title: "Build & Ship",
     description: "Transform your ideas into working products in 48 hours with cutting-edge tools and technologies.",
   },
