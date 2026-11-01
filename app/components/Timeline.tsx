@@ -14,6 +14,7 @@ if (typeof window !== "undefined") {
 interface TimelineMilestone {
   id: string;
   phase: string;
+  numeral: string;
   title: string;
   date: string;
   description: string;
@@ -26,8 +27,9 @@ const MILESTONES: TimelineMilestone[] = [
   {
     id: "phase-0",
     phase: "Phase 0",
+    numeral: "00",
     title: "Registration",
-    date: "November 15, 2026",
+    date: "Nov 15, 2026",
     description: "Team formation & global registration portal goes live.",
     xPercent: 18,
     yPercent: 68,
@@ -36,8 +38,9 @@ const MILESTONES: TimelineMilestone[] = [
   {
     id: "phase-1",
     phase: "Phase 1",
+    numeral: "01",
     title: "Problem Statement Declaration",
-    date: "December 20, 2026",
+    date: "Dec 20, 2026",
     description: "Challenge tracks unveiled & shortlisted teams confirmed.",
     xPercent: 50,
     yPercent: 57,
@@ -46,8 +49,9 @@ const MILESTONES: TimelineMilestone[] = [
   {
     id: "phase-2",
     phase: "Phase 2",
+    numeral: "02",
     title: "Final Round",
-    date: "January 2–4, 2027",
+    date: "Jan 2–4, 2027",
     description: "36-hour national offline hackathon & grand finale at Nirma.",
     xPercent: 82,
     yPercent: 68,
@@ -206,8 +210,7 @@ export default function Timeline() {
         </div>
       </div>
 
-      {/* ── DESKTOP: 3 MINIMAL CARDS FLOATING DIRECTLY ABOVE THE PLANET ARC ── */}
-      {/* No lines, no dots — clean, minimal frosted cards floating naturally right over the horizon contour */}
+      {/* ── DESKTOP: 3 ELEVATED HORIZON GLASS CARDS FLOATING ABOVE THE PLANET ARC ── */}
       <div className="relative z-10 mx-auto hidden min-h-[520px] w-full max-w-6xl md:block">
         {MILESTONES.map((item) => {
           const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
@@ -223,39 +226,62 @@ export default function Timeline() {
               style={{ left: `${item.xPercent}%`, top: `${item.yPercent}%` }}
             >
               <article
-                className="timeline-card group w-[250px] lg:w-[280px] rounded-2xl border border-white/10 bg-black/45 p-5 text-center shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-spice/50 hover:bg-black/65 hover:shadow-[0_12px_32px_rgba(226,130,47,0.25)]"
+                className="timeline-card group relative w-[260px] lg:w-[290px] overflow-hidden rounded-2xl border border-sand/15 bg-gradient-to-b from-[#1b120a]/85 via-[#110b07]/90 to-[#070503]/95 p-5 text-left shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(248,207,150,0.22)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 hover:border-spice/50 hover:shadow-[0_28px_60px_rgba(0,0,0,0.95),0_0_35px_rgba(226,130,47,0.22),inset_0_1px_2px_rgba(248,207,150,0.45)]"
               >
-                {/* Phase Pill & Date */}
-                <div className="flex items-center justify-center gap-2">
-                  <span className="rounded-full border border-sand/30 bg-sand/10 px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand">
-                    {item.phase}
-                  </span>
-                  <span className="font-mono text-xs tracking-wider text-ink-2">
+                {/* Top specular hairline (light catch) */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-sand/40 to-transparent"
+                />
+
+                {/* Ambient horizon bounce light inside bottom of card */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-8 left-1/2 h-20 w-36 -translate-x-1/2 rounded-full bg-spice/15 blur-2xl transition-opacity duration-300 group-hover:bg-spice/28"
+                />
+
+                {/* Subtle Dune Rise Numeral Watermark */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-3.5 top-2.5 select-none font-display text-4xl font-light text-sand/[0.04] transition-all duration-300 group-hover:text-sand/[0.09] group-hover:scale-105"
+                >
+                  {item.numeral}
+                </span>
+
+                {/* ── HEADER: Telemetry Phase Badge & Date ── */}
+                <div className="relative flex items-center justify-between gap-2 border-b border-sand/10 pb-3">
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-spice/40 bg-spice/10 px-2.5 py-0.5 shadow-[0_0_10px_rgba(226,130,47,0.2)]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-spice shadow-[0_0_6px_var(--spice)]" />
+                    <span className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-spice">
+                      {item.phase}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[0.7rem] tracking-wider text-sand/75">
                     {item.date}
                   </span>
                 </div>
 
-                {/* Minimal Title */}
-                <h3 className="mt-3 text-lg font-medium tracking-tight text-ink transition-colors duration-200 group-hover:text-sand lg:text-xl">
-                  {item.title}
-                </h3>
+                {/* ── BODY: Title & Description ── */}
+                <div className="relative mt-3.5">
+                  <h3 className="text-lg font-semibold tracking-tight text-[#fdf6ee] transition-colors duration-200 group-hover:text-sand lg:text-xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[#bca793] transition-colors duration-200 group-hover:text-[#dbccbe]">
+                    {item.description}
+                  </p>
+                </div>
 
-                {/* Short, crisp description */}
-                <p className="mt-1.5 text-xs leading-relaxed text-ink-3">
-                  {item.description}
-                </p>
-
-                {/* 1-Click Calendar Sync */}
-                <div className="mt-3.5 border-t border-line/25 pt-2.5">
+                {/* ── FOOTER: Tactile Add to Calendar Pill ── */}
+                <div className="relative mt-4 border-t border-sand/10 pt-3">
                   <a
                     href={calUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] text-sand/80 transition-colors hover:text-sand"
+                    className="group/btn flex w-full items-center justify-center gap-2 rounded-xl border border-spice/30 bg-spice/10 px-3 py-2 font-mono text-[0.7rem] font-medium tracking-wide text-sand transition-all duration-300 hover:border-sand/60 hover:bg-spice/25 hover:shadow-[0_0_18px_rgba(226,130,47,0.35)]"
                   >
-                    <Calendar size={11} />
-                    <span>Sync Date</span>
-                    <ExternalLink size={10} />
+                    <Calendar size={12} className="text-spice transition-transform duration-300 group-hover/btn:scale-110" />
+                    <span>Add to Calendar</span>
+                    <ExternalLink size={10} className="opacity-60 transition-opacity duration-300 group-hover/btn:opacity-100" />
                   </a>
                 </div>
               </article>
@@ -264,7 +290,7 @@ export default function Timeline() {
         })}
       </div>
 
-      {/* ── MOBILE: CLEAN MINIMAL CARDS STACK (< 768px) ── */}
+      {/* ── MOBILE: ELEVATED MINIMAL CARDS STACK (< 768px) ── */}
       <div className="relative z-10 mx-auto max-w-sm space-y-4 md:hidden">
         {MILESTONES.map((item) => {
           const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
@@ -276,35 +302,48 @@ export default function Timeline() {
           return (
             <article
               key={item.id}
-              className="mobile-card rounded-2xl border border-white/10 bg-black/50 p-5 text-center shadow-xl backdrop-blur-xl"
+              className="mobile-card relative overflow-hidden rounded-2xl border border-sand/15 bg-gradient-to-b from-[#1c120a]/90 via-[#110b07]/92 to-[#070503]/96 p-5 text-left shadow-xl backdrop-blur-2xl"
             >
-              <div className="flex items-center justify-center gap-2">
-                <span className="rounded-full border border-sand/30 bg-sand/10 px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand">
-                  {item.phase}
-                </span>
-                <span className="font-mono text-xs text-ink-2">
+              {/* Top specular hairline */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-sand/40 to-transparent"
+              />
+
+              {/* Header: Phase & Date */}
+              <div className="relative flex items-center justify-between gap-2 border-b border-sand/10 pb-3">
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-spice/40 bg-spice/10 px-2.5 py-0.5 shadow-[0_0_10px_rgba(226,130,47,0.2)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-spice shadow-[0_0_6px_var(--spice)]" />
+                  <span className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-spice">
+                    {item.phase}
+                  </span>
+                </div>
+                <span className="font-mono text-[0.7rem] tracking-wider text-sand/75">
                   {item.date}
                 </span>
               </div>
 
-              <h3 className="mt-2.5 text-base font-medium tracking-tight text-ink">
-                {item.title}
-              </h3>
+              {/* Title & Description */}
+              <div className="relative mt-3">
+                <h3 className="text-base font-semibold tracking-tight text-[#fdf6ee]">
+                  {item.title}
+                </h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-[#bca793]">
+                  {item.description}
+                </p>
+              </div>
 
-              <p className="mt-1 text-xs leading-relaxed text-ink-3">
-                {item.description}
-              </p>
-
-              <div className="mt-3 border-t border-line/25 pt-2.5">
+              {/* Footer */}
+              <div className="relative mt-4 border-t border-sand/10 pt-3">
                 <a
                   href={calUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-mono text-[0.7rem] text-sand"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-spice/30 bg-spice/10 px-3 py-2 font-mono text-[0.7rem] font-medium tracking-wide text-sand"
                 >
-                  <Calendar size={11} />
+                  <Calendar size={12} className="text-spice" />
                   <span>Add to Calendar</span>
-                  <ExternalLink size={10} />
+                  <ExternalLink size={10} className="opacity-60" />
                 </a>
               </div>
             </article>
