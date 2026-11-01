@@ -231,9 +231,9 @@ export default function Timeline() {
                   className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-sand/25 to-transparent"
                 />
 
-                {/* 01 / 02 / 03 Pill & Date */}
-                <div className="flex items-center justify-center gap-2">
-                  <span className="rounded-full border border-sand/30 bg-sand/10 px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand">
+                {/* Custom Dune Typography 01 / 02 / 03 & Date */}
+                <div className="flex items-center justify-center gap-3">
+                  <span className="display text-2xl tracking-[0.08em] text-sand transition-colors duration-200 group-hover:text-spice lg:text-3xl">
                     {item.step}
                   </span>
                   <span className="font-mono text-xs tracking-wider text-ink-2">
@@ -284,8 +284,9 @@ export default function Timeline() {
               key={item.id}
               className="mobile-card rounded-2xl border border-white/10 bg-black/50 p-5 text-center shadow-xl backdrop-blur-xl"
             >
-              <div className="flex items-center justify-center gap-2">
-                <span className="rounded-full border border-sand/30 bg-sand/10 px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand">
+              {/* Custom Dune Typography 01 / 02 / 03 & Date */}
+              <div className="flex items-center justify-center gap-2.5">
+                <span className="display text-2xl tracking-[0.08em] text-sand">
                   {item.step}
                 </span>
                 <span className="font-mono text-xs text-ink-2">
