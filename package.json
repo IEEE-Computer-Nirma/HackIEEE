@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:email": "tsc --project test.tsconfig.json && node --test out-test/__tests__/email.test.js"
   },
   "dependencies": {
     "@flags-sdk/vercel": "^1.6.0",
