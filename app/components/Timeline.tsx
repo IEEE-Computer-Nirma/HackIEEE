@@ -1,47 +1,36 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import {
-  Calendar,
-  ExternalLink,
-  Sparkles,
-  ChevronRight,
-  Clock,
-  UserCheck,
-  FileCode2,
-  Trophy,
-} from "lucide-react";
+import { Calendar, ExternalLink } from "lucide-react";
 import HorizonBloom, { type HorizonBloomHandle } from "./HorizonBloom";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-interface ArcPhase {
+interface TimelineMilestone {
   id: string;
   phase: string;
   title: string;
   date: string;
-  tagline: string;
-  icon: typeof UserCheck;
-  xPercent: number; // Position along the planetary arc width
-  yPercent: number; // Exact height aligning with the horizon curvature
+  description: string;
+  xPercent: number; // Left position %
+  yPercent: number; // Bottom anchor % aligning right above the arc
   googleDates: string;
 }
 
-const ARC_PHASES: ArcPhase[] = [
+const MILESTONES: TimelineMilestone[] = [
   {
     id: "phase-0",
     phase: "Phase 0",
     title: "Registration",
     date: "November 15, 2026",
-    tagline: "Team formation & online portal live",
-    icon: UserCheck,
+    description: "Team formation & global registration portal goes live.",
     xPercent: 18,
-    yPercent: 70,
+    yPercent: 68,
     googleDates: "20261115T033000Z/20261115T183000Z",
   },
   {
@@ -49,10 +38,9 @@ const ARC_PHASES: ArcPhase[] = [
     phase: "Phase 1",
     title: "Problem Statement Declaration",
     date: "December 20, 2026",
-    tagline: "Tracks unveiled & shortlisted teams confirmed",
-    icon: FileCode2,
+    description: "Challenge tracks unveiled & shortlisted teams confirmed.",
     xPercent: 50,
-    yPercent: 62,
+    yPercent: 57,
     googleDates: "20261220T053000Z/20261220T143000Z",
   },
   {
@@ -60,10 +48,9 @@ const ARC_PHASES: ArcPhase[] = [
     phase: "Phase 2",
     title: "Final Round",
     date: "January 2–4, 2027",
-    tagline: "36-hour offline code sprint & grand finale",
-    icon: Trophy,
+    description: "36-hour national offline hackathon & grand finale at Nirma.",
     xPercent: 82,
-    yPercent: 70,
+    yPercent: 68,
     googleDates: "20270102T043000Z/20270105T123000Z",
   },
 ];
@@ -71,7 +58,6 @@ const ARC_PHASES: ArcPhase[] = [
 export default function Timeline() {
   const sectionRef = useRef<HTMLElement>(null);
   const bloomRef = useRef<HorizonBloomHandle>(null);
-  const [activePhase, setActivePhase] = useState<string | null>(null);
 
   useGSAP(
     () => {
@@ -92,67 +78,44 @@ export default function Timeline() {
           };
 
           if (desktop) {
-            const nodes = section.querySelectorAll<HTMLElement>(".arc-node");
-            const stems = section.querySelectorAll<HTMLElement>(".arc-stem");
-            const labels = section.querySelectorAll<HTMLElement>(".arc-content");
+            const cards = section.querySelectorAll<HTMLElement>(".timeline-card");
 
-            const tl = gsap.timeline({
-              scrollTrigger: {
-                trigger: section,
-                start: "top 72%",
-                toggleActions: "play none none reverse",
-                onEnter: () => {
-                  bloomRef.current?.bloom(0.5, 1.3);
-                },
-              },
-            });
-
-            tl.fromTo(
-              nodes,
-              { scale: 0.2, opacity: 0 },
+            gsap.fromTo(
+              cards,
               {
-                scale: 1,
+                opacity: 0,
+                y: 28,
+              },
+              {
                 opacity: 1,
-                duration: 0.65,
+                y: 0,
+                duration: 0.8,
                 stagger: 0.2,
-                ease: "back.out(2)",
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: section,
+                  start: "top 72%",
+                  toggleActions: "play none none reverse",
+                  onEnter: () => {
+                    bloomRef.current?.bloom(0.5, 1.25);
+                  },
+                },
               }
-            )
-              .fromTo(
-                stems,
-                { scaleY: 0, transformOrigin: "bottom center", opacity: 0 },
-                {
-                  scaleY: 1,
-                  opacity: 1,
-                  duration: 0.45,
-                  stagger: 0.2,
-                  ease: "power2.out",
-                },
-                "<+=0.1"
-              )
-              .fromTo(
-                labels,
-                { y: 20, opacity: 0 },
-                {
-                  y: 0,
-                  opacity: 1,
-                  duration: 0.7,
-                  stagger: 0.2,
-                  ease: "power3.out",
-                },
-                "<+=0.15"
-              );
+            );
           }
 
           if (mobile) {
-            const mobileItems = section.querySelectorAll<HTMLElement>(".mobile-milestone");
+            const mobileCards = section.querySelectorAll<HTMLElement>(".mobile-card");
 
             gsap.fromTo(
-              mobileItems,
-              { y: 24, opacity: 0 },
+              mobileCards,
               {
-                y: 0,
+                opacity: 0,
+                y: 20,
+              },
+              {
                 opacity: 1,
+                y: 0,
                 duration: 0.65,
                 stagger: 0.18,
                 ease: "power2.out",
@@ -176,18 +139,14 @@ export default function Timeline() {
     { scope: sectionRef }
   );
 
-  const handleNodeClick = (phaseId: string, normX: number) => {
-    setActivePhase(activePhase === phaseId ? null : phaseId);
-    bloomRef.current?.bloom(normX, 1.15);
-  };
-
   return (
     <section
       ref={sectionRef}
       id="timeline"
       className="relative scroll-mt-4 overflow-hidden px-4 py-24 md:px-8 md:py-36"
     >
-      {/* ── SEAMLESS FULL-BLEED HORIZON BLOOM STAGE ── */}
+      {/* ── EXPANSIVE HORIZON BLOOM STAGE BACKDROP ── */}
+      {/* Soft gradient edge fade into the dark background */}
       <div
         className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
         style={{
@@ -232,201 +191,131 @@ export default function Timeline() {
           Key milestones on the long walk from idea to impact.
         </p>
 
-        {/* Global 1-Click All Events Calendar Sync */}
-        <div className="mt-7 flex items-center justify-center gap-3">
+        {/* Global Add to Calendar Button */}
+        <div className="mt-6 flex items-center justify-center">
           <a
             href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=hackieee+2026+Hackathon&dates=20270102T043000Z/20270105T123000Z&details=The+flagship+Dune-themed+36-hour+hackathon+at+Nirma+University.&location=Nirma+University%2C+Ahmedabad"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 rounded-full border border-spice/40 bg-black/40 px-4 py-2 font-mono text-xs text-sand shadow-lg backdrop-blur-md transition-all duration-300 hover:border-sand hover:bg-spice/20 hover:shadow-[0_0_20px_var(--glow)]"
+            className="group inline-flex items-center gap-2 rounded-full border border-spice/40 bg-black/45 px-4 py-2 font-mono text-xs text-sand shadow-lg backdrop-blur-md transition-all duration-300 hover:border-sand hover:bg-spice/20 hover:shadow-[0_0_20px_var(--glow)]"
           >
             <Calendar size={13} className="text-sand transition-transform group-hover:scale-110" />
-            <span>Add Event to Calendar</span>
+            <span>Add to Calendar</span>
             <ExternalLink size={11} className="opacity-60 transition-opacity group-hover:opacity-100" />
           </a>
         </div>
       </div>
 
-      {/* ── DESKTOP: PLANETARY ARC MAPPING (md: and up) ── */}
-      {/* Three phases mapped directly along the horizon curvature */}
-      <div className="relative z-10 mx-auto hidden min-h-[580px] w-full max-w-6xl md:block">
-        {ARC_PHASES.map((item) => {
-          const isSelected = activePhase === item.id;
-          const Icon = item.icon;
+      {/* ── DESKTOP: 3 MINIMAL CARDS FLOATING DIRECTLY ABOVE THE PLANET ARC ── */}
+      {/* No lines, no dots — clean, minimal frosted cards floating naturally right over the horizon contour */}
+      <div className="relative z-10 mx-auto hidden min-h-[520px] w-full max-w-6xl md:block">
+        {MILESTONES.map((item) => {
           const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-            `hackieee: ${item.title}`
+            `hackieee 2026: ${item.title}`
           )}&dates=${item.googleDates}&details=${encodeURIComponent(
-            `${item.title} (${item.phase}) - hackieee 2026. ${item.tagline}`
+            `${item.title} (${item.phase}) - hackieee 2026. ${item.description}`
           )}&location=${encodeURIComponent("Nirma University, Ahmedabad")}`;
 
           return (
             <div
               key={item.id}
-              className="absolute flex -translate-x-1/2 flex-col items-center"
+              className="absolute -translate-x-1/2 -translate-y-full"
               style={{ left: `${item.xPercent}%`, top: `${item.yPercent}%` }}
             >
-              {/* Floating Typography & Quick Calendar (Sitting directly above the planet rim) */}
-              <div className="arc-content flex -translate-y-full flex-col items-center pb-2 text-center">
-                <div
-                  onClick={() => handleNodeClick(item.id, item.xPercent / 100)}
-                  className={`group cursor-pointer rounded-2xl border p-4 transition-all duration-300 ${
-                    isSelected
-                      ? "border-sand/60 bg-black/75 shadow-[0_0_30px_var(--glow)] backdrop-blur-xl"
-                      : "border-transparent bg-black/30 hover:border-spice/30 hover:bg-black/50 backdrop-blur-md"
-                  } w-[240px] lg:w-[270px]`}
-                >
-                  {/* Phase Pill & Date */}
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="rounded-full border border-sand/30 bg-sand/10 px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand">
-                      {item.phase}
-                    </span>
-                    <span className="font-mono text-[0.72rem] tracking-wider text-ink-2">
-                      {item.date}
-                    </span>
-                  </div>
-
-                  {/* Clean Title */}
-                  <h3 className="mt-2.5 text-base font-medium tracking-tight text-ink lg:text-lg group-hover:text-sand transition-colors">
-                    {item.title}
-                  </h3>
-
-                  {/* Minimal Subtitle */}
-                  <p className="mt-1 text-xs leading-relaxed text-ink-3">
-                    {item.tagline}
-                  </p>
-
-                  {/* 1-Click Calendar Sync Pill */}
-                  <div className="mt-3.5 pt-2.5 border-t border-line/30 flex items-center justify-center">
-                    <a
-                      href={calUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] text-sand/80 hover:text-sand transition-colors"
-                    >
-                      <Calendar size={11} /> Add to Calendar <ExternalLink size={10} />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Glowing Hairline Connector Stem (Rises directly from the orbital node) */}
-                <div
-                  className="arc-stem mt-2 w-[1.5px] bg-gradient-to-b from-transparent via-sand/60 to-sand"
-                  style={{
-                    height: "32px",
-                    boxShadow: "0 0 8px var(--glow)",
-                  }}
-                />
-              </div>
-
-              {/* Glowing Orbital Marker (Sits exactly on the curved planet rim) */}
-              <button
-                type="button"
-                onClick={() => handleNodeClick(item.id, item.xPercent / 100)}
-                className="arc-node group relative z-20 -translate-y-1/2 focus:outline-hidden"
-                aria-label={`Select ${item.title}`}
+              <article
+                className="timeline-card group w-[250px] lg:w-[280px] rounded-2xl border border-white/10 bg-black/45 p-5 text-center shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-spice/50 hover:bg-black/65 hover:shadow-[0_12px_32px_rgba(226,130,47,0.25)]"
               >
-                <div className="relative flex items-center justify-center">
-                  {/* Atmospheric outer glow ring */}
-                  <div
-                    className={`absolute -inset-2.5 rounded-full transition-all duration-300 ${
-                      isSelected
-                        ? "scale-125 opacity-90 blur-xs"
-                        : "opacity-40 group-hover:opacity-75 blur-xs"
-                    }`}
-                    style={{
-                      background: "radial-gradient(circle, var(--sand) 0%, var(--spice) 60%, transparent 80%)",
-                    }}
-                  />
-
-                  {/* Core Eclipse Marker */}
-                  <div
-                    className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all duration-300 ${
-                      isSelected
-                        ? "border-sand bg-sand/20 shadow-[0_0_18px_#ffffff] scale-110"
-                        : "border-sand/60 bg-surface/80 group-hover:border-sand group-hover:scale-105"
-                    }`}
-                  >
-                    <div
-                      className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-                        isSelected ? "bg-white shadow-[0_0_8px_#fff]" : "bg-sand"
-                      }`}
-                    />
-                  </div>
+                {/* Phase Pill & Date */}
+                <div className="flex items-center justify-center gap-2">
+                  <span className="rounded-full border border-sand/30 bg-sand/10 px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand">
+                    {item.phase}
+                  </span>
+                  <span className="font-mono text-xs tracking-wider text-ink-2">
+                    {item.date}
+                  </span>
                 </div>
-              </button>
+
+                {/* Minimal Title */}
+                <h3 className="mt-3 text-lg font-medium tracking-tight text-ink transition-colors duration-200 group-hover:text-sand lg:text-xl">
+                  {item.title}
+                </h3>
+
+                {/* Short, crisp description */}
+                <p className="mt-1.5 text-xs leading-relaxed text-ink-3">
+                  {item.description}
+                </p>
+
+                {/* 1-Click Calendar Sync */}
+                <div className="mt-3.5 border-t border-line/25 pt-2.5">
+                  <a
+                    href={calUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] text-sand/80 transition-colors hover:text-sand"
+                  >
+                    <Calendar size={11} />
+                    <span>Sync Date</span>
+                    <ExternalLink size={10} />
+                  </a>
+                </div>
+              </article>
             </div>
           );
         })}
       </div>
 
-      {/* ── MOBILE: CLEAN MINIMAL MILESTONE STACK (< 768px) ── */}
-      <div className="relative z-10 mx-auto max-w-md md:hidden">
-        {/* Vertical Glowing Horizon Guide Spine */}
-        <div className="relative pl-6">
-          <div
-            className="absolute bottom-4 left-[10px] top-4 w-[1.5px]"
-            style={{
-              background: "linear-gradient(to bottom, var(--sand), var(--spice) 65%, var(--ember))",
-              boxShadow: "0 0 8px var(--glow)",
-            }}
-          />
+      {/* ── MOBILE: CLEAN MINIMAL CARDS STACK (< 768px) ── */}
+      <div className="relative z-10 mx-auto max-w-sm space-y-4 md:hidden">
+        {MILESTONES.map((item) => {
+          const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+            `hackieee 2026: ${item.title}`
+          )}&dates=${item.googleDates}&details=${encodeURIComponent(
+            `${item.title} (${item.phase}) - hackieee 2026. ${item.description}`
+          )}&location=${encodeURIComponent("Nirma University, Ahmedabad")}`;
 
-          <div className="space-y-6">
-            {ARC_PHASES.map((item) => {
-              const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-                `hackieee: ${item.title}`
-              )}&dates=${item.googleDates}&details=${encodeURIComponent(
-                `${item.title} (${item.phase}) - hackieee 2026. ${item.tagline}`
-              )}&location=${encodeURIComponent("Nirma University, Ahmedabad")}`;
+          return (
+            <article
+              key={item.id}
+              className="mobile-card rounded-2xl border border-white/10 bg-black/50 p-5 text-center shadow-xl backdrop-blur-xl"
+            >
+              <div className="flex items-center justify-center gap-2">
+                <span className="rounded-full border border-sand/30 bg-sand/10 px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand">
+                  {item.phase}
+                </span>
+                <span className="font-mono text-xs text-ink-2">
+                  {item.date}
+                </span>
+              </div>
 
-              return (
-                <div key={item.id} className="mobile-milestone relative">
-                  {/* Glowing orbital marker */}
-                  <div className="absolute -left-[20px] top-3.5 z-10 flex h-4 w-4 items-center justify-center rounded-full border border-sand bg-surface shadow-[0_0_8px_var(--glow)]">
-                    <div className="h-1.5 w-1.5 rounded-full bg-sand" />
-                  </div>
+              <h3 className="mt-2.5 text-base font-medium tracking-tight text-ink">
+                {item.title}
+              </h3>
 
-                  {/* Minimal Typography Card */}
-                  <div className="rounded-2xl border border-line/40 bg-black/40 p-4 backdrop-blur-md">
-                    <div className="flex items-center gap-2">
-                      <span className="rounded-full border border-sand/30 bg-sand/10 px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-wider text-sand">
-                        {item.phase}
-                      </span>
-                      <span className="font-mono text-[0.7rem] text-ink-2">
-                        {item.date}
-                      </span>
-                    </div>
+              <p className="mt-1 text-xs leading-relaxed text-ink-3">
+                {item.description}
+              </p>
 
-                    <h3 className="mt-2 text-base font-medium text-ink">
-                      {item.title}
-                    </h3>
-                    <p className="mt-0.5 text-xs text-ink-3">
-                      {item.tagline}
-                    </p>
-
-                    <div className="mt-3 pt-2.5 border-t border-line/30">
-                      <a
-                        href={calUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] text-sand"
-                      >
-                        <Calendar size={11} /> Add to Calendar <ExternalLink size={10} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+              <div className="mt-3 border-t border-line/25 pt-2.5">
+                <a
+                  href={calUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-mono text-[0.7rem] text-sand"
+                >
+                  <Calendar size={11} />
+                  <span>Add to Calendar</span>
+                  <ExternalLink size={10} />
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
 
       {/* ── FOOTNOTE ── */}
       <p className="reveal relative z-10 mx-auto mt-14 max-w-xl text-center text-xs leading-relaxed text-ink-3 md:mt-16">
         <span className="mr-1 text-spice">*</span>
-        All dates are tentative. Schedule details will be communicated directly to registered participants.
+        All dates are tentative and subject to confirmation.
       </p>
     </section>
   );
