@@ -49,11 +49,17 @@ function Decorations() {
 }
 
 export default async function Hero() {
-  let showCollaboration = true;
-  try {
-    showCollaboration = Boolean(await showKiroCollaboration());
-  } catch {
-    showCollaboration = process.env.SHOW_KIRO_COLLABORATION !== "false";
+  let showCollaboration = false;
+  if (process.env.SHOW_KIRO_COLLABORATION === "false") {
+    showCollaboration = false;
+  } else if (process.env.SHOW_KIRO_COLLABORATION === "true") {
+    showCollaboration = true;
+  } else {
+    try {
+      showCollaboration = Boolean(await showKiroCollaboration());
+    } catch {
+      showCollaboration = false;
+    }
   }
   const currentYear = new Date().getFullYear();
   return (
