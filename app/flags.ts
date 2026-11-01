@@ -6,13 +6,28 @@ function createSafeVercelAdapter() {
   return {
     ...base,
     async decide(args: any) {
+      if (process.env.SHOW_KIRO_COLLABORATION === "false") return false;
+      if (process.env.SHOW_KIRO_COLLABORATION === "true") return true;
+
       try {
-        return await base.decide(args);
+        const value = await base.decide(args);
+        return Boolean(value);
       } catch {
-        return process.env.SHOW_KIRO_COLLABORATION !== "false";
+        return false;
       }
     },
     async bulkDecide(args: any): Promise<Record<string, any>> {
+      if (process.env.SHOW_KIRO_COLLABORATION === "false") {
+        const result: Record<string, boolean> = {};
+        for (const f of args.flags) result[f.key] = false;
+        return result;
+      }
+      if (process.env.SHOW_KIRO_COLLABORATION === "true") {
+        const result: Record<string, boolean> = {};
+        for (const f of args.flags) result[f.key] = true;
+        return result;
+      }
+
       try {
         if (base.bulkDecide) {
           const res = await base.bulkDecide(args);
@@ -21,10 +36,9 @@ function createSafeVercelAdapter() {
       } catch {
         // Fallback on error
       }
-      const fallback = process.env.SHOW_KIRO_COLLABORATION !== "false";
       const result: Record<string, boolean> = {};
       for (const f of args.flags) {
-        result[f.key] = fallback;
+        result[f.key] = false;
       }
       return result;
     },
@@ -34,8 +48,5 @@ function createSafeVercelAdapter() {
 export const showKiroCollaboration = flag({
   key: "showKiroCollaboration",
   adapter: createSafeVercelAdapter(),
-  defaultValue: true,
-  decide() {
-    return process.env.SHOW_KIRO_COLLABORATION !== "false";
-  },
+  defaultValue: false,
 });
