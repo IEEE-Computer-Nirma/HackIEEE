@@ -231,12 +231,12 @@ export default function Timeline() {
                   className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-sand/25 to-transparent"
                 />
 
-                {/* Custom Dune Typography 01 / 02 / 03 & Date */}
+                {/* Custom Dune Typography 01 / 02 / 03 & Date — Optically & Technically Aligned */}
                 <div className="flex items-center justify-center gap-3">
-                  <span className="display text-2xl tracking-[0.08em] text-sand transition-colors duration-200 group-hover:text-spice lg:text-3xl">
+                  <span className="display text-2xl tracking-[0.08em] text-sand leading-none transition-colors duration-200 group-hover:text-spice lg:text-3xl">
                     {item.step}
                   </span>
-                  <span className="font-mono text-xs tracking-wider text-ink-2">
+                  <span className="font-mono text-xs tracking-wider text-ink-2 leading-none -translate-y-[2.5px] lg:-translate-y-[3px]">
                     {item.date}
                   </span>
                 </div>
@@ -284,12 +284,12 @@ export default function Timeline() {
               key={item.id}
               className="mobile-card rounded-2xl border border-white/10 bg-black/50 p-5 text-center shadow-xl backdrop-blur-xl"
             >
-              {/* Custom Dune Typography 01 / 02 / 03 & Date */}
+              {/* Custom Dune Typography 01 / 02 / 03 & Date — Optically & Technically Aligned */}
               <div className="flex items-center justify-center gap-2.5">
-                <span className="display text-2xl tracking-[0.08em] text-sand">
+                <span className="display text-2xl tracking-[0.08em] text-sand leading-none">
                   {item.step}
                 </span>
-                <span className="font-mono text-xs text-ink-2">
+                <span className="font-mono text-xs text-ink-2 leading-none -translate-y-[2px]">
                   {item.date}
                 </span>
               </div>
