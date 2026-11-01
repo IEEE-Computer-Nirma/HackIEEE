@@ -50,16 +50,10 @@ function Decorations() {
 
 export default async function Hero() {
   let showCollaboration = false;
-  if (process.env.SHOW_KIRO_COLLABORATION === "false") {
+  try {
+    showCollaboration = Boolean(await showKiroCollaboration());
+  } catch {
     showCollaboration = false;
-  } else if (process.env.SHOW_KIRO_COLLABORATION === "true") {
-    showCollaboration = true;
-  } else {
-    try {
-      showCollaboration = Boolean(await showKiroCollaboration());
-    } catch {
-      showCollaboration = false;
-    }
   }
   const currentYear = new Date().getFullYear();
   return (
