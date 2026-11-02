@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Mail, Copy } from "lucide-react";
+import { Mail, Copy, ArrowUpRight, Users, LayoutDashboard } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
 import { CONTACT_EMAIL } from "../data/timeline";
+import { useRegistration } from "../context/RegistrationContext";
 
 const links = [
   { label: "About", href: "/#about", section: "about" },
@@ -38,6 +39,7 @@ export default function Navbar() {
   const [active, setActive] = useState<string | null>(null);
   const [hidden, setHidden] = useState(false);
   const [onHero, setOnHero] = useState(isHome);
+  const { openWizard } = useRegistration();
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -137,10 +139,43 @@ export default function Navbar() {
               {l.label}
             </SmoothLink>
           ))}
+          <button
+            type="button"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              openWizard("team");
+            }}
+            className="w-full mt-4 px-6 py-2.5 rounded-full border border-line-strong hover:border-spice bg-surface text-sand hover:text-ink text-base font-medium flex items-center justify-center gap-2"
+          >
+            <Users size={18} className="text-spice" />
+            <span>Team Management</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              openWizard("dashboard");
+            }}
+            className="w-full px-6 py-2.5 rounded-full border border-line-strong hover:border-spice bg-surface text-sand hover:text-ink text-base font-medium flex items-center justify-center gap-2"
+          >
+            <LayoutDashboard size={18} className="text-spice" />
+            <span>Dashboard</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              openWizard("registration");
+            }}
+            className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-spice via-spice-hot to-amber-400 text-[#1d130a] text-lg font-semibold tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(226,130,47,0.4)]"
+          >
+            <span>Register Now</span>
+            <ArrowUpRight size={20} />
+          </button>
           <a
             href="#contact"
             onClick={handleContactClick}
-            className="mt-4 px-6 py-3 rounded-full border border-line-strong bg-surface text-ink text-lg flex items-center gap-2"
+            className="px-6 py-3 rounded-full border border-line-strong bg-surface text-ink text-lg flex items-center gap-2"
           >
             <Mail size={20} />
             Contact Us
@@ -157,6 +192,35 @@ export default function Navbar() {
         </nav>
 
         <div className="topbar-actions col-start-3 flex items-center gap-2 md:gap-3">
+          <button
+            type="button"
+            onClick={() => openWizard("team")}
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-line hover:border-spice/50 bg-surface hover:bg-spice/10 text-sand/80 hover:text-ink text-xs font-medium transition-all cursor-pointer"
+            title="Team Management"
+          >
+            <Users size={14} className="text-spice" />
+            <span>Team</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => openWizard("dashboard")}
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-line hover:border-spice/50 bg-surface hover:bg-spice/10 text-sand/80 hover:text-ink text-xs font-medium transition-all cursor-pointer"
+            title="Participant Dashboard"
+          >
+            <LayoutDashboard size={14} className="text-spice" />
+            <span>Dashboard</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => openWizard("registration")}
+            className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-spice via-spice-hot to-amber-400 hover:brightness-110 text-[#1d130a] text-xs font-semibold tracking-wider transition-all duration-200 shadow-[0_0_15px_rgba(226,130,47,0.35)] cursor-pointer"
+          >
+            <span>Register</span>
+            <ArrowUpRight size={14} strokeWidth={2.5} />
+          </button>
+
           <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">
             <Mail size={17} strokeWidth={1.75} />
             <span>
