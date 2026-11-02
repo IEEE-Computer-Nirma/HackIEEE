@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     template: "%s | HackIEEE 2026-27",
   },
   description:
-    "HackIEEE 2026-27 is India's premier national-level hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro. 36 hours of continuous offline building, innovation, and shipping.",
+    "HackIEEE 2026-27 is India's premier national 36-hour offline hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro. Register now to build.",
   keywords: [
     "HackIEEE",
     "HackIEEE 2026",
@@ -79,6 +79,16 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   robots: {
     index: true,
     follow: true,
@@ -101,7 +111,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
     description:
-      "Join India's premier national hackathon at Nirma University. 36 hours of continuous building, top mentorship, and grand prizes with IEEE CS & Kiro.",
+      "Join India's premier national 36-hour offline hackathon at Nirma University. Build, stage, and ship considered products with top mentors and IEEE CS.",
     url: siteUrl,
     siteName: "HackIEEE 2026-27",
     images: [
@@ -119,7 +129,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
     description:
-      "Join India's premier national hackathon at Nirma University. 36 hours of continuous building, top mentorship, and grand prizes.",
+      "Join India's premier national 36-hour offline hackathon at Nirma University. Build, stage, and ship considered products with top mentors.",
     images: ["/OG-Tag.png"],
   },
 };
