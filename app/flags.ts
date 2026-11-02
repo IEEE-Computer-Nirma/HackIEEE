@@ -7,9 +7,11 @@ function createSafeVercelAdapter() {
     ...base,
     async decide(args: any) {
       try {
-        return await base.decide(args);
+        const value = await base.decide(args);
+        return Boolean(value);
       } catch {
-        return process.env.SHOW_KIRO_COLLABORATION !== "false";
+        // Fallback when Vercel OIDC is unavailable (e.g. local dev without vercel env pull)
+        return false;
       }
     },
     async bulkDecide(args: any): Promise<Record<string, any>> {
@@ -21,21 +23,17 @@ function createSafeVercelAdapter() {
       } catch {
         // Fallback on error
       }
-      const fallback = process.env.SHOW_KIRO_COLLABORATION !== "false";
       const result: Record<string, boolean> = {};
       for (const f of args.flags) {
-        result[f.key] = fallback;
+        result[f.key] = false;
       }
       return result;
     },
   };
 }
 
-export const showKiroCollaboration = flag({
+export const showKiroCollaboration = flag<boolean>({
   key: "showKiroCollaboration",
   adapter: createSafeVercelAdapter(),
-  defaultValue: true,
-  decide() {
-    return process.env.SHOW_KIRO_COLLABORATION !== "false";
-  },
+  defaultValue: false,
 });
