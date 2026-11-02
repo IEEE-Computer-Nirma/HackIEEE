@@ -44,3 +44,6 @@ out-test/
 
 # local temporary test scripts
 scripts/test-live-email.ts
+
+# local data
+/.data/
