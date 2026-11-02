@@ -8,7 +8,7 @@ export default function StructuredData() {
         "url": "https://hack.ieeenirma.org",
         "name": "HackIEEE 2026-27 | National-Level Hackathon",
         "description":
-          "Official portal for HackIEEE 2026-27, India's premier national-level 36-hour offline hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro.",
+          "Official portal for HackIEEE 2026-27, India's premier national-level 48-hour offline hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro.",
         "inLanguage": "en-US",
         "publisher": {
           "@id": "https://hack.ieeenirma.org/#organization",
@@ -60,7 +60,7 @@ export default function StructuredData() {
           "IEEE Nirma National Hackathon",
         ],
         "description":
-          "HackIEEE 2026-27 is a premier national-level 36-hour offline hackathon hosted at Nirma University, Ahmedabad. Bringing together top collegiate developers, designers, and innovators across India to build and ship production-grade solutions.",
+          "HackIEEE 2026-27 is India's premier national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Bringing together top collegiate developers and innovators across India to build and ship production-grade solutions.",
         "keywords": [
           "National-Level Hackathon",
           "Hackathon India",

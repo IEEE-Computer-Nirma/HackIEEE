@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     template: "%s | HackIEEE 2026-27",
   },
   description:
-    "HackIEEE 2026-27 is India's premier national 36-hour offline hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro. Register now to build.",
+    "HackIEEE 2026-27 is a national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
   keywords: [
     "HackIEEE",
     "HackIEEE 2026",
@@ -111,7 +111,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
     description:
-      "Join India's premier national 36-hour offline hackathon at Nirma University. Build, stage, and ship considered products with top mentors and IEEE CS.",
+      "India's premier national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Build, stage, and ship considered products.",
     url: siteUrl,
     siteName: "HackIEEE 2026-27",
     images: [
@@ -129,7 +129,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
     description:
-      "Join India's premier national 36-hour offline hackathon at Nirma University. Build, stage, and ship considered products with top mentors.",
+      "India's premier national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
     images: ["/OG-Tag.png"],
   },
 };
