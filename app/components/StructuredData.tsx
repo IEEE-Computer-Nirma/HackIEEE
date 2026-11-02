@@ -60,11 +60,12 @@ export default function StructuredData() {
           "IEEE Nirma National Hackathon",
         ],
         "description":
-          "HackIEEE 2026-27 is India's premier national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Bringing together top collegiate developers and innovators across India to build and ship production-grade solutions.",
+          "HackIEEE 2026-27 is India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Bringing together top collegiate developers and innovators across India to build and ship production-grade solutions.",
         "keywords": [
           "National-Level Hackathon",
           "Hackathon India",
-          "36-Hour Offline Hackathon",
+          "48-Hour Offline Hackathon",
+          "48-Hour Hackathon",
           "IEEE Hackathon",
           "All-India Coding Competition",
           "Nirma University Hackathon",
@@ -128,7 +129,7 @@ export default function StructuredData() {
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock",
           "validFrom": "2026-11-15T00:00:00+05:30",
-          "description": "Free registration for all national applicants. Selected finalists receive mentorship, hacking space, meals, and overnight accommodation support during the 36-hour sprint.",
+          "description": "Free registration for all national applicants. Selected finalists receive mentorship, hacking space, meals, and overnight accommodation support during the 48-hour sprint.",
         },
         "subEvent": [
           {
@@ -149,11 +150,11 @@ export default function StructuredData() {
           },
           {
             "@type": "Event",
-            "name": "Phase 2: 36-Hour Offline Grand Finale at Nirma University",
+            "name": "Phase 2: 48-Hour Offline Grand Finale at Nirma University",
             "startDate": "2027-01-02T09:00:00+05:30",
             "endDate": "2027-01-04T18:00:00+05:30",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "description": "36-hour continuous in-person hacking marathon, project pitching, mentor reviews, and grand award ceremony.",
+            "description": "48-hour continuous in-person hacking marathon, project pitching, mentor reviews, and grand award ceremony.",
           },
         ],
         "about": [
@@ -174,7 +175,7 @@ export default function StructuredData() {
             "acceptedAnswer": {
               "@type": "Answer",
               "text":
-                "HackIEEE 2026-27 is a national-level 36-hour offline hackathon organised by the IEEE Computer Society Student Branch Chapter at Nirma University in collaboration with Kiro. It draws top collegiate developers, designers, and problem solvers from engineering institutes across India to compete, prototype, and build solutions.",
+                "HackIEEE 2026-27 is a national-level 48-hour offline hackathon organised by the IEEE Computer Society Student Branch Chapter at Nirma University in collaboration with Kiro. It draws top collegiate developers, designers, and problem solvers from engineering institutes across India to compete, prototype, and build solutions.",
             },
           },
           {
@@ -192,7 +193,7 @@ export default function StructuredData() {
             "acceptedAnswer": {
               "@type": "Answer",
               "text":
-                "The 36-hour grand finale is held offline on the campus of Nirma University, located on the Sarkhej - Gandhinagar Highway, Ahmedabad, Gujarat (PIN: 382481), India, on January 2–4, 2027.",
+                "The 48-hour grand finale is held offline on the campus of Nirma University, located on the Sarkhej - Gandhinagar Highway, Ahmedabad, Gujarat (PIN: 382481), India, on January 2–4, 2027.",
             },
           },
           {

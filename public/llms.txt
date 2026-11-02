@@ -1,10 +1,10 @@
-# HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon
+# HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon
 
-> HackIEEE is India's premier national-level hackathon hosted by the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, in collaboration with Kiro. A high-intensity 36-hour offline hackathon inviting top engineering talent and student innovators from across the country to build, stage, and ship considered code.
+> HackIEEE is India's premier national-level hackathon hosted by the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, in collaboration with Kiro. A high-intensity 48-hour offline hackathon inviting top engineering talent and student innovators from across the country to build, stage, and ship considered code.
 
 - **Event:** HackIEEE 2026-27 (Inaugural Edition)
 - **Scope & Scale:** All-India National-Level Hackathon
-- **Format:** 36-Hour Continuous In-Person / Offline Hackathon
+- **Format:** 48-Hour Continuous In-Person / Offline Hackathon
 - **Venue:** Nirma University Campus, Sarkhej - Gandhinagar Highway, Gota, Ahmedabad, Gujarat 382481, India
 - **Geographic Coordinates:** 23.1287° N, 72.5447° E
 - **Team Size:** 1 to 4 members per team (inter-college teams permitted)
@@ -23,7 +23,7 @@
    Global and national registration opens. Teams submit ideas and form squads of up to 4 members.
 2. **Phase 1 — Track Declaration & Team Shortlisting (December 20, 2026):**
    Official problem statements and competitive challenge tracks unveiled. Top teams shortlisted for the offline finale.
-3. **Phase 2 — The 36-Hour Offline Grand Finale (January 2–4, 2027):**
+3. **Phase 2 — The 48-Hour Offline Grand Finale (January 2–4, 2027):**
    Three days of nonstop building, real-time code reviews, mentor check-ins, jury evaluations, and the grand awards ceremony at Nirma University.
 
 ## Core Pillars & Values

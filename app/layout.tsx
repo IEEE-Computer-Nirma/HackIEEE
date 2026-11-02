@@ -44,18 +44,19 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon at Nirma University",
+    default: "HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon at Nirma University",
     template: "%s | HackIEEE 2026-27",
   },
   description:
-    "HackIEEE 2026-27 is a national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
+    "HackIEEE 2026-27 is a national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
   keywords: [
     "HackIEEE",
     "HackIEEE 2026",
     "HackIEEE 2027",
     "National Level Hackathon",
     "National Hackathon India",
-    "36-Hour Offline Hackathon",
+    "48-Hour Offline Hackathon",
+    "48-Hour Hackathon",
     "All-India Hackathon",
     "IEEE Hackathon India",
     "Nirma University Hackathon",
@@ -105,12 +106,12 @@ export const metadata: Metadata = {
     "geo.position": "23.1287;72.5447",
     "ICBM": "23.1287, 72.5447",
     "event-type": "National-Level Hackathon",
-    "event-duration": "36-Hour Offline Finale",
+    "event-duration": "48-Hour Offline Finale",
   },
   openGraph: {
-    title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
+    title: "HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon",
     description:
-      "India's premier national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Build, stage, and ship considered products.",
+      "India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Build, stage, and ship considered products.",
     url: siteUrl,
     siteName: "HackIEEE 2026-27",
     images: [
@@ -118,7 +119,7 @@ export const metadata: Metadata = {
         url: "/OG-Tag.png",
         width: 1200,
         height: 630,
-        alt: "HackIEEE 2026-27 — National-Level 36-Hour Offline Hackathon",
+        alt: "HackIEEE 2026-27 — National-Level 48-Hour Offline Hackathon",
       },
     ],
     locale: "en_US",
@@ -126,9 +127,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
+    title: "HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon",
     description:
-      "India's premier national 36-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
+      "India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
     images: ["/OG-Tag.png"],
   },
 };
