@@ -4,6 +4,8 @@ import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
 import { showKiroCollaboration } from "../flags";
 
+import RegisterHeroButton from "./RegisterHeroButton";
+
 /* The Kiro logo exactly as supplied: its intrinsic size sets the aspect ratio,
    CSS sets only the height (.hero-collab__logo). */
 const KIRO_LOGO = { src: "/collab/kiro-logo.svg", width: 1200, height: 1200 };
@@ -90,11 +92,12 @@ export default async function Hero() {
           </p>
 
           <div
-            className="rise mt-9 flex w-full flex-col items-center gap-3 min-[360px]:w-auto min-[360px]:flex-row md:mt-11 md:gap-5"
+            className="rise mt-9 flex w-full flex-col items-center gap-3 min-[360px]:w-auto min-[360px]:flex-row md:mt-11 md:gap-4"
             style={{ "--d": "1350ms" } as React.CSSProperties}
           >
-            <SmoothLink href="#tracks" className="btn btn-sand w-full min-[360px]:w-auto">
-              Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
+            <RegisterHeroButton className="w-full min-[360px]:w-auto" />
+            <SmoothLink href="#tracks" className="btn btn-ghost w-full min-[360px]:w-auto">
+              Tracks <ArrowRight size={18} strokeWidth={1.75} />
             </SmoothLink>
             <SmoothLink href="#timeline" className="btn btn-ghost w-full min-[360px]:w-auto">
               Timeline <ArrowRight size={18} strokeWidth={1.75} />

@@ -47,7 +47,22 @@ export default function Intro() {
 
     let cancelled = false;
     let liftTimer: number | undefined;
+    const onKey = (e: KeyboardEvent) => {
+      // Never intercept keys when typing inside any input, textarea, or form control
+      const target = e.target as HTMLElement | null;
+      if (
+        root.classList.contains("is-done") ||
+        (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable))
+      ) {
+        return;
+      }
+      if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || IGNORED_KEYS.has(e.key)) return;
+      e.preventDefault(); // Space/Enter would otherwise also click the focused button
+      enter();
+    };
+
     const done = (instant = false) => {
+      window.removeEventListener("keydown", onKey);
       if (cancelled || root.classList.contains("is-done")) return;
       if (instant) root.classList.add("is-instant");
       root.classList.add("is-done");
@@ -64,7 +79,6 @@ export default function Intro() {
     }
 
     primeSound();
-    // Shown only now, so a skipped intro never flashes the prompt before hydration.
     button.classList.add("is-ready");
     button.tabIndex = 0;
     button.focus({ preventScroll: true });
@@ -76,10 +90,9 @@ export default function Intro() {
       video.dataset.playing = "";
       playIntroSfx();
       window.clearTimeout(safety);
-      // A stall mid-play shouldn't trap anyone behind the overlay.
       safety = window.setTimeout(finish, video.duration * 1000 + STALL_SLACK_MS);
     };
-    // Runs inside the click/tap/key: the first one enters, a second one skips.
+
     const enter = () => {
       if (started) return done();
       started = true;
@@ -88,11 +101,6 @@ export default function Intro() {
       button.tabIndex = -1;
       video.play().catch(finish);
       safety = window.setTimeout(finish, START_TIMEOUT_MS);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || IGNORED_KEYS.has(e.key)) return;
-      e.preventDefault(); // Space/Enter would otherwise also click the focused button
-      enter();
     };
 
     video.muted = true; // the sound effect is separate; React doesn't render the attribute
