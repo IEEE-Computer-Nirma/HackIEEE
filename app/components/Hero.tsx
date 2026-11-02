@@ -68,15 +68,23 @@ export default async function Hero() {
             /* Kiro stands alone: its own block, never beside another logo. */
           <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
             <p className="hero-collab__label">In Collaboration With</p>
-            <Image
-              src={KIRO_LOGO.src}
-              alt="Kiro"
-              width={KIRO_LOGO.width}
-              height={KIRO_LOGO.height}
-              unoptimized
-              loading="eager"
-              className="hero-collab__logo"
-            />
+            <a
+              href="https://kiro.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center transition-transform duration-300 hover:scale-105"
+              aria-label="Kiro - kiro.dev"
+            >
+              <Image
+                src={KIRO_LOGO.src}
+                alt="Kiro"
+                width={KIRO_LOGO.width}
+                height={KIRO_LOGO.height}
+                unoptimized
+                loading="eager"
+                className="hero-collab__logo"
+              />
+            </a>
           </div>
           )}
 
