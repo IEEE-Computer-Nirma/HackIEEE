@@ -44,6 +44,7 @@
 
 - **Main Website:** https://hack.ieeenirma.org
 - **Sitemap XML:** https://hack.ieeenirma.org/sitemap.xml
+- **IEEE CS Chapter Site:** https://ieee-computer-nirma.github.io/
 - **LinkedIn:** https://www.linkedin.com/company/ieee-computer-nirma-university/
 - **Instagram:** https://www.instagram.com/ieee.cs.sbnu/
 - **GitHub:** https://github.com/IEEE-Computer-Nirma/HackIEEE

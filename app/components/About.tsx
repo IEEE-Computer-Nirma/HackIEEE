@@ -136,7 +136,7 @@ export default function About() {
             <span className="h-px w-10 bg-line-strong md:w-20" />
           </h3>
           <a
-            href="https://www.linkedin.com/company/ieee-computer-nirma-university/"
+            href="https://ieee-computer-nirma.github.io/"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 flex flex-col items-center gap-5 text-center"

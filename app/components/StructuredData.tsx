@@ -22,6 +22,7 @@ export default function StructuredData() {
         "url": "https://hack.ieeenirma.org",
         "logo": "https://hack.ieeenirma.org/organisers/ieee-cs-nirma.svg",
         "sameAs": [
+          "https://ieee-computer-nirma.github.io/",
           "https://www.linkedin.com/company/ieee-computer-nirma-university/",
           "https://www.instagram.com/ieee.cs.sbnu/",
           "https://github.com/IEEE-Computer-Nirma",
