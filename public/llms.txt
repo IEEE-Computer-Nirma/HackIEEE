@@ -1,0 +1,41 @@
+# HackIEEE 2026-27
+
+> The premier national hackathon hosted by IEEE Computer Society at Nirma University. 48 hours to innovate, build, and ship considered code with cutting-edge tools and technologies.
+
+- **Event Name:** HackIEEE 2026-27 (Inaugural Edition)
+- **Tagline:** Build, stage and ship code that feels considered, from first draft to launch.
+- **Dates:** 
+  - Registrations Open: November 15, 2026
+  - Problem Statements & Track Declaration: December 20, 2026
+  - Grand Offline Finale: January 2–4, 2027 (36-hour offline hackathon)
+- **Venue:** Nirma University, Sarkhej - Gandhinagar Highway, Ahmedabad, Gujarat 382481, India
+- **Format:** In-person / Offline Grand Finale at Nirma University campus
+- **Team Size:** 1 to 4 members per team
+- **Eligibility:** Open to students, developers, and tech innovators globally
+- **Registration Fee:** Free of cost
+- **Official Website:** https://hack.ieeenirma.org
+- **Primary Contact:** deep@computer.org | +91 92656 41668
+- **Organizers:** IEEE Computer Society Student Branch Chapter at Nirma University (with IEEE ITSS & IEEE SPS)
+- **Collaborator:** Kiro (https://kiro.dev)
+
+## Schedule & Timeline
+
+1. **Phase 0 — Registrations Open (November 15, 2026):**
+   Team formation begins. Global registration portal opens for all participants.
+2. **Phase 1 — Problem Statement & Track Declaration (December 20, 2026):**
+   Official challenge tracks and problem statements unveiled. Shortlisted teams confirmed.
+3. **Phase 2 — Grand Finale (January 2–4, 2027):**
+   36-hour offline hackathon, mentorship sessions, project pitching, judging, and award ceremony at Nirma University.
+
+## Core Pillars & Values
+
+- **Build & Ship:** Transform ambitious concepts into production-grade functional software and hardware within 48 hours.
+- **Connect & Network:** Engage with tech founders, industry mentors, IEEE leaders, and peers from across the nation.
+- **Learn & Grow:** Hands-on workshops, masterclasses, and direct exposure to modern architectures, frameworks, and tools.
+
+## Social & Links
+
+- **LinkedIn:** https://www.linkedin.com/company/ieee-computer-nirma-university/
+- **Instagram:** https://www.instagram.com/ieee.cs.sbnu/
+- **GitHub:** https://github.com/IEEE-Computer-Nirma/HackIEEE
+- **Sitemap:** https://hack.ieeenirma.org/sitemap.xml

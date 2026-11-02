@@ -8,10 +8,25 @@ export default function robots(): MetadataRoute.Robots {
       : "https://hack.ieeenirma.org");
 
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+      },
+      {
+        // Generative search & LLM crawler permissions (AEO / GEO)
+        userAgent: [
+          "GPTBot",
+          "ChatGPT-User",
+          "ClaudeBot",
+          "anthropic-ai",
+          "PerplexityBot",
+          "Google-Extended",
+          "Applebot-Extended",
+        ],
+        allow: ["/", "/llms.txt"],
+      },
+    ],
     sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
