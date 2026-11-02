@@ -44,24 +44,28 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HackIEEE 2026-27 | 48-Hour National Hackathon at Nirma University",
+    default: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon at Nirma University",
     template: "%s | HackIEEE 2026-27",
   },
   description:
-    "HackIEEE 2026-27 is the premier national hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro. Build, stage, and ship considered code in 48 hours.",
+    "HackIEEE 2026-27 is India's premier national-level hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro. 36 hours of continuous offline building, innovation, and shipping.",
   keywords: [
     "HackIEEE",
     "HackIEEE 2026",
     "HackIEEE 2027",
-    "IEEE Computer Society",
+    "National Level Hackathon",
+    "National Hackathon India",
+    "36-Hour Offline Hackathon",
+    "All-India Hackathon",
+    "IEEE Hackathon India",
     "Nirma University Hackathon",
     "Ahmedabad Hackathon",
-    "National Hackathon India",
-    "Kiro",
-    "Coding Competition",
-    "Web3",
-    "AI",
-    "Software Development",
+    "Gujarat Tech Hackathon",
+    "Student Hackathon 2027",
+    "Kiro Hackathon",
+    "Coding Marathon",
+    "Hardware and Software Hackathon",
+    "IEEE Computer Society",
   ],
   authors: [
     {
@@ -86,10 +90,18 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    "geo.region": "IN-GJ",
+    "geo.placename": "Ahmedabad, Gujarat, India",
+    "geo.position": "23.1287;72.5447",
+    "ICBM": "23.1287, 72.5447",
+    "event-type": "National-Level Hackathon",
+    "event-duration": "36-Hour Offline Finale",
+  },
   openGraph: {
-    title: "HackIEEE 2026-27 | 48-Hour National Hackathon at Nirma University",
+    title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
     description:
-      "Join HackIEEE 2026-27 at Nirma University. 48 hours to innovate, build, and ship with top developers and industry mentors.",
+      "Join India's premier national hackathon at Nirma University. 36 hours of continuous building, top mentorship, and grand prizes with IEEE CS & Kiro.",
     url: siteUrl,
     siteName: "HackIEEE 2026-27",
     images: [
@@ -97,7 +109,7 @@ export const metadata: Metadata = {
         url: "/OG-Tag.png",
         width: 1200,
         height: 630,
-        alt: "HackIEEE 2026-27 — 48-Hour National Hackathon",
+        alt: "HackIEEE 2026-27 — National-Level 36-Hour Offline Hackathon",
       },
     ],
     locale: "en_US",
@@ -105,9 +117,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HackIEEE 2026-27 | 48-Hour National Hackathon",
+    title: "HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon",
     description:
-      "Join HackIEEE 2026-27 at Nirma University. 48 hours to innovate, build, and ship with top developers.",
+      "Join India's premier national hackathon at Nirma University. 36 hours of continuous building, top mentorship, and grand prizes.",
     images: ["/OG-Tag.png"],
   },
 };

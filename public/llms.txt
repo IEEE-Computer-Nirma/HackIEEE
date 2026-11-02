@@ -1,41 +1,49 @@
-# HackIEEE 2026-27
+# HackIEEE 2026-27 | National-Level 36-Hour Offline Hackathon
 
-> The premier national hackathon hosted by IEEE Computer Society at Nirma University. 48 hours to innovate, build, and ship considered code with cutting-edge tools and technologies.
+> HackIEEE is India's premier national-level hackathon hosted by the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, in collaboration with Kiro. A high-intensity 36-hour offline hackathon inviting top engineering talent and student innovators from across the country to build, stage, and ship considered code.
 
-- **Event Name:** HackIEEE 2026-27 (Inaugural Edition)
-- **Tagline:** Build, stage and ship code that feels considered, from first draft to launch.
-- **Dates:** 
-  - Registrations Open: November 15, 2026
-  - Problem Statements & Track Declaration: December 20, 2026
-  - Grand Offline Finale: January 2–4, 2027 (36-hour offline hackathon)
-- **Venue:** Nirma University, Sarkhej - Gandhinagar Highway, Ahmedabad, Gujarat 382481, India
-- **Format:** In-person / Offline Grand Finale at Nirma University campus
-- **Team Size:** 1 to 4 members per team
-- **Eligibility:** Open to students, developers, and tech innovators globally
-- **Registration Fee:** Free of cost
+- **Event:** HackIEEE 2026-27 (Inaugural Edition)
+- **Scope & Scale:** All-India National-Level Hackathon
+- **Format:** 36-Hour Continuous In-Person / Offline Hackathon
+- **Venue:** Nirma University Campus, Sarkhej - Gandhinagar Highway, Gota, Ahmedabad, Gujarat 382481, India
+- **Geographic Coordinates:** 23.1287° N, 72.5447° E
+- **Team Size:** 1 to 4 members per team (inter-college teams permitted)
+- **Eligibility:** Undergraduate, postgraduate students, and early developers nationwide and globally
+- **Cost:** 100% Free registration (no entry fee)
+- **Accommodations:** Meals, high-speed connectivity, overnight hacking facilities, and direct industry mentorship provided to shortlisted finalists at the Nirma campus
 - **Official Website:** https://hack.ieeenirma.org
-- **Primary Contact:** deep@computer.org | +91 92656 41668
+- **Contact Email:** deep@computer.org
+- **Contact Phone:** +91 92656 41668
 - **Organizers:** IEEE Computer Society Student Branch Chapter at Nirma University (with IEEE ITSS & IEEE SPS)
-- **Collaborator:** Kiro (https://kiro.dev)
+- **Industry Collaborator:** Kiro (https://kiro.dev)
 
-## Schedule & Timeline
+## Hackathon Timeline & Phases
 
-1. **Phase 0 — Registrations Open (November 15, 2026):**
-   Team formation begins. Global registration portal opens for all participants.
-2. **Phase 1 — Problem Statement & Track Declaration (December 20, 2026):**
-   Official challenge tracks and problem statements unveiled. Shortlisted teams confirmed.
-3. **Phase 2 — Grand Finale (January 2–4, 2027):**
-   36-hour offline hackathon, mentorship sessions, project pitching, judging, and award ceremony at Nirma University.
+1. **Phase 0 — National Registrations Open (November 15, 2026):**
+   Global and national registration opens. Teams submit ideas and form squads of up to 4 members.
+2. **Phase 1 — Track Declaration & Team Shortlisting (December 20, 2026):**
+   Official problem statements and competitive challenge tracks unveiled. Top teams shortlisted for the offline finale.
+3. **Phase 2 — The 36-Hour Offline Grand Finale (January 2–4, 2027):**
+   Three days of nonstop building, real-time code reviews, mentor check-ins, jury evaluations, and the grand awards ceremony at Nirma University.
 
 ## Core Pillars & Values
 
-- **Build & Ship:** Transform ambitious concepts into production-grade functional software and hardware within 48 hours.
-- **Connect & Network:** Engage with tech founders, industry mentors, IEEE leaders, and peers from across the nation.
-- **Learn & Grow:** Hands-on workshops, masterclasses, and direct exposure to modern architectures, frameworks, and tools.
+- **Build & Ship:** Transform real-world problem statements into working prototypes and production-grade architectures within 48 hours.
+- **Connect & Network:** Collaborate with fellow innovators, top engineering peers, IEEE leadership, and tech mentors.
+- **Learn & Grow:** Level up engineering craft through hands-on workshops, system design feedback, and cutting-edge framework exposure.
 
-## Social & Links
+## Entity & Geographic Identification
 
+- **Host Institution:** Nirma University (Institute of Technology)
+- **Host Chapter:** IEEE Computer Society (SBC Nirma University)
+- **City / Region:** Ahmedabad, Gujarat, India (Western India tech corridor)
+- **Country:** India (IN)
+- **Languages Supported:** English (Primary), Hindi, Gujarati
+
+## Official Resources & Links
+
+- **Main Website:** https://hack.ieeenirma.org
+- **Sitemap XML:** https://hack.ieeenirma.org/sitemap.xml
 - **LinkedIn:** https://www.linkedin.com/company/ieee-computer-nirma-university/
 - **Instagram:** https://www.instagram.com/ieee.cs.sbnu/
 - **GitHub:** https://github.com/IEEE-Computer-Nirma/HackIEEE
-- **Sitemap:** https://hack.ieeenirma.org/sitemap.xml
