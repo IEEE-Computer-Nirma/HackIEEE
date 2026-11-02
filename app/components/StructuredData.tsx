@@ -51,7 +51,7 @@ export default function StructuredData() {
         },
       },
       {
-        "@type": ["Event", "Hackathon"],
+        "@type": "Event",
         "@id": "https://hack.ieeenirma.org/#event",
         "name": "HackIEEE 2026-27 — National-Level Offline Hackathon",
         "alternateName": [
@@ -114,7 +114,14 @@ export default function StructuredData() {
           },
         },
         "organizer": {
-          "@id": "https://hack.ieeenirma.org/#organization",
+          "@type": "Organization",
+          "name": "IEEE Computer Society Student Branch Chapter, Nirma University",
+          "url": "https://hack.ieeenirma.org",
+        },
+        "performer": {
+          "@type": "Organization",
+          "name": "IEEE Computer Society Student Branch Chapter, Nirma University",
+          "url": "https://hack.ieeenirma.org",
         },
         "sponsor": [
           {
@@ -132,33 +139,7 @@ export default function StructuredData() {
           "validFrom": "2026-11-15T00:00:00+05:30",
           "description": "Free registration for all national applicants. Selected finalists receive mentorship, hacking space, meals, and overnight accommodation support during the 48-hour sprint.",
         },
-        "subEvent": [
-          {
-            "@type": "Event",
-            "name": "Phase 0: National Registrations Open",
-            "startDate": "2026-11-15T00:00:00+05:30",
-            "endDate": "2026-12-19T23:59:59+05:30",
-            "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-            "description": "Team registration and proposal submission phase open to students and developers nationwide.",
-          },
-          {
-            "@type": "Event",
-            "name": "Phase 1: Problem Statement & Track Declaration",
-            "startDate": "2026-12-20T10:00:00+05:30",
-            "endDate": "2026-12-20T18:00:00+05:30",
-            "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-            "description": "Official challenge tracks and problem statements unveiled. Shortlisted finalist teams announced.",
-          },
-          {
-            "@type": "Event",
-            "name": "Phase 2: 48-Hour Offline Grand Finale at Nirma University",
-            "startDate": "2027-01-02T09:00:00+05:30",
-            "endDate": "2027-01-04T18:00:00+05:30",
-            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "description": "48-hour continuous in-person hacking marathon, project pitching, mentor reviews, and grand award ceremony.",
-          },
-        ],
-        "about": [
+                "about": [
           { "@type": "Thing", "name": "Hackathon" },
           { "@type": "Thing", "name": "Software Prototyping" },
           { "@type": "Thing", "name": "Artificial Intelligence & Machine Learning" },
