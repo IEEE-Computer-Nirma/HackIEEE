@@ -6,7 +6,8 @@ export default function StructuredData() {
         "@type": "WebSite",
         "@id": "https://hack.ieeenirma.org/#website",
         "url": "https://hack.ieeenirma.org",
-        "name": "HackIEEE 2026-27 | National-Level Hackathon",
+        "name": "HackIEEE 2026-27",
+        "alternateName": ["HackIEEE", "HackIEEE 2026", "hack.ieeenirma.org"],
         "description":
           "Official portal for HackIEEE 2026-27, India's premier national-level 48-hour offline hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro.",
         "inLanguage": "en-US",
