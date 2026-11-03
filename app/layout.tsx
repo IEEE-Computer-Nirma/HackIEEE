@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, Lexend } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { isRegistrationActive } from "./flags";
 import PageTransition from "./components/PageTransition";
 import Intro from "./components/Intro";
 import SoundToggle from "./components/SoundToggle";
@@ -140,7 +141,14 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  let registrationActive = true;
+  try {
+    registrationActive = Boolean(await isRegistrationActive());
+  } catch {
+    registrationActive = true;
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -148,11 +156,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData />
       </head>
       <body
+        suppressHydrationWarning
         className={`${lexend.variable} ${duneRise.variable} ${plexMono.variable} antialiased font-sans`}
       >
         <Intro />
         <PageTransition />
-        <Navbar />
+        <Navbar isRegistrationActive={registrationActive} />
         <SoundToggle />
         {children}
         <Analytics />
