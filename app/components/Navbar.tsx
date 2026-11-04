@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Mail, Copy, ArrowUpRight, Users, LayoutDashboard } from "lucide-react";
+import { Mail, Copy, LogIn, UserPlus } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
 import { CONTACT_EMAIL } from "../data/timeline";
-import { useRegistration } from "../context/RegistrationContext";
+
+interface NavbarProps {
+  isRegistrationActive?: boolean;
+}
 
 const links = [
   { label: "About", href: "/#about", section: "about" },
@@ -14,32 +18,15 @@ const links = [
   { label: "Speakers", href: "/#speakers", section: "speakers" },
 ];
 
-function LogoMark() {
-  return (
-    <svg width="46" height="46" viewBox="0 0 46 46" fill="none" aria-hidden="true">
-      <circle cx="21" cy="23" r="17.5" stroke="currentColor" strokeWidth="1.4" />
-      <circle cx="21" cy="23" r="3.2" fill="currentColor" />
-      <path d="M26 23h32" stroke="url(#logo-flare)" strokeWidth="1.2" />
-      <circle cx="33" cy="23" r="2" fill="#fff1dc" />
-      <defs>
-        <linearGradient id="logo-flare" x1="26" x2="58" y1="0" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#ffb061" stopOpacity="0" />
-          <stop offset="0.25" stopColor="#ffb061" />
-          <stop offset="1" stopColor="#ffb061" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-export default function Navbar() {
+export default function Navbar({ isRegistrationActive = true }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isAuthPage = pathname === "/register" || pathname === "/login";
+
   const [active, setActive] = useState<string | null>(null);
   const [hidden, setHidden] = useState(false);
   const [onHero, setOnHero] = useState(isHome);
-  const { openWizard } = useRegistration();
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -50,6 +37,7 @@ export default function Navbar() {
 
   /* Top bar: hide while scrolling down, return on scroll up. */
   useEffect(() => {
+    if (isAuthPage) return;
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
@@ -60,7 +48,7 @@ export default function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isHome]);
+  }, [isHome, isAuthPage]);
 
   /* Active pill follows the section in view. */
   useEffect(() => {
@@ -85,6 +73,11 @@ export default function Navbar() {
   useEffect(() => () => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
   }, []);
+
+  // Suppress landing page topbar on standalone registration & login pages
+  if (isAuthPage) {
+    return null;
+  }
 
   const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -128,7 +121,7 @@ export default function Navbar() {
       <div 
         className={`fixed inset-0 z-[60] bg-bg/95 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-500 md:hidden ${isMobileMenuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
       >
-        <div className="flex flex-col items-center gap-8 text-2xl font-medium mt-12">
+        <div className="flex flex-col items-center gap-7 text-2xl font-medium mt-12 w-full px-6">
           {links.map((l) => (
             <SmoothLink
               key={l.label}
@@ -139,47 +132,36 @@ export default function Navbar() {
               {l.label}
             </SmoothLink>
           ))}
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              openWizard("team");
-            }}
-            className="w-full mt-4 px-6 py-2.5 rounded-full border border-line-strong hover:border-spice bg-surface text-sand hover:text-ink text-base font-medium flex items-center justify-center gap-2"
-          >
-            <Users size={18} className="text-spice" />
-            <span>Team Management</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              openWizard("dashboard");
-            }}
-            className="w-full px-6 py-2.5 rounded-full border border-line-strong hover:border-spice bg-surface text-sand hover:text-ink text-base font-medium flex items-center justify-center gap-2"
-          >
-            <LayoutDashboard size={18} className="text-spice" />
-            <span>Dashboard</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              openWizard("registration");
-            }}
-            className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-spice via-spice-hot to-amber-400 text-[#1d130a] text-lg font-semibold tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(226,130,47,0.4)]"
-          >
-            <span>Register Now</span>
-            <ArrowUpRight size={20} />
-          </button>
-          <a
-            href="#contact"
-            onClick={handleContactClick}
-            className="px-6 py-3 rounded-full border border-line-strong bg-surface text-ink text-lg flex items-center gap-2"
-          >
-            <Mail size={20} />
-            Contact Us
-          </a>
+
+          {isRegistrationActive ? (
+            <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-[240px]">
+              <Link
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full px-6 py-3 rounded-full border border-line-strong bg-surface text-ink text-base flex items-center justify-center gap-2"
+              >
+                <LogIn size={18} />
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
+              >
+                <UserPlus size={18} />
+                Register
+              </Link>
+            </div>
+          ) : (
+            <a
+              href="#contact"
+              onClick={handleContactClick}
+              className="mt-4 px-6 py-3 rounded-full border border-line-strong bg-surface text-ink text-lg flex items-center gap-2"
+            >
+              <Mail size={20} />
+              Contact Us
+            </a>
+          )}
         </div>
       </div>
 
@@ -192,41 +174,25 @@ export default function Navbar() {
         </nav>
 
         <div className="topbar-actions col-start-3 flex items-center gap-2 md:gap-3">
-          <button
-            type="button"
-            onClick={() => openWizard("team")}
-            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-line hover:border-spice/50 bg-surface hover:bg-spice/10 text-sand/80 hover:text-ink text-xs font-medium transition-all cursor-pointer"
-            title="Team Management"
-          >
-            <Users size={14} className="text-spice" />
-            <span>Team</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => openWizard("dashboard")}
-            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-line hover:border-spice/50 bg-surface hover:bg-spice/10 text-sand/80 hover:text-ink text-xs font-medium transition-all cursor-pointer"
-            title="Participant Dashboard"
-          >
-            <LayoutDashboard size={14} className="text-spice" />
-            <span>Dashboard</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => openWizard("registration")}
-            className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-spice via-spice-hot to-amber-400 hover:brightness-110 text-[#1d130a] text-xs font-semibold tracking-wider transition-all duration-200 shadow-[0_0_15px_rgba(226,130,47,0.35)] cursor-pointer"
-          >
-            <span>Register</span>
-            <ArrowUpRight size={14} strokeWidth={2.5} />
-          </button>
-
-          <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">
-            <Mail size={17} strokeWidth={1.75} />
-            <span>
-              Contact Us
-            </span>
-          </a>
+          {isRegistrationActive ? (
+            <div className="hidden md:flex items-center gap-2.5">
+              <Link href="/login" className="contact-btn">
+                <LogIn size={16} strokeWidth={1.75} />
+                <span>Login</span>
+              </Link>
+              <Link 
+                href="/register" 
+                className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
+              >
+                <span>Register</span>
+              </Link>
+            </div>
+          ) : (
+            <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">
+              <Mail size={17} strokeWidth={1.75} />
+              <span>Contact Us</span>
+            </a>
+          )}
 
           {/* Mobile Hamburger Button */}
           <button

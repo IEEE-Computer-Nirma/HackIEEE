@@ -9,6 +9,7 @@ interface UniversityAutocompleteProps {
   onChange: (value: string, university?: University) => void;
   error?: string;
   id?: string;
+  isDark?: boolean;
 }
 
 export default function UniversityAutocomplete({
@@ -16,6 +17,7 @@ export default function UniversityAutocomplete({
   onChange,
   error,
   id = "university-autocomplete",
+  isDark = false,
 }: UniversityAutocompleteProps) {
   const [query, setQuery] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -145,8 +147,8 @@ export default function UniversityAutocomplete({
   return (
     <div ref={containerRef} className="relative w-full">
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sand/60">
-          <School size={18} strokeWidth={1.8} />
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8a8073]">
+          <School size={17} strokeWidth={1.8} />
         </div>
         <input
           id={id}
@@ -161,19 +163,21 @@ export default function UniversityAutocomplete({
           onKeyDown={handleKeyDown}
           placeholder="Search or enter your university / institution"
           autoComplete="off"
-          className={`w-full pl-11 pr-10 py-3 rounded-xl bg-[#140f0b]/80 border text-ink placeholder:text-sand/30 text-[0.95rem] transition-all duration-200 outline-none ${
-            error
-              ? "border-ember focus:border-ember focus:ring-1 focus:ring-ember/40"
-              : "border-[rgba(241,214,172,0.18)] focus:border-spice focus:ring-1 focus:ring-spice/40 focus:bg-[#1a130d]"
+          className={`w-full pl-10 pr-10 py-3 rounded-xl text-sm transition-all duration-200 outline-none ${
+            isDark
+              ? "bg-[#18110b] border-[rgba(248,207,150,0.2)] text-[#f3e6cf] placeholder:text-[#f3e6cf]/35 hover:border-[rgba(248,207,150,0.35)] focus:border-[#ffa64d] focus:ring-1 focus:ring-[#ffa64d]/30"
+              : "bg-[#f5f0e8] border-[#e5dcce] text-[#2b2318] placeholder:text-[#9a9184] hover:border-[#c67634]/60 focus:border-[#c06820] focus:ring-1 focus:ring-[#c06820]/30"
+          } ${
+            error ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/30" : ""
           }`}
           aria-expanded={isOpen}
           aria-autocomplete="list"
           aria-controls="university-suggestions-list"
           role="combobox"
         />
-        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-sand/40">
+        <div className={`absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none ${isDark ? "text-[#f3e6cf]/40" : "text-[#8a8073]"}`}>
           {loading ? (
-            <Loader2 size={16} className="animate-spin text-spice" />
+            <Loader2 size={16} className={`animate-spin ${isDark ? "text-[#ffa64d]" : "text-[#c06820]"}`} />
           ) : (
             <Search size={16} />
           )}
@@ -185,7 +189,11 @@ export default function UniversityAutocomplete({
         <div
           id="university-suggestions-list"
           role="listbox"
-          className="absolute z-50 left-0 right-0 mt-2 max-h-64 overflow-y-auto rounded-xl border border-line-strong bg-[#16100b]/98 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] py-1.5 focus:outline-none"
+          className={`absolute z-50 left-0 right-0 mt-2 max-h-64 overflow-y-auto rounded-xl py-1.5 focus:outline-none ${
+            isDark
+              ? "border border-[rgba(248,207,150,0.22)] bg-[#18110b] shadow-[0_16px_50px_rgba(0,0,0,0.7)]"
+              : "border border-[#ecd8c5] bg-[#fefbf6] shadow-[0_16px_50px_rgba(140,80,30,0.14)]"
+          }`}
         >
           {suggestions.length > 0 ? (
             suggestions.map((univ, idx) => {
@@ -197,27 +205,44 @@ export default function UniversityAutocomplete({
                   type="button"
                   onClick={() => handleSelect(univ)}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full text-left px-4 py-2.5 flex items-start gap-3 transition-colors ${
-                    isSelected ? "bg-spice/15 text-sand" : "text-ink hover:bg-surface"
+                  className={`w-full text-left px-4 py-2.5 flex items-start gap-3 transition-colors cursor-pointer ${
+                    isDark
+                      ? isSelected
+                        ? "bg-[#e2822f]/20 text-[#ffa64d]"
+                        : "text-[#f3e6cf] hover:bg-white/5"
+                      : isSelected
+                        ? "bg-[#faefe3] text-[#c06820]"
+                        : "text-[#2b2318] hover:bg-[#f5f0e8]"
                   }`}
                 >
-                  <School size={16} className={`mt-0.5 shrink-0 ${isSelected ? "text-spice" : "text-sand/50"}`} />
+                  <School
+                    size={16}
+                    className={`mt-0.5 shrink-0 ${
+                      isSelected
+                        ? isDark ? "text-[#ffa64d]" : "text-[#c06820]"
+                        : isDark ? "text-[#f3e6cf]/40" : "text-[#8a8073]"
+                    }`}
+                  />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[0.92rem] font-medium leading-snug truncate">{univ.name}</p>
+                    <p className={`text-sm font-medium leading-snug truncate ${isDark ? "text-[#f3e6cf]" : "text-[#2b2318]"}`}>
+                      {univ.name}
+                    </p>
                     {(univ.city || univ.state) && (
-                      <p className="text-[0.78rem] text-sand/60 leading-tight">
+                      <p className={`text-xs leading-tight ${isDark ? "text-[#f3e6cf]/50" : "text-[#7f7669]"}`}>
                         {[univ.city, univ.state, univ.country].filter(Boolean).join(", ")}
                       </p>
                     )}
                   </div>
-                  {isCurrent && <Check size={16} className="text-spice shrink-0 mt-0.5" />}
+                  {isCurrent && (
+                    <Check size={16} className={`shrink-0 mt-0.5 ${isDark ? "text-[#ffa64d]" : "text-[#c06820]"}`} />
+                  )}
                 </button>
               );
             })
           ) : (
             !loading && query.trim().length > 0 && (
-              <div className="px-4 py-3 text-center text-sand/60 text-sm">
-                No matching university found in recommendations.
+              <div className={`px-4 py-3 text-center text-xs ${isDark ? "text-[#f3e6cf]/50" : "text-[#7f7669]"}`}>
+                No matching university found in catalog.
               </div>
             )
           )}
@@ -231,22 +256,30 @@ export default function UniversityAutocomplete({
                 type="button"
                 onClick={handleAddCustom}
                 onMouseEnter={() => setSelectedIndex(suggestions.length)}
-                className={`w-full text-left px-4 py-3 border-t border-line flex items-center gap-2.5 transition-colors ${
-                  selectedIndex === suggestions.length
-                    ? "bg-spice/20 text-spice-hot"
-                    : "text-spice hover:bg-spice/10"
+                className={`w-full text-left px-4 py-3 flex items-center gap-2.5 transition-colors cursor-pointer ${
+                  isDark
+                    ? `border-t border-[rgba(248,207,150,0.15)] ${
+                        selectedIndex === suggestions.length
+                          ? "bg-[#e2822f]/20 text-[#ffa64d]"
+                          : "text-[#f3e6cf] hover:bg-white/5"
+                      }`
+                    : `border-t border-[#ecd8c5] ${
+                        selectedIndex === suggestions.length
+                          ? "bg-[#faefe3] text-[#c06820]"
+                          : "text-[#2b2318] hover:bg-[#f5f0e8]"
+                      }`
                 }`}
               >
-                <Plus size={16} className="shrink-0" />
-                <span className="text-[0.88rem] font-medium truncate">
-                  Use custom entry: <span className="underline italic">&quot;{query.trim()}&quot;</span>
+                <Plus size={16} className={`shrink-0 ${isDark ? "text-[#ffa64d]" : "text-[#c06820]"}`} />
+                <span className="text-xs font-medium truncate">
+                  Use custom entry: <span className={`underline italic ${isDark ? "text-[#ffa64d]" : "text-[#c06820]"}`}>&quot;{query.trim()}&quot;</span>
                 </span>
               </button>
             )}
         </div>
       )}
 
-      {error && <p className="mt-1.5 text-xs text-ember font-medium">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-red-400 font-medium">{error}</p>}
     </div>
   );
 }

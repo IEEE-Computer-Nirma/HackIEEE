@@ -3,6 +3,7 @@ import { fullRegistrationSchema } from "@/app/lib/registration-schema";
 import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
+import { sendRegistrationConfirmationEmail } from "@/services/email";
 
 const REGISTRATIONS_FILE = path.join(process.cwd(), ".data", "registrations.json");
 
@@ -115,7 +116,7 @@ export async function POST(req: NextRequest) {
       saveRegistration(newRecord);
     }
 
-    // 5. Try Supabase if configured
+    // 3. Try Supabase if configured
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (supabaseUrl && supabaseKey) {
@@ -149,7 +150,20 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 6. Return response
+    // 4. Dispatch confirmation email
+    try {
+      await sendRegistrationConfirmationEmail({
+        name: data.fullName,
+        email: data.personalEmail,
+        registrationId,
+        college: data.university,
+        track: data.areasOfInterest?.[0] || "Open Innovation",
+      });
+    } catch (mailError) {
+      console.warn("Confirmation email dispatch notice:", mailError);
+    }
+
+    // 5. Return response
     return NextResponse.json({
       success: true,
       registrationId,

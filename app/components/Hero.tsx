@@ -1,10 +1,9 @@
 import Image, { getImageProps } from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
-import { showKiroCollaboration } from "../flags";
-
-import RegisterHeroButton from "./RegisterHeroButton";
+import { showKiroCollaboration, isRegistrationActive } from "../flags";
 
 /* The Kiro logo exactly as supplied: its intrinsic size sets the aspect ratio,
    CSS sets only the height (.hero-collab__logo). */
@@ -57,6 +56,14 @@ export default async function Hero() {
   } catch {
     showCollaboration = false;
   }
+
+  let registrationActive = true;
+  try {
+    registrationActive = Boolean(await isRegistrationActive());
+  } catch {
+    registrationActive = true;
+  }
+
   const currentYear = new Date().getFullYear();
   return (
     <section id="top" className="hero" aria-label={`hackieee ${currentYear}`}>
@@ -68,26 +75,26 @@ export default async function Hero() {
         <div className={`hero__lift flex w-full flex-col items-center ${!showCollaboration ? "-mt-8 md:-mt-14" : ""}`}>
           {showCollaboration && (
             /* Kiro stands alone: its own block, never beside another logo. */
-          <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
-            <p className="hero-collab__label">In Collaboration With</p>
-            <a
-              href="https://kiro.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center transition-transform duration-300 hover:scale-105"
-              aria-label="Kiro - kiro.dev"
-            >
-              <Image
-                src={KIRO_LOGO.src}
-                alt="Kiro"
-                width={KIRO_LOGO.width}
-                height={KIRO_LOGO.height}
-                unoptimized
-                loading="eager"
-                className="hero-collab__logo"
-              />
-            </a>
-          </div>
+            <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
+              <p className="hero-collab__label">In Collaboration With</p>
+              <a
+                href="https://kiro.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center transition-transform duration-300 hover:scale-105"
+                aria-label="Kiro - kiro.dev"
+              >
+                <Image
+                  src={KIRO_LOGO.src}
+                  alt="Kiro"
+                  width={KIRO_LOGO.width}
+                  height={KIRO_LOGO.height}
+                  unoptimized
+                  loading="eager"
+                  className="hero-collab__logo"
+                />
+              </a>
+            </div>
           )}
 
           <h1 className="w-full">
@@ -100,21 +107,31 @@ export default async function Hero() {
           </p>
 
           <div
-            className="rise mt-9 flex w-full flex-col items-center gap-3 min-[360px]:w-auto min-[360px]:flex-row md:mt-11 md:gap-4"
+            className="rise mt-9 flex w-full flex-col items-center gap-3 min-[360px]:w-auto min-[360px]:flex-row md:mt-11 md:gap-5"
             style={{ "--d": "1350ms" } as React.CSSProperties}
           >
-            <RegisterHeroButton className="w-full min-[360px]:w-auto" />
-            <SmoothLink href="#tracks" className="btn btn-ghost w-full min-[360px]:w-auto">
-              Tracks <ArrowRight size={18} strokeWidth={1.75} />
-            </SmoothLink>
-            <SmoothLink href="#timeline" className="btn btn-ghost w-full min-[360px]:w-auto">
-              Timeline <ArrowRight size={18} strokeWidth={1.75} />
-            </SmoothLink>
+            {registrationActive ? (
+              <>
+                <Link href="/register" className="btn btn-sand w-full min-[360px]:w-auto font-medium">
+                  Register for HackIEEE <ArrowRight size={18} strokeWidth={1.75} />
+                </Link>
+                <SmoothLink href="#tracks" className="btn btn-ghost w-full min-[360px]:w-auto">
+                  Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
+                </SmoothLink>
+              </>
+            ) : (
+              <>
+                <SmoothLink href="#tracks" className="btn btn-sand w-full min-[360px]:w-auto">
+                  Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
+                </SmoothLink>
+                <SmoothLink href="#timeline" className="btn btn-ghost w-full min-[360px]:w-auto">
+                  Timeline <ArrowRight size={18} strokeWidth={1.75} />
+                </SmoothLink>
+              </>
+            )}
           </div>
         </div>
       </div>
-
-
 
       <p className="hero__corner hero__corner--l rise" style={{ "--d": "1600ms" } as React.CSSProperties}>
         Nirma

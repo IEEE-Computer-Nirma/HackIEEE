@@ -34,6 +34,20 @@
   --radius: 18px;
   --radius-sm: 12px;
 
+  /* ── Exact User Swatch Palettes ── */
+  --ieee-blue: #3576ae;
+  --ieee-sky: #68aec9;
+  --ice-cyan: #a9d8de;
+  --dune-sand: #e9cb8e;
+  --spice-terracotta: #a5663a;
+  --spice-umber: #66280c;
+
+  --sand-gold: #ba9241;
+  --sand-ochre: #cbaa5c;
+  --sand-linen: #e0d3c5;
+  --sand-blush: #e2c9b3;
+  --sietch-earth: #9e8275;
+
   color-scheme: dark;
 }
 
@@ -1284,4 +1298,36 @@ svg.lucide * {
   .hero__lift {
     animation: none !important;
   }
+}
+
+
+/* ── Form Autofill Prevention (Light & Dark Theme adaptive) ── */
+html[data-theme="day"] input:-webkit-autofill,
+html[data-theme="day"] input:-webkit-autofill:hover,
+html[data-theme="day"] input:-webkit-autofill:focus,
+html[data-theme="day"] input:-webkit-autofill:active,
+html[data-theme="day"] select:-webkit-autofill,
+html[data-theme="day"] select:-webkit-autofill:hover,
+html[data-theme="day"] select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #f5f0e8 inset !important;
+  box-shadow: 0 0 0 1000px #f5f0e8 inset !important;
+  -webkit-text-fill-color: #2b2318 !important;
+  color: #2b2318 !important;
+  caret-color: #2b2318 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+html:not([data-theme="day"]) input:-webkit-autofill,
+html:not([data-theme="day"]) input:-webkit-autofill:hover,
+html:not([data-theme="day"]) input:-webkit-autofill:focus,
+html:not([data-theme="day"]) input:-webkit-autofill:active,
+html:not([data-theme="day"]) select:-webkit-autofill,
+html:not([data-theme="day"]) select:-webkit-autofill:hover,
+html:not([data-theme="day"]) select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #18110b inset !important;
+  box-shadow: 0 0 0 1000px #18110b inset !important;
+  -webkit-text-fill-color: #f3e6cf !important;
+  color: #f3e6cf !important;
+  caret-color: #ffa64d !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
