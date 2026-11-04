@@ -152,7 +152,7 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
                 Register
               </Link>
             </div>
-          ) : (
+          ) : isHome ? (
             <a
               href="#contact"
               onClick={handleContactClick}
@@ -161,7 +161,7 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
               <Mail size={20} />
               Contact Us
             </a>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -187,12 +187,12 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
                 <span>Register</span>
               </Link>
             </div>
-          ) : (
+          ) : isHome ? (
             <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">
               <Mail size={17} strokeWidth={1.75} />
               <span>Contact Us</span>
             </a>
-          )}
+          ) : null}
 
           {/* Mobile Hamburger Button */}
           <button
