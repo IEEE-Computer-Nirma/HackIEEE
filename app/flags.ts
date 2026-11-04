@@ -1,17 +1,20 @@
 import { flag } from "flags/next";
 import { vercelAdapter } from "@flags-sdk/vercel";
 
-function createSafeVercelAdapter() {
+function createSafeVercelAdapter(fallbackValue: boolean = false) {
   const base = vercelAdapter();
   return {
     ...base,
     async decide(args: any) {
       try {
         const value = await base.decide(args);
-        return Boolean(value);
+        if (value !== undefined && value !== null) {
+          return Boolean(value);
+        }
+        return fallbackValue;
       } catch {
         // Fallback when Vercel OIDC is unavailable (e.g. local dev without vercel env pull)
-        return false;
+        return fallbackValue;
       }
     },
     async bulkDecide(args: any): Promise<Record<string, any>> {
@@ -25,7 +28,7 @@ function createSafeVercelAdapter() {
       }
       const result: Record<string, boolean> = {};
       for (const f of args.flags) {
-        result[f.key] = false;
+        result[f.key] = f.key === "isRegistrationActive" ? fallbackValue : false;
       }
       return result;
     },
@@ -34,6 +37,18 @@ function createSafeVercelAdapter() {
 
 export const showKiroCollaboration = flag<boolean>({
   key: "showKiroCollaboration",
-  adapter: createSafeVercelAdapter(),
+  adapter: createSafeVercelAdapter(false),
   defaultValue: false,
+});
+
+/**
+ * Flag controlling HackIEEE 2026-27 Registrations:
+ * - When TRUE: Navbar swaps "Contact Us" for "Login" & "Register", Hero displays "Register for HackIEEE"
+ * - When FALSE: Navbar retains "Contact Us", Hero displays "Tracks & Challenges" & "Timeline"
+ * (The direct routes /register and /login remain accessible anytime for review & staging)
+ */
+export const isRegistrationActive = flag<boolean>({
+  key: "isRegistrationActive",
+  adapter: createSafeVercelAdapter(true),
+  defaultValue: true,
 });
