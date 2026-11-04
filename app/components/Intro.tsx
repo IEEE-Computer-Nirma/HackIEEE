@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { playIntroSfx, primeSound, releaseSound, unlockSound } from "./sound";
 
 /* First-visit intro. Opens on a black "click to enter" gate: browsers only allow
@@ -34,12 +35,18 @@ function decide() {
 }
 
 export default function Intro() {
+  const pathname = usePathname();
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const enterRef = useRef<HTMLButtonElement>(null);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
+    if (pathname !== "/") {
+      setGone(true);
+      return;
+    }
+
     const root = rootRef.current;
     const video = videoRef.current;
     const button = enterRef.current;
@@ -76,10 +83,8 @@ export default function Intro() {
       video.dataset.playing = "";
       playIntroSfx();
       window.clearTimeout(safety);
-      // A stall mid-play shouldn't trap anyone behind the overlay.
       safety = window.setTimeout(finish, video.duration * 1000 + STALL_SLACK_MS);
     };
-    // Runs inside the click/tap/key: the first one enters, a second one skips.
     const enter = () => {
       if (started) return done();
       started = true;
@@ -91,11 +96,11 @@ export default function Intro() {
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || IGNORED_KEYS.has(e.key)) return;
-      e.preventDefault(); // Space/Enter would otherwise also click the focused button
+      e.preventDefault();
       enter();
     };
 
-    video.muted = true; // the sound effect is separate; React doesn't render the attribute
+    video.muted = true;
     video.addEventListener("playing", onPlaying, { once: true });
     video.addEventListener("ended", finish);
     root.addEventListener("click", enter);
@@ -110,9 +115,9 @@ export default function Intro() {
       root.removeEventListener("click", enter);
       window.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [pathname]);
 
-  if (gone) return null;
+  if (pathname !== "/" || gone) return null;
 
   return (
     <div ref={rootRef} className="intro">
@@ -128,8 +133,6 @@ export default function Intro() {
       >
         <source src="/loading-animation.webm" type='video/webm; codecs="vp9"' />
       </video>
-      {/* The root's click handler does the entering; this is the visible,
-          focusable affordance for it. */}
       <button ref={enterRef} type="button" className="intro__enter" tabIndex={-1}>
         <span className="intro__enter-pointer">Click to enter</span>
         <span className="intro__enter-touch">Tap to enter</span>
