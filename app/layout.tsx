@@ -142,11 +142,11 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let registrationActive = true;
+  let registrationActive = false;
   try {
     registrationActive = Boolean(await isRegistrationActive());
   } catch {
-    registrationActive = true;
+    registrationActive = false;
   }
 
   return (

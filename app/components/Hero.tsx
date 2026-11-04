@@ -57,11 +57,11 @@ export default async function Hero() {
     showCollaboration = false;
   }
 
-  let registrationActive = true;
+  let registrationActive = false;
   try {
     registrationActive = Boolean(await isRegistrationActive());
   } catch {
-    registrationActive = true;
+    registrationActive = false;
   }
 
   const currentYear = new Date().getFullYear();

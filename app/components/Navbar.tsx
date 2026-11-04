@@ -18,7 +18,7 @@ const links = [
   { label: "Speakers", href: "/#speakers", section: "speakers" },
 ];
 
-export default function Navbar({ isRegistrationActive = true }: NavbarProps) {
+export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";

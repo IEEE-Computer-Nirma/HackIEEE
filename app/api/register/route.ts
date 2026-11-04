@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { sendRegistrationConfirmationEmail } from "@/services/email";
+import { isRegistrationActive } from "@/app/flags";
 
 const REGISTRATIONS_FILE = path.join(process.cwd(), ".data", "registrations.json");
 
@@ -49,6 +50,24 @@ function generateRegistrationId(): string {
 }
 
 export async function POST(req: NextRequest) {
+  // Gate backend registration behind feature flag
+  let active = false;
+  try {
+    active = Boolean(await isRegistrationActive());
+  } catch {
+    active = false;
+  }
+
+  if (!active) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "HackIEEE registrations are currently closed. Please check back later.",
+      },
+      { status: 403 }
+    );
+  }
+
   try {
     const body = await req.json();
 
@@ -89,78 +108,76 @@ export async function POST(req: NextRequest) {
       registrationId = existingList[existingIndex].registrationId;
       existingList[existingIndex] = {
         registrationId,
-        createdAt: new Date().toISOString(),
-        data: { ...data },
+        createdAt: existingList[existingIndex].createdAt,
+        data: {
+          ...data,
+          updatedAt: new Date().toISOString(),
+        },
       };
       try {
-        const dir = path.dirname(REGISTRATIONS_FILE);
-        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(REGISTRATIONS_FILE, JSON.stringify(existingList, null, 2), "utf-8");
       } catch (err) {
-        console.error("Failed to update registration file:", err);
+        console.error("Failed to update registration locally:", err);
       }
-      successMessage = "Registration details updated successfully!";
+      successMessage = "Your registration has been updated!";
     } else {
-      // Generate new Registration ID
+      // Create new registration record
       registrationId = generateRegistrationId();
-      while (existingList.some((r) => r.registrationId === registrationId)) {
-        registrationId = generateRegistrationId();
-      }
-
-      const newRecord: PersistedRegistration = {
+      saveRegistration({
         registrationId,
         createdAt: new Date().toISOString(),
-        data: { ...data },
-      };
-
-      saveRegistration(newRecord);
+        data: {
+          ...data,
+          registrationId,
+        },
+      });
     }
 
-    // 3. Try Supabase if configured
+    // 3. Optional Supabase Sync if environment configured
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (supabaseUrl && supabaseKey) {
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (supabaseUrl && supabaseServiceKey) {
       try {
-        const supabase = createClient(supabaseUrl, supabaseKey);
-        await supabase.from("registrations").insert({
-          registration_id: registrationId,
-          full_name: data.fullName,
-          personal_email: data.personalEmail,
-          college_email: data.collegeEmail || null,
-          phone_number: `${data.countryCode} ${data.phoneNumber}`,
-          city: data.city,
-          state: data.state,
-          country: data.country,
-          university: data.university,
-          degree: data.degree,
-          branch: data.branch,
-          year_of_study: data.yearOfStudy,
-          graduation_year: data.graduationYear,
-          is_ieee_member: data.isIeeeMember,
-          ieee_membership_number: data.ieeeMembershipNumber || null,
-          is_ieee_cs_member: data.isIeeeCsMember,
-          linkedin_url: data.linkedinUrl || null,
-          github_url: data.githubUrl || null,
-          areas_of_interest: data.areasOfInterest,
-          hear_about: data.hearAbout || null,
-          created_at: new Date().toISOString(),
-        });
-      } catch (sbError) {
-        console.warn("Supabase insert skipped or failed:", sbError);
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+        await supabase.from("registrations").upsert(
+          {
+            registration_id: registrationId,
+            email: data.personalEmail,
+            full_name: data.fullName,
+            phone: data.phoneNumber,
+            university: data.university,
+            degree: data.degree,
+            branch: data.branch,
+            year_of_study: data.yearOfStudy,
+            is_ieee_member: data.isIeeeMember,
+            ieee_membership_number: data.ieeeMembershipNumber || null,
+            data: data,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "email" }
+        );
+      } catch (sbErr) {
+        console.warn("Supabase sync optional warning:", sbErr);
       }
     }
 
-    // 4. Dispatch confirmation email
+    // 4. Send Confirmation Email via Resend
     try {
       await sendRegistrationConfirmationEmail({
         name: data.fullName,
         email: data.personalEmail,
         registrationId,
         college: data.university,
+        degree: data.degree,
+        branch: data.branch,
+        yearOfStudy: data.yearOfStudy,
+        isIeeeMember: data.isIeeeMember,
+        ieeeMembershipNumber: data.ieeeMembershipNumber || undefined,
         track: data.areasOfInterest?.[0] || "Open Innovation",
       });
     } catch (mailError) {
-      console.warn("Confirmation email dispatch notice:", mailError);
+      console.warn("Email confirmation non-fatal warning:", mailError);
     }
 
     // 5. Return response
