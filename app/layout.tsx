@@ -140,6 +140,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+import { RegistrationProvider } from "./context/RegistrationContext";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -150,13 +151,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${lexend.variable} ${duneRise.variable} ${plexMono.variable} antialiased font-sans`}
       >
-        <Intro />
-        <PageTransition />
-        <Navbar />
-        <SoundToggle />
-        {children}
-        <Analytics />
-        <SpeedInsights />
+        <RegistrationProvider>
+          <Intro />
+          <PageTransition />
+          <Navbar />
+          <SoundToggle />
+          {children}
+          <Analytics />
+          <SpeedInsights />
+        </RegistrationProvider>
       </body>
     </html>
   );
