@@ -182,18 +182,26 @@ export function renderRegistrationEmail({
             </td>
           </tr>
 
-          <!-- 'Stay Tuned' Notice -->
+          <!-- 'Stay Tuned' & Support Notice (Deep & Curvy, No Harsh Orange Edge) -->
           <tr>
             <td style="padding: 4px 36px 24px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: rgba(226, 130, 47, 0.06); border-left: 3px solid #e2822f; border-radius: 0 10px 10px 0; padding: 14px 18px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #120c08; border: 1px solid rgba(248, 207, 150, 0.16); border-radius: 16px; padding: 18px 22px;">
                 <tr>
                   <td>
-                    <p style="margin: 0 0 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #e2822f;">
+                    <p style="margin: 0 0 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #f8cf96;">
                       Stay Tuned
                     </p>
                     <p style="margin: 0; font-size: 12.5px; line-height: 1.6; color: rgba(243, 230, 207, 0.85);">
                       Official problem statements, challenge tracks, and event guidelines will be announced on <strong>December 20, 2026</strong>. Keep an eye on your registered inbox for all milestone releases.
                     </p>
+
+                    <!-- Red Support Note -->
+                    <div style="border-top: 1px solid rgba(248, 207, 150, 0.1); margin-top: 14px; padding-top: 12px;">
+                      <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; line-height: 1.55; color: #f87171;">
+                        <strong style="color: #ef4444; font-family: ui-monospace, monospace; text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.12em; display: inline-block; margin-right: 6px;">Support Note:</strong>
+                        For any query related to the Hackathon or if you need any support, please reply to or share it on <a href="mailto:deep@computer.org" style="color: #fca5a5; text-decoration: underline; font-weight: 600;">deep@computer.org</a>.
+                      </p>
+                    </div>
                   </td>
                 </tr>
               </table>
@@ -255,6 +263,9 @@ ${basicInfo.map((b) => `${b.label}: ${b.value}`).join("\n")}
 STAY TUNED
 ------------------------------------------------------
 Official problem statements, challenge tracks, and event guidelines will be announced on December 20, 2026. Keep an eye on your registered inbox for all milestone releases.
+
+SUPPORT & QUERIES:
+For any query related to the Hackathon or if you need any support, please reply to or share it on deep@computer.org.
 
 EVENT DETAILS
 ------------------------------------------------------

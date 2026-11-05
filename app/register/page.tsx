@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   RegistrationFormData,
   initialRegistrationFormData,
@@ -394,6 +395,24 @@ export default function RegisterPage() {
           <span>Home</span>
         </Link>
 
+        {/* Center: IEEE CS Nirma University Official Logo */}
+        <a
+          href="https://ieee-computer-nirma.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-transparent hover:border-[rgba(248,207,150,0.2)] transition-all"
+          title="IEEE Computer Society, Nirma University"
+        >
+          <Image
+            src={isDark ? "/organisers/ieee-cs-nirma-dark.svg" : "/organisers/ieee-cs-nirma.svg"}
+            alt="IEEE Computer Society, Nirma University"
+            width={180}
+            height={36}
+            className="h-7 w-auto object-contain"
+            priority
+          />
+        </a>
+
         {/* Right Islands: Theme Mode Switcher + Login */}
         <div className="flex items-center gap-1.5 sm:gap-2.5">
           {/* Segmented Island Theme Switcher: Light | System | Dark */}
@@ -478,12 +497,17 @@ export default function RegisterPage() {
             : "bg-[#fefcf8]/95 border-[#eddccb] text-[#2b2318]"
         }`}
       >
-        <div className="flex items-center gap-2 min-w-0">
-          <span
-            className="w-2.5 h-2.5 rounded-full shrink-0 bg-[#c06820] shadow-[0_0_8px_rgba(192,104,32,0.5)]"
+        <div className="flex items-center gap-2.5 min-w-0">
+          <Image
+            src={isDark ? "/organisers/ieee-cs-nirma-dark.svg" : "/organisers/ieee-cs-nirma.svg"}
+            alt="IEEE CS Nirma"
+            width={120}
+            height={24}
+            className="h-5 w-auto object-contain shrink-0"
           />
+          <span className="text-xs opacity-30">•</span>
           <span className={`text-[11px] sm:text-xs font-mono uppercase tracking-wider truncate font-semibold ${isDark ? "text-[#f8cf96]" : "text-[#7a481e]"}`}>
-            Step {currentStep} of 5 • {STEPS[currentStep - 1].title}
+            Step {currentStep} of 5
           </span>
         </div>
 
@@ -543,7 +567,27 @@ export default function RegisterPage() {
           />
 
           {/* Top Brand & Title Block with Large Dune Rise Typography */}
-          <div className="relative z-10 space-y-4">
+          <div className="relative z-10 space-y-5">
+            {/* IEEE CS Nirma University Official Brand Banner */}
+            <div className="pb-1">
+              <a
+                href="https://ieee-computer-nirma.github.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform duration-300 hover:scale-[1.02]"
+                title="IEEE Computer Society Student Branch Chapter - Nirma University"
+              >
+                <Image
+                  src={isDark ? "/organisers/ieee-cs-nirma-dark.svg" : "/organisers/ieee-cs-nirma.svg"}
+                  alt="IEEE Computer Society, Nirma University"
+                  width={220}
+                  height={44}
+                  className="h-8 xl:h-9 w-auto object-contain"
+                  priority
+                />
+              </a>
+            </div>
+
             <div
               className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border ${
                 isDark
@@ -712,17 +756,30 @@ export default function RegisterPage() {
                     isDark ? "border-[rgba(248,207,150,0.15)]" : "border-[#ede3d5]"
                   }`}
                 >
-                  <h2
-                    className={`text-2xl sm:text-3xl xl:text-4xl font-[family-name:var(--font-dune)] tracking-[0.06em] lowercase ${
-                      isDark ? "text-white" : "text-[#231b12]"
-                    }`}
-                  >
-                    {currentStep === 1 && "create new profile"}
-                    {currentStep === 2 && "academic details"}
-                    {currentStep === 3 && "ieee membership"}
-                    {currentStep === 4 && "finalize profile"}
-                    {currentStep === 5 && "review & confirm"}
-                  </h2>
+                  <div className="flex items-center justify-between gap-3">
+                    <h2
+                      className={`text-2xl sm:text-3xl xl:text-4xl font-[family-name:var(--font-dune)] tracking-[0.06em] lowercase ${
+                        isDark ? "text-white" : "text-[#231b12]"
+                      }`}
+                    >
+                      {currentStep === 1 && "create new profile"}
+                      {currentStep === 2 && "academic details"}
+                      {currentStep === 3 && "ieee membership"}
+                      {currentStep === 4 && "finalize profile"}
+                      {currentStep === 5 && "review & confirm"}
+                    </h2>
+
+                    {/* IEEE CS Nirma logo for mobile / tablet where left brand card is hidden */}
+                    <div className="lg:hidden shrink-0">
+                      <Image
+                        src={isDark ? "/organisers/ieee-cs-nirma-dark.svg" : "/organisers/ieee-cs-nirma.svg"}
+                        alt="IEEE CS Nirma"
+                        width={130}
+                        height={26}
+                        className="h-6 w-auto object-contain"
+                      />
+                    </div>
+                  </div>
 
                   <p
                     className={`text-xs sm:text-sm leading-relaxed ${

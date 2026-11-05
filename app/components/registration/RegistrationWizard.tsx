@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { X, ArrowRight, ArrowLeft, Loader2, User } from "lucide-react";
 import {
   RegistrationFormData,
@@ -321,17 +322,14 @@ export default function RegistrationWizard({
         <div className="shrink-0 border-b border-line px-5 py-4 flex items-center justify-between bg-[#140e0a]/90 backdrop-blur-md">
           {/* IEEE CS Nirma Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full border border-spice/60 bg-spice/15 flex items-center justify-center text-spice font-bold text-xs">
-              Φ
-            </div>
-            <div className="leading-tight">
-              <span className="block text-[0.68rem] font-mono tracking-widest uppercase text-sand/60">
-                IEEE Computer Society
-              </span>
-              <span className="block text-xs font-semibold tracking-wider text-ink">
-                Nirma University
-              </span>
-            </div>
+            <Image
+              src="/organisers/ieee-cs-nirma-dark.svg"
+              alt="IEEE Computer Society, Nirma University"
+              width={160}
+              height={32}
+              className="h-7 w-auto object-contain"
+              priority
+            />
           </div>
 
           {/* Navigation Pill tabs in header - Fully Interactive! */}
