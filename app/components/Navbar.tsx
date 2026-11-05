@@ -143,14 +143,14 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
                 <LogIn size={18} />
                 Sign In
               </Link>
-              <Link
+              <a
                 href="/register"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
               >
                 <UserPlus size={18} />
                 Register
-              </Link>
+              </a>
             </div>
           ) : isHome ? (
             <a
@@ -180,12 +180,12 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
                 <LogIn size={16} strokeWidth={1.75} />
                 <span>Login</span>
               </Link>
-              <Link 
+              <a 
                 href="/register" 
                 className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
               >
                 <span>Register</span>
-              </Link>
+              </a>
             </div>
           ) : isHome ? (
             <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">

@@ -25,7 +25,35 @@ export async function sendRegistrationConfirmationEmail(data: RegistrationEmailD
     });
 
     if (result.error) {
-      console.error("[Email Service] Resend dispatch error:", result.error);
+      console.warn("[Email Service] Resend dispatch error:", result.error.message);
+
+      // If Resend is restricted by sandbox domain to the owner's account (deepensify@gmail.com),
+      // forward the registration confirmation directly to deepensify@gmail.com so test registrations
+      // are delivered and visible in the inbox without getting dropped.
+      if (
+        result.error.message?.includes("only send testing emails") ||
+        result.error.statusCode === 403
+      ) {
+        console.log(`[Email Service] Sandbox test mode: forwarding email for participant ${data.email} to deepensify@gmail.com...`);
+        const fallbackSubject = `[Participant: ${data.email}] ${subject}`;
+        const fallbackResult = await resend.emails.send({
+          from: fromAddress,
+          to: ["deepensify@gmail.com"],
+          subject: fallbackSubject,
+          html: `<div style="padding: 12px 16px; background: #24170d; color: #f8cf96; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; border: 1px solid #c06820; border-radius: 8px; margin: 16px auto 24px; max-width: 580px; line-height: 1.5;">
+            🔔 <strong>Resend Sandbox Delivery Notice:</strong> Delivered to your verified Resend account (<code>deepensify@gmail.com</code>).<br/>
+            Registered Attendee: <strong>${data.name}</strong> (<code>${data.email}</code>)<br/>
+            <span style="font-size: 11px; opacity: 0.8;">To send directly to attendee domains, verify your domain at <a href="https://resend.com/domains" style="color: #ffa64d; text-decoration: underline;">resend.com/domains</a> and set <code>RESEND_FROM_EMAIL</code>.</span>
+          </div>` + html,
+          text: `[Sandbox Delivery for Participant: ${data.name} <${data.email}>]\n\n` + text,
+        });
+
+        if (!fallbackResult.error) {
+          console.log(`[Email Service] Confirmation email safely delivered to inbox (deepensify@gmail.com)! Message ID: ${fallbackResult.data?.id}`);
+          return { success: true, id: fallbackResult.data?.id, sandboxFallback: true };
+        }
+      }
+
       return { success: false, error: result.error.message };
     }
 

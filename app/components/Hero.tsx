@@ -112,9 +112,9 @@ export default async function Hero() {
           >
             {registrationActive ? (
               <>
-                <Link href="/register" className="btn btn-sand w-full min-[360px]:w-auto font-medium">
+                <a href="/register" className="btn btn-sand w-full min-[360px]:w-auto font-medium">
                   Register for HackIEEE <ArrowRight size={18} strokeWidth={1.75} />
-                </Link>
+                </a>
                 <SmoothLink href="#tracks" className="btn btn-ghost w-full min-[360px]:w-auto">
                   Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
                 </SmoothLink>

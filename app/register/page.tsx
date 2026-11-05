@@ -677,8 +677,8 @@ export default function RegisterPage() {
 
         {/* ── RIGHT COLUMN: Adaptive Form Panel (Starts at Exact Same Top Level) ── */}
         <section
-          className="w-full col-span-1 lg:col-span-7 flex flex-col justify-start relative z-20 min-w-0"
-          style={{ width: "100%" }}
+          className="w-full col-span-1 lg:col-span-7 flex flex-col justify-start relative z-20 min-w-full lg:min-w-0"
+          style={{ width: "100%", minWidth: "0" }}
         >
           <div
             className={`w-full rounded-[32px] border backdrop-blur-xl p-6 sm:p-8 xl:p-10 transition-all duration-700 min-w-0 ${
