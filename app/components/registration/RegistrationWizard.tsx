@@ -179,19 +179,43 @@ export default function RegistrationWizard({
     return 1;
   };
 
+  /**
+   * Safely normalizes user-entered social URLs for allowlisted domains (e.g. linkedin.com, github.com).
+   * Uses URL constructor parsing and exact hostname matching instead of fragile substring checks.
+   */
+  const normalizeAllowedUrl = (input: string | undefined, allowedHosts: string[]): string => {
+    const trimmed = input?.trim() || "";
+    if (!trimmed) return "";
+
+    const hasProtocol = /^https?:\/\//i.test(trimmed);
+    const testUrl = hasProtocol ? trimmed : `https://${trimmed}`;
+
+    try {
+      const parsed = new URL(testUrl);
+      const hostname = parsed.hostname.toLowerCase();
+
+      // Check against allowed hostnames or their www. variants
+      const isAllowed = allowedHosts.some(
+        (host) => hostname === host || hostname === `www.${host}`
+      );
+
+      if (isAllowed && !hasProtocol) {
+        return `https://${trimmed}`;
+      }
+    } catch {
+      // If not a parseable URL, return trimmed original so downstream schema validator reports error
+    }
+
+    return trimmed;
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setSubmissionError(null);
 
-    // Normalize URLs
-    let normalizedLinkedin = formData.linkedinUrl?.trim() || "";
-    if (normalizedLinkedin && !/^https?:\/\//i.test(normalizedLinkedin) && normalizedLinkedin.includes("linkedin.com")) {
-      normalizedLinkedin = `https://${normalizedLinkedin}`;
-    }
-    let normalizedGithub = formData.githubUrl?.trim() || "";
-    if (normalizedGithub && !/^https?:\/\//i.test(normalizedGithub) && normalizedGithub.includes("github.com")) {
-      normalizedGithub = `https://${normalizedGithub}`;
-    }
+    // Normalize URLs with exact hostname allowlisting
+    const normalizedLinkedin = normalizeAllowedUrl(formData.linkedinUrl, ["linkedin.com"]);
+    const normalizedGithub = normalizeAllowedUrl(formData.githubUrl, ["github.com"]);
 
     const payload: RegistrationFormData = {
       ...formData,
