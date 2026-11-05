@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "../../lib/supabase/server";
-import { isRegistrationActive } from "@/app/flags";
+import { authNavMode } from "@/app/flags";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
 
   let active = false;
   try {
-    active = Boolean(await isRegistrationActive());
+    const mode = await authNavMode();
+    active = mode === "registration_only" || mode === "both";
   } catch {
-    active = false;
+    active = true;
   }
 
   if (!active) {

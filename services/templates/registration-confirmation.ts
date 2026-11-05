@@ -5,10 +5,11 @@ import { getDuneRiseWordmarkSvg } from "./dune-wordmark";
  * Strictly adheres to the HackIEEE Dune website aesthetic:
  * - Obsidian dark background (#0b0906 / #140e0a)
  * - Restrained warm sand gold (#f8cf96) and spice (#e2822f)
- * - Authentic Dune Rise letterforms with large hack-italic display heading
- * - Minimalist, high-legibility key-value record table (no bloat)
+ * - Authentic Dune Rise vector wordmark
+ * - Minimalist key-value record table (no bloat)
+ * - Verified checkmark registration badge
  * - Single solid 'Add to Google Calendar' CTA button
- * - Clean thank-you letter and 'Stay tuned' briefing
+ * - No em-dashes, 100% online hackathon copy
  */
 
 export interface RegistrationEmailData {
@@ -34,32 +35,26 @@ export function renderRegistrationEmail({
   yearOfStudy,
   isIeeeMember,
   ieeeMembershipNumber,
-  track,
 }: RegistrationEmailData) {
-  const subject = `Registration Confirmed: hackieee 2026-27 [${registrationId}]`;
+  const subject = `Registration Confirmed: HackIEEE 2027 [${registrationId}]`;
 
   // Google Calendar Template URL
   const calendarUrl =
     "https://calendar.google.com/calendar/render?action=TEMPLATE" +
     "&text=" +
-    encodeURIComponent("HackIEEE 2027 | National 48-Hour Offline Hackathon") +
+    encodeURIComponent("HackIEEE 2027 | National 48-Hour Online Hackathon") +
     "&dates=20270102T043000Z/20270105T123000Z" +
     "&details=" +
     encodeURIComponent(
-      `HackIEEE 2026-27 National 48-Hour Offline Hackathon.\nRegistration ID: ${registrationId}\nParticipant: ${name}\nVenue: Nirma University, Ahmedabad.\n\nOrganised by IEEE Computer Society at Nirma University.`
+      `HackIEEE 2027 National 48-Hour Online Hackathon.\nRegistration ID: ${registrationId}\nParticipant: ${name}\nMode: Online Event.\n\nOrganised by IEEE Computer Society at Nirma University.`
     ) +
     "&location=" +
-    encodeURIComponent("Nirma University, Sarkhej-Gandhinagar Highway, Gota, Ahmedabad, Gujarat 382481, India");
+    encodeURIComponent("Online Event");
 
-  // Format basic academic info
-  const degreeBranch = [degree, branch].filter(Boolean).join(" — ");
-  const membershipText = isIeeeMember
-    ? ieeeMembershipNumber
-      ? `Active Member (#${ieeeMembershipNumber})`
-      : "Active IEEE Member"
-    : "Non-Member";
+  // Format basic academic info with comma (no em-dashes)
+  const degreeBranch = [degree, branch].filter(Boolean).join(", ");
 
-  // Build basic information rows cleanly
+  // Build basic information rows cleanly (preferred track removed)
   const basicInfo: { label: string; value: string }[] = [
     { label: "Participant Name", value: name },
     { label: "Registered Email", value: email },
@@ -74,13 +69,15 @@ export function renderRegistrationEmail({
     basicInfo.push({ label: "Year of Study", value: yearOfStudy });
   }
 
-  basicInfo.push({ label: "IEEE Membership", value: membershipText });
-
-  if (track && track !== "Open Innovation") {
-    basicInfo.push({ label: "Preferred Track", value: track });
+  // Only display IEEE membership row if participant is actually an IEEE member
+  if (isIeeeMember) {
+    const membershipText = ieeeMembershipNumber
+      ? `Active Member (#${ieeeMembershipNumber})`
+      : "Active IEEE Member";
+    basicInfo.push({ label: "IEEE Membership", value: membershipText });
   }
 
-  const wordmarkSvg = getDuneRiseWordmarkSvg(280);
+  const wordmarkSvg = getDuneRiseWordmarkSvg(300);
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -97,31 +94,22 @@ export function renderRegistrationEmail({
         <!-- Card Container -->
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 580px; background-color: #140e0a; border: 1px solid rgba(248, 207, 150, 0.16); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);">
           
-          <!-- Subtle Sand Hairline Accent (No Loud Gradients) -->
-          <tr>
-            <td style="height: 3px; background-color: #e2822f;"></td>
-          </tr>
-
           <!-- Header Section -->
           <tr>
             <td style="padding: 38px 36px 20px; text-align: center;">
               <!-- Eyebrow / Kicker -->
               <p style="margin: 0 0 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: #e2822f;">
-                IEEE Computer Society &bull; Nirma University
+                IEEE Computer Society Nirma University
               </p>
 
               <!-- Dune Rise Vector Wordmark -->
-              <div style="margin: 0 auto 10px; text-align: center;">
+              <div style="margin: 0 auto 12px; text-align: center;">
                 ${wordmarkSvg}
               </div>
-
-              <!-- Large Hack-Italic Dune Heading Fallback / Display -->
-              <h1 style="margin: 0; font-family: 'Dune Rise', 'Cinzel', -apple-system, BlinkMacSystemFont, 'Segoe UI', serif; font-size: 28px; font-weight: 700; font-style: italic; letter-spacing: 0.18em; text-transform: lowercase; color: #f8cf96; line-height: 1.2;">
-                hackieee <span style="font-size: 20px; font-style: normal; color: rgba(243, 230, 207, 0.7); letter-spacing: 0.08em;">2026–27</span>
-              </h1>
               
-              <p style="margin: 8px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(243, 230, 207, 0.65);">
-                National 48-Hour Offline Hackathon &bull; Nirma University
+              <!-- Clean Subtitle (No duplicate italic title, online event) -->
+              <p style="margin: 12px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(243, 230, 207, 0.65);">
+                National 48-Hour Online Hackathon 2027
               </p>
             </td>
           </tr>
@@ -138,8 +126,8 @@ export function renderRegistrationEmail({
                     <p style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 24px; font-weight: 700; letter-spacing: 0.16em; color: #f8cf96;">
                       ${registrationId}
                     </p>
-                    <p style="margin: 6px 0 0; font-size: 12px; font-weight: 500; color: #4ade80; letter-spacing: 0.04em;">
-                      &bull; Registration Confirmed
+                    <p style="margin: 6px 0 0; font-size: 12px; font-weight: 600; color: #4ade80; letter-spacing: 0.04em;">
+                      &#10003; Registration Confirmed
                     </p>
                   </td>
                 </tr>
@@ -154,10 +142,10 @@ export function renderRegistrationEmail({
                 Dear ${name},
               </p>
               <p style="margin: 0 0 14px;">
-                Thank you for registering for <strong>HackIEEE 2026–27</strong>. We are thrilled to welcome you to our flagship national 48-hour offline hackathon hosted at Nirma University, Ahmedabad.
+                Thank you for registering for <strong>HackIEEE 2027</strong>. We are thrilled to welcome you to our flagship national 48-hour online hackathon organised by IEEE Computer Society at Nirma University.
               </p>
               <p style="margin: 0;">
-                Your participant registration has been successfully received and cataloged in our portal. Our review committee is evaluating applications, and we can&apos;t wait to see the craftsmanship and impact you bring to the finale.
+                Your participant registration is successfully confirmed and recorded in our portal. We can&apos;t wait to see the craftsmanship, innovation, and impact you bring to the hackathon!
               </p>
             </td>
           </tr>
@@ -184,7 +172,7 @@ export function renderRegistrationEmail({
                   </td>
                   <td width="62%" style="padding: 11px 18px; font-size: 13px; font-weight: 500; color: #f3e6cf; border-bottom: ${
                     idx < basicInfo.length - 1 ? "1px solid rgba(248, 207, 150, 0.08)" : "none"
-                  }; vertical-align: top; word-break: break-word;">
+                  };">
                     ${item.value}
                   </td>
                 </tr>`
@@ -204,7 +192,7 @@ export function renderRegistrationEmail({
                       Stay Tuned
                     </p>
                     <p style="margin: 0; font-size: 12.5px; line-height: 1.6; color: rgba(243, 230, 207, 0.85);">
-                      Official problem statements, challenge tracks, and shortlist announcements will be declared on <strong>December 20, 2026</strong>. Keep an eye on your registered inbox for all milestone releases.
+                      Official problem statements, challenge tracks, and event guidelines will be announced on <strong>December 20, 2026</strong>. Keep an eye on your registered inbox for all milestone releases.
                     </p>
                   </td>
                 </tr>
@@ -232,20 +220,11 @@ export function renderRegistrationEmail({
             </td>
           </tr>
 
-          <!-- Minimalist Footer -->
+          <!-- Minimalist Clean Footer (No contact address) -->
           <tr>
-            <td style="padding: 22px 36px 26px; border-top: 1px solid rgba(248, 207, 150, 0.1); background-color: #0d0906; text-align: center; font-size: 11px; line-height: 1.6; color: rgba(243, 230, 207, 0.5);">
-              <p style="margin: 0 0 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(243, 230, 207, 0.75);">
-                Organised by: IEEE Computer Society at Nirma University
-              </p>
-              <p style="margin: 0 0 8px;">
-                Nirma University, Sarkhej - Gandhinagar Highway, Gota, Ahmedabad, Gujarat 382481
-              </p>
-              <p style="margin: 0;">
-                For any questions or partnerships, reach us at 
-                <a href="mailto:contact@hackieee.com" style="color: #f8cf96; text-decoration: none; font-weight: 500;">
-                  contact@hackieee.com
-                </a>
+            <td style="padding: 20px 36px 24px; border-top: 1px solid rgba(248, 207, 150, 0.1); background-color: #0d0906; text-align: center; font-size: 11px; line-height: 1.6; color: rgba(243, 230, 207, 0.5);">
+              <p style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(243, 230, 207, 0.75);">
+                Organised by IEEE Computer Society Nirma University
               </p>
             </td>
           </tr>
@@ -257,17 +236,17 @@ export function renderRegistrationEmail({
 </body>
 </html>`;
 
-  // Plain Text Version
-  const text = `REGISTRATION CONFIRMED — HACKIEEE 2026-27
+  // Plain Text Version (No em-dashes, 100% online hackathon)
+  const text = `REGISTRATION CONFIRMED - HACKIEEE 2027
 ======================================================
 Official Confirmation ID: ${registrationId}
 Status: Confirmed
 
 Dear ${name},
 
-Thank you for registering for HackIEEE 2026-27! We are thrilled to welcome you to our national 48-hour offline hackathon hosted at Nirma University, Ahmedabad.
+Thank you for registering for HackIEEE 2027! We are thrilled to welcome you to our national 48-hour online hackathon organised by IEEE Computer Society at Nirma University.
 
-Your participant registration has been securely received and recorded.
+Your participant registration is successfully confirmed and recorded in our portal.
 
 PARTICIPANT INFORMATION
 ------------------------------------------------------
@@ -275,20 +254,19 @@ ${basicInfo.map((b) => `${b.label}: ${b.value}`).join("\n")}
 
 STAY TUNED
 ------------------------------------------------------
-Official problem statements, challenge tracks, and shortlist announcements will be declared on December 20, 2026. Keep an eye on your registered inbox for all milestone releases.
+Official problem statements, challenge tracks, and event guidelines will be announced on December 20, 2026. Keep an eye on your registered inbox for all milestone releases.
 
 EVENT DETAILS
 ------------------------------------------------------
-Event: HackIEEE 2026-27 (48-Hour Offline Finale)
-Dates: January 2–4, 2027
-Venue: Nirma University, Ahmedabad, Gujarat, India
+Event: HackIEEE 2027 (48-Hour Online Hackathon)
+Dates: January 2-4, 2027
+Mode: Online Event (Organised by IEEE Computer Society at Nirma University)
 
 Add to Google Calendar:
 ${calendarUrl}
 
 ------------------------------------------------------
-Organised by: IEEE Computer Society at Nirma University
-Support & Enquiries: contact@hackieee.com
+Organised by IEEE Computer Society at Nirma University
 `;
 
   return { subject, html, text };

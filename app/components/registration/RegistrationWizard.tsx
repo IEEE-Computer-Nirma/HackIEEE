@@ -170,7 +170,7 @@ export default function RegistrationWizard({
     const step1Fields = ["fullName", "city", "state", "country", "countryCode", "phoneNumber", "personalEmail", "collegeEmail"];
     const step2Fields = ["university", "universityId", "isCustomUniversity", "degree", "customDegree", "branch", "yearOfStudy", "graduationYear"];
     const step3Fields = ["isIeeeMember", "ieeeMembershipNumber", "isIeeeCsMember"];
-    const step4Fields = ["linkedinUrl", "githubUrl", "areasOfInterest", "hearAbout", "resumeFileName", "resumeFileSize"];
+    const step4Fields = ["linkedinUrl", "githubUrl", "hearAbout"];
 
     if (step1Fields.includes(field)) return 1;
     if (step2Fields.includes(field)) return 2;

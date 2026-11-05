@@ -37,10 +37,7 @@ export interface RegistrationFormData {
   // Step 4: Additional Information
   linkedinUrl?: string;
   githubUrl?: string;
-  areasOfInterest: string[];
   hearAbout?: string;
-  resumeFileName?: string;
-  resumeFileSize?: number;
 }
 
 export const initialRegistrationFormData: RegistrationFormData = {
@@ -72,10 +69,7 @@ export const initialRegistrationFormData: RegistrationFormData = {
   // Step 4
   linkedinUrl: "",
   githubUrl: "",
-  areasOfInterest: [],
   hearAbout: "",
-  resumeFileName: "",
-  resumeFileSize: 0,
 };
 
 export const step1PersonalSchema = z.object({
@@ -173,10 +167,7 @@ export const step4AdditionalSchema = z.object({
     )
     .optional()
     .default(""),
-  areasOfInterest: z.array(z.string()).default([]),
   hearAbout: z.string().trim().optional().default(""),
-  resumeFileName: z.string().optional().default(""),
-  resumeFileSize: z.number().optional().default(0),
 });
 
 export const fullRegistrationSchema = z

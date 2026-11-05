@@ -38,6 +38,32 @@ function saveCustomUniversity(univ: University) {
   }
 }
 
+// Fallback online search via free Indian university directory
+async function fetchOnlineUniversities(query: string): Promise<University[]> {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2000); // 2-second safety timeout
+    const res = await fetch(
+      `http://universities.hipolabs.com/search?country=India&name=${encodeURIComponent(query)}`,
+      { signal: controller.signal }
+    );
+    clearTimeout(timeout);
+    if (!res.ok) return [];
+    const data = await res.json();
+    if (!Array.isArray(data)) return [];
+
+    return data.slice(0, 8).map((item: any, idx: number) => ({
+      id: `online-${idx}-${item.name.toLowerCase().replace(/[^a-z0-9]/g, "-").slice(0, 30)}`,
+      name: item.name,
+      country: "India",
+      state: item["state-province"] || undefined,
+      isVerified: true,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q")?.toLowerCase().trim() || "";
@@ -45,14 +71,14 @@ export async function GET(req: NextRequest) {
   const all = [...INITIAL_UNIVERSITIES, ...getCustomUniversities()];
 
   if (!q) {
-    // Return top 15 default / popular recommendations
+    // Return top recommendations
     return NextResponse.json({
       success: true,
-      universities: all.slice(0, 12),
+      universities: all.slice(0, 15),
     });
   }
 
-  // Filter with fuzzy match: check name, city, state, and aliases
+  // 1. Filter local curated list with fuzzy match
   const matched = all.filter((u) => {
     if (u.name.toLowerCase().includes(q)) return true;
     if (u.city && u.city.toLowerCase().includes(q)) return true;
@@ -61,10 +87,23 @@ export async function GET(req: NextRequest) {
     return false;
   });
 
+  // 2. If fewer than 5 local matches and search query is at least 2 chars, fetch from online API fallback
+  if (matched.length < 5 && q.length >= 2) {
+    const onlineMatches = await fetchOnlineUniversities(q);
+    const existingNames = new Set(matched.map((m) => m.name.toLowerCase().trim()));
+
+    for (const online of onlineMatches) {
+      if (!existingNames.has(online.name.toLowerCase().trim())) {
+        matched.push(online);
+        existingNames.add(online.name.toLowerCase().trim());
+      }
+    }
+  }
+
   // Sort: exact starts-with first
   matched.sort((a, b) => {
-    const aStarts = a.name.toLowerCase().startsWith(q) || a.aliases?.some(al => al.toLowerCase().startsWith(q));
-    const bStarts = b.name.toLowerCase().startsWith(q) || b.aliases?.some(al => al.toLowerCase().startsWith(q));
+    const aStarts = a.name.toLowerCase().startsWith(q) || a.aliases?.some((al) => al.toLowerCase().startsWith(q));
+    const bStarts = b.name.toLowerCase().startsWith(q) || b.aliases?.some((al) => al.toLowerCase().startsWith(q));
     if (aStarts && !bStarts) return -1;
     if (!aStarts && bStarts) return 1;
     return 0;

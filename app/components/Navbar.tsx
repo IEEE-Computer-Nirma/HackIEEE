@@ -7,7 +7,10 @@ import { Mail, Copy, LogIn, UserPlus } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
 import { CONTACT_EMAIL } from "../data/timeline";
 
+export type AuthNavMode = "registration_only" | "both" | "login_only" | "none";
+
 interface NavbarProps {
+  authNavMode?: AuthNavMode;
   isRegistrationActive?: boolean;
 }
 
@@ -18,7 +21,13 @@ const links = [
   { label: "Speakers", href: "/#speakers", section: "speakers" },
 ];
 
-export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
+export default function Navbar({
+  authNavMode,
+  isRegistrationActive = true,
+}: NavbarProps) {
+  // Resolve mode: default to registration_only (or none if registration is explicitly false)
+  const mode: AuthNavMode =
+    authNavMode ?? (isRegistrationActive ? "registration_only" : "none");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -133,7 +142,8 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
             </SmoothLink>
           ))}
 
-          {isRegistrationActive ? (
+          {/* Auth & Action Buttons in Mobile Menu */}
+          {mode === "both" && (
             <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-[240px]">
               <Link
                 href="/login"
@@ -152,7 +162,35 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
                 Register
               </a>
             </div>
-          ) : isHome ? (
+          )}
+
+          {mode === "registration_only" && (
+            <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-[240px]">
+              <a
+                href="/register"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
+              >
+                <UserPlus size={18} />
+                Register
+              </a>
+            </div>
+          )}
+
+          {mode === "login_only" && (
+            <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-[240px]">
+              <Link
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
+              >
+                <LogIn size={18} />
+                Sign In
+              </Link>
+            </div>
+          )}
+
+          {mode === "none" && isHome && (
             <a
               href="#contact"
               onClick={handleContactClick}
@@ -161,7 +199,7 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
               <Mail size={20} />
               Contact Us
             </a>
-          ) : null}
+          )}
         </div>
       </div>
 
@@ -173,8 +211,9 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
           {pills}
         </nav>
 
-        <div className="topbar-actions col-start-3 flex items-center gap-2 md:gap-3">
-          {isRegistrationActive ? (
+        <div className="topbar-actions col-start-3 flex items-center justify-end gap-2 md:gap-3">
+          {/* Mode 1: Both (Login on the left, Register on the right corner) */}
+          {mode === "both" && (
             <div className="hidden md:flex items-center gap-2.5">
               <Link href="/login" className="contact-btn">
                 <LogIn size={16} strokeWidth={1.75} />
@@ -187,12 +226,40 @@ export default function Navbar({ isRegistrationActive = false }: NavbarProps) {
                 <span>Register</span>
               </a>
             </div>
-          ) : isHome ? (
+          )}
+
+          {/* Mode 2: Registration Only (Register on the right corner) */}
+          {mode === "registration_only" && (
+            <div className="hidden md:flex items-center">
+              <a 
+                href="/register" 
+                className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
+              >
+                <span>Register</span>
+              </a>
+            </div>
+          )}
+
+          {/* Mode 3: Login Only (Login on the right corner) */}
+          {mode === "login_only" && (
+            <div className="hidden md:flex items-center">
+              <Link 
+                href="/login" 
+                className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
+              >
+                <LogIn size={16} strokeWidth={1.75} />
+                <span>Login</span>
+              </Link>
+            </div>
+          )}
+
+          {/* Mode 4: None (Contact Us on the right corner) */}
+          {mode === "none" && isHome && (
             <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">
               <Mail size={17} strokeWidth={1.75} />
               <span>Contact Us</span>
             </a>
-          ) : null}
+          )}
 
           {/* Mobile Hamburger Button */}
           <button

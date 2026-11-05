@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
-import { showKiroCollaboration, isRegistrationActive } from "../flags";
+import { showKiroCollaboration, authNavMode } from "../flags";
 
 /* The Kiro logo exactly as supplied: its intrinsic size sets the aspect ratio,
    CSS sets only the height (.hero-collab__logo). */
@@ -59,9 +59,10 @@ export default async function Hero() {
 
   let registrationActive = false;
   try {
-    registrationActive = Boolean(await isRegistrationActive());
+    const mode = await authNavMode();
+    registrationActive = mode === "registration_only" || mode === "both";
   } catch {
-    registrationActive = false;
+    registrationActive = true;
   }
 
   const currentYear = new Date().getFullYear();

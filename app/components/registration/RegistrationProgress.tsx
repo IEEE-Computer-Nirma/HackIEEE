@@ -13,7 +13,7 @@ const STEPS = [
   { step: 1, label: "Personal Info", short: "Personal" },
   { step: 2, label: "Academic Info", short: "Academic" },
   { step: 3, label: "IEEE Membership", short: "Membership" },
-  { step: 4, label: "Additional Info", short: "Interests" },
+  { step: 4, label: "Additional Info", short: "Additional" },
   { step: 5, label: "Review & Submit", short: "Review" },
 ];
 

@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, Lexend } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { authNavMode, type AuthNavMode } from "./flags";
 import PageTransition from "./components/PageTransition";
 import Intro from "./components/Intro";
 import SoundToggle from "./components/SoundToggle";
@@ -140,13 +141,13 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // Read the flag synchronously from the environment variable.
-  // This keeps the root layout synchronous (non-async), which prevents
-  // Next.js from creating streaming Suspense boundaries (MetadataOutlet)
-  // that cause hydration mismatches in Turbopack dev mode.
-  // The flags SDK's adapter checks this same env var first anyway.
-  const registrationActive = process.env.IS_REGISTRATION_ACTIVE === "true";
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  let navMode: AuthNavMode = "registration_only";
+  try {
+    navMode = await authNavMode();
+  } catch {
+    navMode = "registration_only";
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -160,7 +161,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <Intro />
         <PageTransition />
-        <Navbar isRegistrationActive={registrationActive} />
+        <Navbar authNavMode={navMode} />
         <SoundToggle />
         {children}
         {process.env.NODE_ENV === "production" && (

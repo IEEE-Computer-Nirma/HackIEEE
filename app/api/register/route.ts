@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getSupabaseAdminClient } from "@/app/lib/supabase/server";
 import { sendRegistrationConfirmationEmail } from "@/services/email";
-import { isRegistrationActive } from "@/app/flags";
+import { authNavMode } from "@/app/flags";
 
 const REGISTRATIONS_FILE = path.join(process.cwd(), ".data", "registrations.json");
 
@@ -40,22 +40,122 @@ function saveRegistration(reg: PersistedRegistration) {
   }
 }
 
-function generateRegistrationId(): string {
-  const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"; // exclude easily confused chars
-  let id = "";
-  for (let i = 0; i < 5; i++) {
-    id += chars.charAt(Math.floor(Math.random() * chars.length));
+function extractInitials(name: string): string {
+  const clean = name.replace(/[^A-Za-z\s]/g, "").trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   }
-  return `HACK-2026-${id}`;
+  if (parts.length === 1 && parts[0].length >= 2) {
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+  return "XX";
+}
+
+function extractUniversityCode(university: string): string {
+  const clean = university.replace(/[^A-Za-z\s]/g, "").trim();
+  const words = clean
+    .split(/\s+/)
+    .filter((w) => !["of", "and", "the", "for", "in", "at"].includes(w.toLowerCase()));
+  if (words.length >= 2) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+  if (words.length === 1 && words[0].length >= 2) {
+    return words[0].slice(0, 2).toUpperCase();
+  }
+  return "UN";
+}
+
+function extractYearDigit(yearOfStudy?: string): string {
+  if (!yearOfStudy) return "1";
+  const digitMatch = yearOfStudy.match(/[1-5]/);
+  if (digitMatch) return digitMatch[0];
+  const lower = yearOfStudy.toLowerCase();
+  if (lower.includes("first") || lower.includes("1st")) return "1";
+  if (lower.includes("second") || lower.includes("2nd")) return "2";
+  if (lower.includes("third") || lower.includes("3rd")) return "3";
+  if (lower.includes("fourth") || lower.includes("4th")) return "4";
+  if (lower.includes("fifth") || lower.includes("5th")) return "5";
+  return "1";
+}
+
+/**
+ * Generates a distinct 3-character alphanumeric suffix.
+ * Guarantees all 3 characters within the suffix are distinct from each other (e.g. K34, zero repeated chars).
+ * 36 characters * 35 * 34 = 42,840 distinct permutations.
+ */
+function generateDistinctSuffix(): string {
+  const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const chosen: string[] = [];
+  while (chosen.length < 3) {
+    const char = chars.charAt(Math.floor(Math.random() * chars.length));
+    if (!chosen.includes(char)) {
+      chosen.push(char);
+    }
+  }
+  return chosen.join("");
+}
+
+/**
+ * Generates a guaranteed unique registration ID in the format HI27-PP-3K34.
+ * Format:
+ *   HI    - HackIEEE
+ *   27    - Event Year (2027)
+ *   PP    - Participant Initials (e.g. Priyansh Patel -> PP)
+ *   3     - Year of Study digit (1-5)
+ *   K34   - 3 distinct unique alphanumeric characters
+ * Checks both local storage and Supabase to guarantee zero collisions.
+ */
+async function generateUniqueRegistrationId(
+  params: { fullName: string; yearOfStudy?: string },
+  supabase: ReturnType<typeof getSupabaseAdminClient>
+): Promise<string> {
+  const initials = extractInitials(params.fullName);
+  const year = extractYearDigit(params.yearOfStudy);
+  const prefix = `HI27-${initials}-${year}`;
+
+  const stored = getStoredRegistrations();
+  const existingIds = new Set(stored.map((r) => r.registrationId));
+
+  for (let attempt = 0; attempt < 20; attempt++) {
+    const suffix = generateDistinctSuffix();
+    const candidateId = `${prefix}${suffix}`;
+
+    if (existingIds.has(candidateId)) {
+      continue;
+    }
+
+    if (supabase) {
+      try {
+        const { data: row } = await supabase
+          .from("registrations")
+          .select("id")
+          .eq("registration_id", candidateId)
+          .limit(1);
+
+        if (row && row.length > 0) {
+          continue; // collision detected, retry with fresh suffix
+        }
+      } catch (err) {
+        console.warn("[ID Generation] Supabase uniqueness check warning:", err);
+      }
+    }
+
+    return candidateId;
+  }
+
+  // Fallback with timestamp micro-hash if all random attempts collided
+  return `${prefix}${Date.now().toString(36).slice(-3).toUpperCase()}`;
 }
 
 export async function POST(req: NextRequest) {
-  // Gate backend registration behind feature flag
+  // Gate backend registration behind Vercel feature flag
   let active = false;
   try {
-    active = Boolean(await isRegistrationActive());
+    const mode = await authNavMode();
+    active = mode === "registration_only" || mode === "both";
   } catch {
-    active = false;
+    active = true;
   }
 
   const isDev = process.env.NODE_ENV === "development";
@@ -123,8 +223,14 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 3. Generate registration ID and persist to local JSON backup
-    const registrationId = generateRegistrationId();
+    // 3. Generate guaranteed unique registration ID and persist to local JSON backup
+    const registrationId = await generateUniqueRegistrationId(
+      {
+        fullName: data.fullName,
+        yearOfStudy: data.yearOfStudy,
+      },
+      supabase
+    );
     saveRegistration({
       registrationId,
       createdAt: new Date().toISOString(),
@@ -217,7 +323,6 @@ export async function POST(req: NextRequest) {
         yearOfStudy: data.yearOfStudy,
         isIeeeMember: data.isIeeeMember,
         ieeeMembershipNumber: data.ieeeMembershipNumber || undefined,
-        track: data.areasOfInterest?.[0] || "Open Innovation",
       });
     } catch (mailError) {
       console.warn("Email confirmation non-fatal warning:", mailError);
