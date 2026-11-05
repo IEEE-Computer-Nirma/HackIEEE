@@ -72,7 +72,7 @@ The site features cinematic hero sections, a 3D title reveal, GSAP-powered anima
 - **Node.js** ≥ 18
 - **npm**, **yarn**, **pnpm**, or **bun**
 
-### Setup
+### Installation & Setup
 
 ```bash
 # 1. Clone the repository
@@ -82,11 +82,71 @@ cd HackIEEE
 # 2. Install dependencies
 npm install
 
-# 3. Start the dev server
+# 3. Create your local environment file
+cp .env.local.example .env.local
+
+# 4. Start the development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the site.
+Open [http://localhost:3000](http://localhost:3000) to view the site locally.
+
+---
+
+## ⚙️ Environment Variables & Feature Flags
+
+All configurable keys and flags are defined in `.env.local.example`. To customize behavior locally or in production, configure the following:
+
+### 1. Core Services
+
+| Variable | Required | Description |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase Project URL for user authentication and team registration tables |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase Anonymous public API key |
+| `RESEND_API_KEY` | Yes | Resend API key for automated registration confirmation emails |
+
+### 2. Feature Flags
+
+Feature flags control site functionality dynamically without requiring code changes. They can be set locally via `.env.local` or on Vercel via **Environment Variables** and **Vercel Flags Toolbar**.
+
+| Flag / Environment Variable | Default | Description |
+|---|---|---|
+| `IS_REGISTRATION_ACTIVE` | `false` | Master toggle for HackIEEE registrations. See below for detailed states. |
+| `SHOW_KIRO_COLLABORATION` | `false` | Toggles the Kiro collaboration badge in the Hero section. |
+
+#### Registration Flag States (`IS_REGISTRATION_ACTIVE`)
+
+- **`false` (Pre-launch / Closed)**:
+  - **Navbar**: Displays the **Contact Us** button.
+  - **Hero**: Shows the **Tracks & Challenges** and **Timeline** action buttons.
+  - **Direct routes (`/register`, `/login`)**: Automatically redirect users back to the home page (`/`).
+  - **Backend API (`POST /api/register`)**: Protects the database and returns `403 Forbidden`.
+- **`true` (Live / Active)**:
+  - **Navbar**: Displays **Register** and **Login** buttons.
+  - **Hero**: Shows the **Register for HackIEEE** call-to-action button.
+  - **Direct routes (`/register`, `/login`)**: Unlocked and accessible for multi-step registration and user login.
+  - **Backend API (`POST /api/register`)**: Fully active, validating submissions and sending email confirmations.
+
+---
+
+## ☁️ Configuring Flags in Vercel
+
+When deploying to Vercel, teammates can toggle the registration system in seconds without touching code:
+
+### Method A: Environment Variables (Recommended)
+1. Navigate to your project on the [Vercel Dashboard](https://vercel.com).
+2. Go to **Settings** → **Environment Variables**.
+3. Add or edit:
+   - **Key**: `IS_REGISTRATION_ACTIVE`
+   - **Value**: `true` (to launch registration) or `false` (to close registration)
+   - **Target Environments**: Select **Production**, **Preview**, and **Development**.
+4. Redeploy or promote your deployment to apply changes instantly.
+
+### Method B: Vercel Flags Toolbar (Optional)
+The project is integrated with `@flags-sdk/vercel` in `app/flags.ts`.
+- Teammates with Vercel Toolbar access can explore, override, and test flags live on Preview deployments using the toolbar's flag toggle.
+- Set `FLAGS_SECRET` in `.env.local` to securely enable flag exploration locally.
+
 
 ---
 

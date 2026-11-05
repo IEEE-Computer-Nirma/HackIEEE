@@ -28,16 +28,16 @@ export default function RegistrationSuccess({
 
   return (
     <div className="py-6 px-2 text-center max-w-lg mx-auto">
-      {/* Checkmark with Cosmic Horizon Sky Accent matching the sky */}
+      {/* Checkmark with Solid Emerald Green Accent matching the Radiant Emerald background */}
       <div className="relative w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full bg-[#38bdf8]/25 blur-xl animate-pulse" />
-        <div className="relative w-16 h-16 rounded-full bg-gradient-to-tr from-[#1e3fd8] via-[#38bdf8] to-white p-0.5 shadow-[0_0_30px_rgba(56,189,248,0.4)]">
+        <div className="absolute inset-0 rounded-full bg-[#10b981]/20 blur-xl animate-pulse" />
+        <div className="relative w-16 h-16 rounded-full border-2 border-[#10b981] shadow-[0_0_25px_rgba(16,185,129,0.35)] flex items-center justify-center">
           <div
             className={`w-full h-full rounded-full flex items-center justify-center ${
-              isDark ? "bg-[#140f0b] text-[#38bdf8]" : "bg-[#fefcf8] text-[#1e3fd8]"
+              isDark ? "bg-[#140f0b] text-[#10b981]" : "bg-[#fefcf8] text-[#10b981]"
             }`}
           >
-            <CheckCircle2 size={34} strokeWidth={2.4} />
+            <CheckCircle2 size={34} strokeWidth={2.4} className="text-[#10b981]" />
           </div>
         </div>
       </div>
@@ -46,8 +46,8 @@ export default function RegistrationSuccess({
       <span
         className={`inline-block px-3.5 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-widest mb-3 border ${
           isDark
-            ? "bg-[#1e3fd8]/20 border-[#38bdf8]/40 text-[#38bdf8]"
-            : "bg-[#e0f2fe] border-[#bae6fd] text-[#0284c7]"
+            ? "bg-[#10b981]/15 border-[#10b981]/40 text-[#34d399]"
+            : "bg-[#ecfdf5] border-[#a7f3d0] text-[#047857]"
         }`}
       >
         Registration Confirmed
@@ -160,12 +160,12 @@ export default function RegistrationSuccess({
         </div>
       </div>
 
-      {/* Actions: Solid Orange Button, no gradient tricks */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      {/* Action: Return to HackIEEE with Primary Solid Sand/Spice Button */}
+      <div className="flex items-center justify-center pt-2">
         <button
           type="button"
           onClick={onClose}
-          className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#c06820] hover:bg-[#b05c18] active:scale-[0.99] text-white font-extrabold text-sm uppercase tracking-wider transition-all shadow-[0_8px_25px_rgba(192,104,32,0.35)] cursor-pointer"
+          className="w-full sm:w-auto px-9 py-4 rounded-full bg-[#c06820] hover:bg-[#b05c18] active:scale-[0.99] text-white font-extrabold text-sm uppercase tracking-wider transition-all shadow-[0_8px_25px_rgba(192,104,32,0.35)] cursor-pointer"
         >
           Return to HackIEEE
         </button>

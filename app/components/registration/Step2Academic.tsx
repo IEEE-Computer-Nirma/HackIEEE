@@ -4,6 +4,7 @@ import { GraduationCap, BookOpen, Calendar } from "lucide-react";
 import { RegistrationFormData } from "@/app/lib/registration-schema";
 import { DEGREE_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@/app/data/universities";
 import UniversityAutocomplete from "./UniversityAutocomplete";
+import CustomSelect from "./CustomSelect";
 
 interface Step2AcademicProps {
   formData: RegistrationFormData;
@@ -71,37 +72,22 @@ export default function Step2Academic({
           <label className={labelClass}>
             Degree / Program <span className={asteriskClass}>*</span>
           </label>
-          <div className="relative">
-            <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none ${iconColor}`}>
-              <GraduationCap size={17} />
-            </div>
-            <select
-              value={formData.degree}
-              onChange={(e) => {
-                const val = e.target.value;
-                updateFormData({
-                  degree: val,
-                  customDegree: val === "Other" ? formData.customDegree : "",
-                });
-              }}
-              className={`w-full pl-10 pr-9 py-3 rounded-xl text-sm transition-all outline-none cursor-pointer appearance-none ${inputClass} ${
-                errors.degree ? "border-red-500/80 focus:border-red-500" : ""
-              }`}
-            >
-              <option value="" disabled className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}>
-                Select degree / program
-              </option>
-              {DEGREE_OPTIONS.map((d) => (
-                <option key={d} value={d} className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}>
-                  {d}
-                </option>
-              ))}
-            </select>
-            <div className={`absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-xs ${iconColor}`}>
-              ▼
-            </div>
-          </div>
-          {errors.degree && <p className="mt-1 text-xs text-red-500 font-medium">{errors.degree}</p>}
+          <CustomSelect
+            value={formData.degree}
+            onChange={(val) => {
+              updateFormData({
+                degree: val,
+                customDegree: val === "Other" ? formData.customDegree : "",
+              });
+            }}
+            options={DEGREE_OPTIONS}
+            placeholder="Select degree / program"
+            icon={<GraduationCap size={17} />}
+            error={errors.degree}
+            isDark={isDark}
+            id="reg-degree"
+            name="degree"
+          />
         </div>
 
         {/* Custom Degree Input */}
@@ -152,33 +138,17 @@ export default function Step2Academic({
           <label className={labelClass}>
             Current Year of Study <span className={asteriskClass}>*</span>
           </label>
-          <div className="relative">
-            <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none ${iconColor}`}>
-              <Calendar size={17} />
-            </div>
-            <select
-              value={formData.yearOfStudy}
-              onChange={(e) => updateFormData({ yearOfStudy: e.target.value })}
-              className={`w-full pl-10 pr-9 py-3 rounded-xl text-sm transition-all outline-none cursor-pointer appearance-none ${inputClass} ${
-                errors.yearOfStudy ? "border-red-500/80 focus:border-red-500" : ""
-              }`}
-            >
-              <option value="" disabled className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}>
-                Select current year
-              </option>
-              {YEAR_OF_STUDY_OPTIONS.map((y) => (
-                <option key={y} value={y} className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}>
-                  {y}
-                </option>
-              ))}
-            </select>
-            <div className={`absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-xs ${iconColor}`}>
-              ▼
-            </div>
-          </div>
-          {errors.yearOfStudy && (
-            <p className="mt-1 text-xs text-red-500 font-medium">{errors.yearOfStudy}</p>
-          )}
+          <CustomSelect
+            value={formData.yearOfStudy}
+            onChange={(val) => updateFormData({ yearOfStudy: val })}
+            options={YEAR_OF_STUDY_OPTIONS}
+            placeholder="Select current year"
+            icon={<Calendar size={17} />}
+            error={errors.yearOfStudy}
+            isDark={isDark}
+            id="reg-yearOfStudy"
+            name="yearOfStudy"
+          />
         </div>
 
         {/* Expected Graduation Year */}
@@ -186,33 +156,17 @@ export default function Step2Academic({
           <label className={labelClass}>
             Expected Graduation Year <span className={asteriskClass}>*</span>
           </label>
-          <div className="relative">
-            <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none ${iconColor}`}>
-              <Calendar size={17} />
-            </div>
-            <select
-              value={formData.graduationYear}
-              onChange={(e) => updateFormData({ graduationYear: e.target.value })}
-              className={`w-full pl-10 pr-9 py-3 rounded-xl text-sm transition-all outline-none cursor-pointer appearance-none ${inputClass} ${
-                errors.graduationYear ? "border-red-500/80 focus:border-red-500" : ""
-              }`}
-            >
-              <option value="" disabled className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}>
-                Select graduation year
-              </option>
-              {graduationYears.map((yr) => (
-                <option key={yr} value={yr} className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}>
-                  {yr}
-                </option>
-              ))}
-            </select>
-            <div className={`absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-xs ${iconColor}`}>
-              ▼
-            </div>
-          </div>
-          {errors.graduationYear && (
-            <p className="mt-1 text-xs text-red-500 font-medium">{errors.graduationYear}</p>
-          )}
+          <CustomSelect
+            value={formData.graduationYear}
+            onChange={(val) => updateFormData({ graduationYear: val })}
+            options={graduationYears}
+            placeholder="Select graduation year"
+            icon={<Calendar size={17} />}
+            error={errors.graduationYear}
+            isDark={isDark}
+            id="reg-graduationYear"
+            name="graduationYear"
+          />
         </div>
       </div>
     </div>

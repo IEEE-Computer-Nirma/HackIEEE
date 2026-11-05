@@ -2,6 +2,7 @@
 
 import { RegistrationFormData } from "@/app/lib/registration-schema";
 import { HEAR_ABOUT_US_OPTIONS } from "@/app/data/universities";
+import CustomSelect from "./CustomSelect";
 
 function LinkedinIcon() {
   return (
@@ -99,25 +100,15 @@ export default function Step4Additional({
           <label className={labelClass}>
             How did you hear about HackIEEE? <span className={`${subtextClass} font-normal font-sans`}>(Optional)</span>
           </label>
-          <div className="relative">
-            <select
-              value={formData.hearAbout || ""}
-              onChange={(e) => updateFormData({ hearAbout: e.target.value })}
-              className={`w-full px-4 py-3 rounded-xl text-sm transition-all outline-none cursor-pointer appearance-none ${inputClass}`}
-            >
-              <option value="" disabled className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#9a9184]"}>
-                Select an option
-              </option>
-              {HEAR_ABOUT_US_OPTIONS.map((opt) => (
-                <option key={opt} value={opt} className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-            <div className={`absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-xs ${iconColor}`}>
-              ▼
-            </div>
-          </div>
+          <CustomSelect
+            value={formData.hearAbout || ""}
+            onChange={(val) => updateFormData({ hearAbout: val })}
+            options={HEAR_ABOUT_US_OPTIONS}
+            placeholder="Select an option"
+            isDark={isDark}
+            id="reg-hearAbout"
+            name="hearAbout"
+          />
         </div>
       </div>
     </div>
