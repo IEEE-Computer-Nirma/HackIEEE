@@ -124,6 +124,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     setMounted(true);
+    document.title = "Register | HackIEEE 2026-27";
     try {
       const saved = localStorage.getItem("hackieee-theme-mode") as ThemeMode | null;
       if (saved && ["light", "dark", "system"].includes(saved)) {

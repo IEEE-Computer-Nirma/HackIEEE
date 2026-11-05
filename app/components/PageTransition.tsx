@@ -58,6 +58,19 @@ export default function PageTransition() {
 
     revealRef.current = reveal;
 
+    // Check if we arrived from a page transition navigation
+    try {
+      if (sessionStorage.getItem("hackieee-page-transition")) {
+        sessionStorage.removeItem("hackieee-page-transition");
+        root.classList.add("is-active");
+        gsap.set(veil, { opacity: 1 });
+        gsap.set(mark, { opacity: 1, scale: 1 });
+        requestAnimationFrame(() => {
+          reveal();
+        });
+      }
+    } catch {}
+
     const cover = (href: string) => {
       phaseRef.current = "covering";
       pendingRef.current = href;
@@ -78,11 +91,10 @@ export default function PageTransition() {
               yoyo: true,
             });
             window.scrollTo(0, 0);
-            push(href);
-
-            failsafeRef.current = setTimeout(() => {
-              if (phaseRef.current === "waiting") reveal();
-            }, 4000);
+            try {
+              sessionStorage.setItem("hackieee-page-transition", "1");
+            } catch {}
+            window.location.href = href;
           },
         })
         .to(veil, { opacity: 1, duration: 0.45, ease: "power2.out" })

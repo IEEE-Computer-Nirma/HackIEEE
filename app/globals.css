@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../app";
+@source "../components";
 
 /* ── Arrakis Design Tokens ───────────────────────────────────
    Night (default) is dusk on the deep desert. Day swaps the same

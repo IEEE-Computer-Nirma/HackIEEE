@@ -163,8 +163,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar isRegistrationActive={registrationActive} />
         <SoundToggle />
         {children}
-        <Analytics />
-        <SpeedInsights />
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );
