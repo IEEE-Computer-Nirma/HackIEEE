@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { fullRegistrationSchema } from "@/app/lib/registration-schema";
 import fs from "node:fs";
 import path from "node:path";
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseAdminClient } from "@/app/lib/supabase/server";
 import { sendRegistrationConfirmationEmail } from "@/services/email";
 import { isRegistrationActive } from "@/app/flags";
 
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
 
     const data = parsed.data;
 
-    // 2. Check existing registration by personal email
+    // 2. Check existing registration by personal email (Local JSON backup store)
     const existingList = getStoredRegistrations();
     const existingIndex = existingList.findIndex(
       (r) =>
@@ -133,33 +133,74 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 3. Optional Supabase Sync if environment configured
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    // 3. Supabase Sync (Primary Database)
+    try {
+      const supabase = getSupabaseAdminClient();
+      if (supabase) {
+        const fullPayload = {
+          registration_id: registrationId,
+          email: data.personalEmail.toLowerCase().trim(),
+          full_name: data.fullName.trim(),
+          phone: `${data.countryCode || "+91"} ${data.phoneNumber.trim()}`,
+          city: data.city?.trim() || null,
+          state: data.state?.trim() || null,
+          country: data.country?.trim() || "India",
+          college_email: data.collegeEmail?.trim() || null,
+          university: data.university.trim(),
+          degree:
+            data.degree === "Other" && data.customDegree
+              ? data.customDegree.trim()
+              : data.degree.trim(),
+          branch: data.branch.trim(),
+          year_of_study: data.yearOfStudy,
+          graduation_year: data.graduationYear,
+          is_ieee_member: data.isIeeeMember,
+          ieee_membership_number: data.ieeeMembershipNumber?.trim() || null,
+          is_ieee_cs_member: data.isIeeeCsMember,
+          linkedin_url: data.linkedinUrl?.trim() || null,
+          github_url: data.githubUrl?.trim() || null,
+          hear_about: data.hearAbout?.trim() || null,
+          data: data,
+          updated_at: new Date().toISOString(),
+        };
 
-    if (supabaseUrl && supabaseServiceKey) {
-      try {
-        const supabase = createClient(supabaseUrl, supabaseServiceKey);
-        await supabase.from("registrations").upsert(
-          {
+        let { error: sbError } = await supabase
+          .from("registrations")
+          .upsert(fullPayload, { onConflict: "email" });
+
+        // If extra columns are not in the table yet, retry with core schema columns + JSONB data
+        if (sbError && sbError.message?.toLowerCase().includes("column")) {
+          console.warn("[Supabase] Retrying upsert with core schema columns:", sbError.message);
+          const corePayload = {
             registration_id: registrationId,
-            email: data.personalEmail,
-            full_name: data.fullName,
-            phone: data.phoneNumber,
-            university: data.university,
-            degree: data.degree,
-            branch: data.branch,
+            email: data.personalEmail.toLowerCase().trim(),
+            full_name: data.fullName.trim(),
+            phone: `${data.countryCode || "+91"} ${data.phoneNumber.trim()}`,
+            university: data.university.trim(),
+            degree: data.degree.trim(),
+            branch: data.branch.trim(),
             year_of_study: data.yearOfStudy,
             is_ieee_member: data.isIeeeMember,
-            ieee_membership_number: data.ieeeMembershipNumber || null,
+            ieee_membership_number: data.ieeeMembershipNumber?.trim() || null,
             data: data,
             updated_at: new Date().toISOString(),
-          },
-          { onConflict: "email" }
-        );
-      } catch (sbErr) {
-        console.warn("Supabase sync optional warning:", sbErr);
+          };
+          const retryResult = await supabase
+            .from("registrations")
+            .upsert(corePayload, { onConflict: "email" });
+          sbError = retryResult.error;
+        }
+
+        if (sbError) {
+          console.error("[Supabase Error] Failed to sync registration to database:", sbError.message, sbError.details);
+        } else {
+          console.log(`[Supabase Success] Synced registration ${registrationId} (${data.personalEmail}) to database`);
+        }
+      } else {
+        console.info("[Supabase] Sync skipped: Supabase credentials not yet configured in environment");
       }
+    } catch (sbErr) {
+      console.warn("[Supabase Sync Warning]", sbErr);
     }
 
     // 4. Send Confirmation Email via Resend
