@@ -50,11 +50,14 @@ function Decorations() {
 }
 
 export default async function Hero() {
-  let showCollaboration = false;
+  let showCollaboration = process.env.SHOW_KIRO_COLLABORATION === "true";
   try {
-    showCollaboration = Boolean(await showKiroCollaboration());
+    const flagVal = await showKiroCollaboration();
+    if (typeof flagVal === "boolean") {
+      showCollaboration = flagVal;
+    }
   } catch {
-    showCollaboration = false;
+    showCollaboration = process.env.SHOW_KIRO_COLLABORATION === "true";
   }
 
   let registrationActive = false;

@@ -26,5 +26,5 @@ export const authNavMode = flag<AuthNavMode>({
 export const showKiroCollaboration = flag<boolean>({
   key: "showKiroCollaboration",
   adapter: vercelAdapter(),
-  defaultValue: false,
+  defaultValue: process.env.SHOW_KIRO_COLLABORATION === "true",
 });
