@@ -98,7 +98,7 @@ export function renderRegistrationEmail({
           <tr>
             <td style="padding: 38px 36px 20px; text-align: center;">
               <!-- Eyebrow / Kicker -->
-              <p style="margin: 0 0 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: #facc15;">
+              <p style="margin: 0 0 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: #e2822f;">
                 IEEE Computer Society Nirma University
               </p>
 
@@ -142,7 +142,7 @@ export function renderRegistrationEmail({
                 Dear ${name},
               </p>
               <p style="margin: 0 0 14px;">
-                Thank you for registering for <strong>HackIEEE 2027</strong>. We are thrilled to welcome you to our flagship national 48-hour online hackathon organised by <span style="color: #facc15; font-weight: 600;">IEEE Computer Society Nirma University</span>.
+                Thank you for registering for <strong>HackIEEE 2027</strong>. We are thrilled to welcome you to our flagship national 48-hour online hackathon organised by IEEE Computer Society at Nirma University.
               </p>
               <p style="margin: 0;">
                 Your participant registration is successfully confirmed and recorded in our portal. We can&apos;t wait to see the craftsmanship, innovation, and impact you bring to the hackathon!
@@ -237,7 +237,7 @@ export function renderRegistrationEmail({
           <tr>
             <td style="padding: 20px 36px 24px; border-top: 1px solid rgba(248, 207, 150, 0.1); background-color: #0d0906; text-align: center; font-size: 11px; line-height: 1.6; color: rgba(243, 230, 207, 0.5);">
               <p style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(243, 230, 207, 0.75);">
-                Organised by <span style="color: #facc15; font-weight: 700;">IEEE Computer Society Nirma University</span>
+                Organised by IEEE Computer Society Nirma University
               </p>
             </td>
           </tr>
