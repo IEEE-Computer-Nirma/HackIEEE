@@ -233,7 +233,7 @@ export default function UniversityAutocomplete({
               const isCurrent = value.toLowerCase().trim() === univ.name.toLowerCase().trim();
               return (
                 <button
-                  key={univ.id}
+                  key={`${univ.id}-${idx}`}
                   type="button"
                   onClick={() => handleSelect(univ)}
                   onMouseEnter={() => setSelectedIndex(idx)}

@@ -499,15 +499,6 @@ export const INITIAL_UNIVERSITIES: University[] = [
     isVerified: true,
   },
   {
-    id: "coep-pune",
-    name: "COEP Technological University (College of Engineering Pune)",
-    city: "Pune",
-    state: "Maharashtra",
-    country: "India",
-    aliases: ["COEP", "COEP Pune"],
-    isVerified: true,
-  },
-  {
     id: "vjti-mumbai",
     name: "Veermata Jijabai Technological Institute (VJTI)",
     city: "Mumbai",
