@@ -76,15 +76,10 @@ export default async function Hero() {
       <Decorations />
 
       <div className="hero__content">
-        <div className={`hero__lift flex w-full flex-col items-center ${showCollaboration ? "pt-7 md:pt-14 lg:pt-18" : ""}`}>
-          <h1 className="w-full">
-            <span className="sr-only">hackieee</span>
-            <HeroTitle />
-          </h1>
-
+        <div className={`hero__lift flex w-full flex-col items-center ${!showCollaboration ? "-mt-8 md:-mt-14" : ""}`}>
           {showCollaboration && (
             /* Kiro stands alone: its own block, never beside another logo. */
-            <div className="hero-collab rise mt-7 md:mt-9 !mb-7" style={{ "--d": "600ms" } as React.CSSProperties}>
+            <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
               <p className="hero-collab__label">In Collaboration With</p>
               <a
                 href="https://kiro.dev"
@@ -106,7 +101,12 @@ export default async function Hero() {
             </div>
           )}
 
-          <p className={`hero__tagline rise ${showCollaboration ? "mt-3 md:mt-4" : "mt-9 md:mt-10"}`} style={{ "--d": "1100ms" } as React.CSSProperties}>
+          <h1 className="w-full">
+            <span className="sr-only">hackieee</span>
+            <HeroTitle />
+          </h1>
+
+          <p className="hero__tagline rise mt-9 md:mt-10" style={{ "--d": "1100ms" } as React.CSSProperties}>
             Build, stage and ship code that feels considered, from first draft to launch.
           </p>
 
