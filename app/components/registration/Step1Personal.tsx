@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { RegistrationFormData } from "@/app/lib/registration-schema";
+import CustomSelect from "./CustomSelect";
 
 interface Step1PersonalProps {
   formData: RegistrationFormData;
@@ -163,27 +164,16 @@ export default function Step1Personal({
           Phone Number <span className={asteriskClass}>*</span>
         </label>
         <div className="flex gap-2.5">
-          <div className="relative w-36 shrink-0">
-            <select
+          <div className="w-36 sm:w-40 shrink-0">
+            <CustomSelect
               id="reg-countrycode"
               name="countryCode"
               value={formData.countryCode}
-              onChange={(e) => updateFormData({ countryCode: e.target.value })}
-              className={`w-full px-3 py-3 rounded-xl text-xs sm:text-sm outline-none cursor-pointer appearance-none ${inputClass}`}
-            >
-              {COUNTRY_CODES.map((c) => (
-                <option
-                  key={c.code}
-                  value={c.code}
-                  className={isDark ? "bg-[#18110b] text-[#f3e6cf]" : "bg-[#fefbf6] text-[#2b2318]"}
-                >
-                  {c.label}
-                </option>
-              ))}
-            </select>
-            <div className={`absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-xs ${subtextClass}`}>
-              ▼
-            </div>
+              onChange={(val) => updateFormData({ countryCode: val })}
+              options={COUNTRY_CODES.map((c) => ({ value: c.code, label: c.label }))}
+              placeholder="+91"
+              isDark={isDark}
+            />
           </div>
 
           <div className="relative flex-1">

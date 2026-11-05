@@ -189,10 +189,16 @@ export default function UniversityAutocomplete({
         <div
           id="university-suggestions-list"
           role="listbox"
-          className={`absolute z-50 left-0 right-0 mt-2 max-h-64 overflow-y-auto rounded-xl py-1.5 focus:outline-none ${
+          style={{
+            scrollbarWidth: "thin",
+            scrollbarColor: isDark
+              ? "rgba(248, 207, 150, 0.25) transparent"
+              : "rgba(192, 104, 32, 0.2) transparent",
+          }}
+          className={`absolute z-50 left-0 right-0 mt-2 max-h-64 overflow-y-auto rounded-xl p-1.5 border backdrop-blur-xl focus:outline-none ${
             isDark
-              ? "border border-[rgba(248,207,150,0.22)] bg-[#18110b] shadow-[0_16px_50px_rgba(0,0,0,0.7)]"
-              : "border border-[#ecd8c5] bg-[#fefbf6] shadow-[0_16px_50px_rgba(140,80,30,0.14)]"
+              ? "border-[rgba(248,207,150,0.22)] bg-[#18110b]/98 shadow-[0_16px_50px_rgba(0,0,0,0.85)] text-[#f3e6cf]"
+              : "border-[#ecd8c5] bg-[#fefbf6]/98 shadow-[0_16px_50px_rgba(140,80,30,0.14)] text-[#2b2318]"
           }`}
         >
           {suggestions.length > 0 ? (

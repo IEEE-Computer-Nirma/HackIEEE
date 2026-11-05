@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   RegistrationFormData,
@@ -41,20 +41,88 @@ const STEPS = [
   { id: 5, title: "Review & confirm" },
 ];
 
+// ── Step-by-Step Color Transitions for GradientASCII & Sky Aura ──
+const STEP_THEMES: Record<
+  number,
+  {
+    colors: string[];
+    auraDark: string;
+    auraLight: string;
+  }
+> = {
+  // Step 1: Celestial Blue Horizon (The original starting blue from main/previous branches)
+  1: {
+    colors: ["#1e3fd8", "#f6f8ff", "#a5d8ff", "#38bdf8"],
+    auraDark:
+      "radial-gradient(130% 90% at 50% -15%, rgba(30, 63, 216, 0.45) 0%, rgba(56, 189, 248, 0.18) 45%, rgba(11, 9, 6, 0.95) 85%)",
+    auraLight:
+      "radial-gradient(130% 90% at 50% -15%, rgba(30, 63, 216, 0.35) 0%, rgba(56, 189, 248, 0.15) 45%, transparent 85%)",
+  },
+  // Step 2: Amethyst Purple (Mystic Royal Violet)
+  2: {
+    colors: ["#6b21a8", "#c084fc", "#f3e8ff", "#9333ea"],
+    auraDark:
+      "radial-gradient(130% 90% at 50% -15%, rgba(107, 33, 168, 0.5) 0%, rgba(192, 132, 252, 0.22) 45%, rgba(11, 9, 6, 0.95) 85%)",
+    auraLight:
+      "radial-gradient(130% 90% at 50% -15%, rgba(107, 33, 168, 0.35) 0%, rgba(192, 132, 252, 0.16) 45%, transparent 85%)",
+  },
+  // Step 3: Dusty Orange (Arrakis Amber & Desert Spice)
+  3: {
+    colors: ["#c2410c", "#fb923c", "#fed7aa", "#ea580c"],
+    auraDark:
+      "radial-gradient(130% 90% at 50% -15%, rgba(194, 65, 12, 0.5) 0%, rgba(251, 146, 60, 0.22) 45%, rgba(11, 9, 6, 0.95) 85%)",
+    auraLight:
+      "radial-gradient(130% 90% at 50% -15%, rgba(194, 65, 12, 0.35) 0%, rgba(251, 146, 60, 0.16) 45%, transparent 85%)",
+  },
+  // Step 4: Green (Emerald Oasis)
+  4: {
+    colors: ["#047857", "#34d399", "#d1fae5", "#10b981"],
+    auraDark:
+      "radial-gradient(130% 90% at 50% -15%, rgba(4, 120, 87, 0.5) 0%, rgba(52, 211, 153, 0.22) 45%, rgba(11, 9, 6, 0.95) 85%)",
+    auraLight:
+      "radial-gradient(130% 90% at 50% -15%, rgba(4, 120, 87, 0.35) 0%, rgba(52, 211, 153, 0.16) 45%, transparent 85%)",
+  },
+  // Step 5: Pale Yellow (Sand Sunrise)
+  5: {
+    colors: ["#a16207", "#facc15", "#fef9c3", "#eab308"],
+    auraDark:
+      "radial-gradient(130% 90% at 50% -15%, rgba(161, 98, 7, 0.5) 0%, rgba(250, 204, 21, 0.22) 45%, rgba(11, 9, 6, 0.95) 85%)",
+    auraLight:
+      "radial-gradient(130% 90% at 50% -15%, rgba(161, 98, 7, 0.35) 0%, rgba(250, 204, 21, 0.16) 45%, transparent 85%)",
+  },
+  // Step 6 / Success: Radiant Emerald Oasis
+  6: {
+    colors: ["#065f46", "#34d399", "#ecfdf5", "#10b981"],
+    auraDark:
+      "radial-gradient(130% 90% at 50% -15%, rgba(6, 95, 70, 0.5) 0%, rgba(52, 211, 153, 0.25) 45%, rgba(11, 9, 6, 0.95) 85%)",
+    auraLight:
+      "radial-gradient(130% 90% at 50% -15%, rgba(6, 95, 70, 0.35) 0%, rgba(52, 211, 153, 0.18) 45%, transparent 85%)",
+  },
+};
 
-function RegisterContent() {
+function GoogleIcon() {
+  return null;
+}
+
+function GithubIcon() {
+  return null;
+}
+
+export default function RegisterPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [maxAccessibleStep, setMaxAccessibleStep] = useState(1);
   const [formData, setFormData] = useState<RegistrationFormData>(initialRegistrationFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   // ── Multi-Theme Support: Dark, Light, & System Default ──
   const [themeMode, setThemeMode] = useState<ThemeMode>("light");
   const [systemPrefersDark, setSystemPrefersDark] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     try {
       const saved = localStorage.getItem("hackieee-theme-mode") as ThemeMode | null;
       if (saved && ["light", "dark", "system"].includes(saved)) {
@@ -119,9 +187,9 @@ function RegisterContent() {
     email: "priyanshpatel9506@gmail.com",
   } : null);
 
-  const activeAuraBackground = isDark
-    ? "radial-gradient(130% 90% at 50% -15%, rgba(30, 63, 216, 0.45) 0%, rgba(56, 189, 248, 0.18) 45%, rgba(11, 9, 6, 0.95) 85%)"
-    : "radial-gradient(130% 90% at 50% -15%, rgba(30, 63, 216, 0.35) 0%, rgba(56, 189, 248, 0.15) 45%, transparent 85%)";
+  const activeStepKey = activeSuccessData ? 6 : currentStep;
+  const activeStepTheme = STEP_THEMES[activeStepKey] || STEP_THEMES[1];
+  const activeAuraBackground = isDark ? activeStepTheme.auraDark : activeStepTheme.auraLight;
 
   const updateFormData = (fields: Partial<RegistrationFormData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -218,8 +286,20 @@ function RegisterContent() {
     }
   };
 
+  const handleStartNewRegistration = () => {
+    setRegisteredSuccessData(null);
+    setIsDemoSuccess(false);
+    setFormData(initialRegistrationFormData);
+    setCurrentStep(1);
+    setMaxAccessibleStep(1);
+    setErrors({});
+    setSubmitError(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <main
+      suppressHydrationWarning
       className={`min-h-screen w-full flex flex-col justify-start relative overflow-x-hidden transition-colors duration-700 ${
         isDark ? "bg-[#0b0906] text-[#f3e6cf]" : "bg-[#f0eae0] text-[#2b2318]"
       }`}
@@ -227,17 +307,18 @@ function RegisterContent() {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 lg:py-8 relative z-10">
       {/* ── Dynamic Ambient Sky Aura ── */}
       <div
+        suppressHydrationWarning
         className="fixed inset-0 pointer-events-none z-0 transition-all duration-1000 opacity-60 blur-[130px]"
         style={{
-          background: activeAuraBackground,
+          backgroundImage: activeAuraBackground,
         }}
       />
 
-      {/* ── Background: ReactBits GradientASCII (Original Celestial Horizon Sky with White Flickering Dots) ── */}
+      {/* ── Background: ReactBits GradientASCII (Smooth real-time color transitions without unmounting or re-running intro) ── */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-95">
         <GradientASCII
-          key={`sky-step-${currentStep}`}
-          colors={["#1e3fd8", "#f6f8ff", "#a5d8ff", "#38bdf8"]}
+          key="gradient-ascii-persistent"
+          colors={activeStepTheme.colors}
           shape="horizon"
           characters=" .·•●"
           cellSize={18}
@@ -256,7 +337,7 @@ function RegisterContent() {
           mouseInteraction
           scrambleRadius={0.1}
           clickEffect="wave"
-          intro
+          intro={true}
           lightMode={false}
         />
       </div>
@@ -409,10 +490,10 @@ function RegisterContent() {
       </div>
 
       {/* ── Main Two-Column Grid: Both Card Tops Flush on the Exact Same Level (items-start) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-start">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-start" style={{ width: "100%" }}>
         {/* ── LEFT COLUMN: Adaptive Card (White/Beige in Light, Charcoal/Pitch Black in Dark) ── */}
         <aside
-          className={`hidden lg:flex lg:col-span-5 relative rounded-[32px] overflow-hidden p-8 xl:p-10 flex-col justify-between min-h-[640px] border backdrop-blur-xl transition-all duration-700 ${
+          className={`hidden lg:flex lg:col-span-5 w-full relative rounded-[32px] overflow-hidden p-8 xl:p-10 flex-col justify-between min-h-[640px] border backdrop-blur-xl transition-all duration-700 ${
             isDark
               ? "bg-[#140f0b]/95 border-[rgba(248,207,150,0.18)] shadow-[0_25px_80px_rgba(0,0,0,0.65)]"
               : "bg-[#fefcf8]/95 border-[#eddccb] shadow-[0_20px_50px_rgba(40,25,10,0.06),0_1px_3px_rgba(0,0,0,0.04)]"
@@ -560,13 +641,17 @@ function RegisterContent() {
         </aside>
 
         {/* ── RIGHT COLUMN: Adaptive Form Panel (Starts at Exact Same Top Level) ── */}
-        <section className="lg:col-span-7 flex flex-col justify-start relative z-20">
+        <section
+          className="w-full col-span-1 lg:col-span-7 flex flex-col justify-start relative z-20 min-w-0"
+          style={{ width: "100%" }}
+        >
           <div
-            className={`rounded-[32px] border backdrop-blur-xl p-7 sm:p-10 transition-all duration-700 ${
+            className={`w-full rounded-[32px] border backdrop-blur-xl p-6 sm:p-8 xl:p-10 transition-all duration-700 min-w-0 ${
               isDark
                 ? "bg-[#140f0b]/95 border-[rgba(248,207,150,0.18)] shadow-[0_25px_80px_rgba(0,0,0,0.65)]"
                 : "bg-[#fefcf8]/95 border-[#eddccb] shadow-[0_20px_50px_rgba(40,25,10,0.06),0_1px_3px_rgba(0,0,0,0.04)]"
             }`}
+            style={{ width: "100%" }}
           >
             {activeSuccessData ? (
               <RegistrationSuccess
@@ -583,7 +668,8 @@ function RegisterContent() {
                   if (currentStep < 5) handleGoForward();
                   else handleSubmit();
                 }}
-                className="w-full space-y-6 relative z-20 pointer-events-auto"
+                className="w-full space-y-6 relative z-20 pointer-events-auto min-w-0"
+                style={{ width: "100%" }}
               >
                 {/* Header Title with Large Dune Rise Typography */}
                 <div
@@ -736,14 +822,14 @@ function RegisterContent() {
                       isDark ? "text-[#f3e6cf]/60" : "text-[#7a6f62]"
                     }`}
                   >
-                    Member of the team?{" "}
+                    Already registered?{" "}
                     <Link
                       href="/login"
                       className={`font-bold hover:underline ${
                         isDark ? "text-[#ffa64d] hover:text-[#f8cf96]" : "text-[#c06820] hover:text-[#9e4e10]"
                       }`}
                     >
-                      Log in
+                      Log in now
                     </Link>
                   </p>
                 </div>
@@ -754,19 +840,5 @@ function RegisterContent() {
       </div>
     </div>
   </main>
-  );
-}
-
-export default function RegisterPage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen w-full bg-[#f0eae0] text-center font-mono text-[#c06820] py-24">
-          Loading registration...
-        </div>
-      }
-    >
-      <RegisterContent />
-    </Suspense>
   );
 }

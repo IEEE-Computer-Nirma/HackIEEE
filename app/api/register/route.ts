@@ -58,7 +58,8 @@ export async function POST(req: NextRequest) {
     active = false;
   }
 
-  if (!active) {
+  const isDev = process.env.NODE_ENV === "development";
+  if (!active && !isDev) {
     return NextResponse.json(
       {
         success: false,
@@ -153,10 +154,10 @@ export async function POST(req: NextRequest) {
               : data.degree.trim(),
           branch: data.branch.trim(),
           year_of_study: data.yearOfStudy,
-          graduation_year: data.graduationYear,
+          graduation_year: data.graduationYear || null,
           is_ieee_member: data.isIeeeMember,
           ieee_membership_number: data.ieeeMembershipNumber?.trim() || null,
-          is_ieee_cs_member: data.isIeeeCsMember,
+          is_ieee_cs_member: Boolean(data.isIeeeCsMember),
           linkedin_url: data.linkedinUrl?.trim() || null,
           github_url: data.githubUrl?.trim() || null,
           hear_about: data.hearAbout?.trim() || null,

@@ -1,23 +1,14 @@
-import { redirect } from "next/navigation";
-import { isRegistrationActive } from "@/app/flags";
+import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Login | HackIEEE 2026-27",
+  description: "Log in to your HackIEEE 2026-27 attendee portal.",
+};
 
-export default async function LoginLayout({
+export default function LoginLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  let active = false;
-  try {
-    active = Boolean(await isRegistrationActive());
-  } catch {
-    active = false;
-  }
-
-  if (!active) {
-    redirect("/");
-  }
-
   return <>{children}</>;
 }

@@ -10,6 +10,9 @@ function createSafeVercelAdapter(fallbackValue: boolean = false) {
       if (args.key === "isRegistrationActive" && process.env.IS_REGISTRATION_ACTIVE !== undefined) {
         return process.env.IS_REGISTRATION_ACTIVE === "true";
       }
+      if (args.key === "showKiroCollaboration" && process.env.SHOW_KIRO_COLLABORATION !== undefined) {
+        return process.env.SHOW_KIRO_COLLABORATION === "true";
+      }
       try {
         const value = await base.decide(args);
         if (value !== undefined && value !== null) {
@@ -34,6 +37,8 @@ function createSafeVercelAdapter(fallbackValue: boolean = false) {
       for (const f of args.flags) {
         if (f.key === "isRegistrationActive" && process.env.IS_REGISTRATION_ACTIVE !== undefined) {
           result[f.key] = process.env.IS_REGISTRATION_ACTIVE === "true";
+        } else if (f.key === "showKiroCollaboration" && process.env.SHOW_KIRO_COLLABORATION !== undefined) {
+          result[f.key] = process.env.SHOW_KIRO_COLLABORATION === "true";
         } else {
           result[f.key] = f.key === "isRegistrationActive" ? fallbackValue : false;
         }

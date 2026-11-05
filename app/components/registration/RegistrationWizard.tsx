@@ -433,6 +433,7 @@ export default function RegistrationWizard({
                     formData={formData}
                     updateFormData={updateFormData}
                     errors={errors}
+                    isDark={true}
                   />
                 )}
                 {currentStep === 2 && (
@@ -440,6 +441,7 @@ export default function RegistrationWizard({
                     formData={formData}
                     updateFormData={updateFormData}
                     errors={errors}
+                    isDark={true}
                   />
                 )}
                 {currentStep === 3 && (
@@ -447,6 +449,7 @@ export default function RegistrationWizard({
                     formData={formData}
                     updateFormData={updateFormData}
                     errors={errors}
+                    isDark={true}
                   />
                 )}
                 {currentStep === 4 && (
@@ -454,12 +457,14 @@ export default function RegistrationWizard({
                     formData={formData}
                     updateFormData={updateFormData}
                     errors={errors}
+                    isDark={true}
                   />
                 )}
                 {currentStep === 5 && (
                   <Step5Review
                     formData={formData}
                     goToStep={handleGoToStep}
+                    isDark={true}
                   />
                 )}
               </div>

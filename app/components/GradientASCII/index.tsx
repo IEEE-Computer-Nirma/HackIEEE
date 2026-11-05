@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export interface GradientASCIIProps extends React.HTMLAttributes<HTMLDivElement> {
   colors?: string[];
@@ -31,7 +31,7 @@ export interface GradientASCIIProps extends React.HTMLAttributes<HTMLDivElement>
   style?: React.CSSProperties;
 }
 
-const GradientASCIIComponent = dynamic<any>(
+const DynamicGradientASCII = dynamic<any>(
   () => import("./GradientASCII"),
   {
     ssr: false,
@@ -42,5 +42,15 @@ const GradientASCIIComponent = dynamic<any>(
 );
 
 export default function GradientASCII(props: GradientASCIIProps) {
-  return <GradientASCIIComponent {...props} />;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="w-full h-full bg-transparent" aria-hidden="true" />;
+  }
+
+  return <DynamicGradientASCII {...props} />;
 }
