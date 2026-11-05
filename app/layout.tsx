@@ -8,6 +8,7 @@ import PageTransition from "./components/PageTransition";
 import Intro from "./components/Intro";
 import SoundToggle from "./components/SoundToggle";
 import StructuredData from "./components/StructuredData";
+import UniversitiesPrefetcher from "./components/UniversitiesPrefetcher";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
@@ -160,6 +161,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         className={`${lexend.variable} ${duneRise.variable} ${plexMono.variable} antialiased font-sans`}
       >
         <Intro />
+        <UniversitiesPrefetcher />
         <PageTransition />
         <Navbar authNavMode={navMode} />
         <SoundToggle />

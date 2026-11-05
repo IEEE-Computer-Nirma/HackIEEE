@@ -153,27 +153,31 @@ export default function Navbar({
                 <LogIn size={18} />
                 Sign In
               </Link>
-              <a
+              <Link
                 href="/register"
+                prefetch={true}
+                data-no-transition
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
               >
                 <UserPlus size={18} />
                 Register
-              </a>
+              </Link>
             </div>
           )}
 
           {mode === "registration_only" && (
             <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-[240px]">
-              <a
+              <Link
                 href="/register"
+                prefetch={true}
+                data-no-transition
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
               >
                 <UserPlus size={18} />
                 Register
-              </a>
+              </Link>
             </div>
           )}
 
@@ -219,24 +223,28 @@ export default function Navbar({
                 <LogIn size={16} strokeWidth={1.75} />
                 <span>Login</span>
               </Link>
-              <a 
+              <Link 
                 href="/register" 
+                prefetch={true}
+                data-no-transition
                 className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
               >
                 <span>Register</span>
-              </a>
+              </Link>
             </div>
           )}
 
           {/* Mode 2: Registration Only (Register on the right corner) */}
           {mode === "registration_only" && (
             <div className="hidden md:flex items-center">
-              <a 
+              <Link 
                 href="/register" 
+                prefetch={true}
+                data-no-transition
                 className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
               >
                 <span>Register</span>
-              </a>
+              </Link>
             </div>
           )}
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { School, Check, Plus, Loader2, Search } from "lucide-react";
-import { University } from "@/app/data/universities";
+import { University, INITIAL_UNIVERSITIES } from "@/app/data/universities";
 
 interface UniversityAutocompleteProps {
   value: string;
@@ -21,7 +21,8 @@ export default function UniversityAutocomplete({
 }: UniversityAutocompleteProps) {
   const [query, setQuery] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
-  const [suggestions, setSuggestions] = useState<University[]>([]);
+  // Pre-seed with curated universities immediately so dropdown opens at 0ms latency
+  const [suggestions, setSuggestions] = useState<University[]>(() => INITIAL_UNIVERSITIES.slice(0, 25));
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
@@ -36,8 +37,10 @@ export default function UniversityAutocomplete({
     }
   }, [value]);
 
-  // Fetch suggestions with caching
-  const cacheRef = useRef<Record<string, University[]>>({});
+  // In-memory cache pre-seeded with empty query
+  const cacheRef = useRef<Record<string, University[]>>({
+    "": INITIAL_UNIVERSITIES,
+  });
 
   const fetchUniversities = useCallback(async (searchQuery: string) => {
     const key = searchQuery.trim().toLowerCase();
@@ -61,6 +64,11 @@ export default function UniversityAutocomplete({
     }
   }, []);
 
+  // Pre-fetch updated backend catalog immediately on mount
+  useEffect(() => {
+    void fetchUniversities("");
+  }, [fetchUniversities]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVal = e.target.value;
     setQuery(newVal);
@@ -68,10 +76,28 @@ export default function UniversityAutocomplete({
     setIsOpen(true);
     setSelectedIndex(-1);
 
+    const clean = newVal.toLowerCase().trim();
+    if (!clean) {
+      setSuggestions(cacheRef.current[""] || INITIAL_UNIVERSITIES.slice(0, 25));
+    } else {
+      // Instant local preview for zero-latency feedback
+      const localMatches = INITIAL_UNIVERSITIES.filter(
+        (u) =>
+          u.name.toLowerCase().includes(clean) ||
+          u.aliases?.some((a) => a.toLowerCase().includes(clean)) ||
+          u.city?.toLowerCase().includes(clean) ||
+          u.state?.toLowerCase().includes(clean)
+      );
+      if (localMatches.length > 0) {
+        setSuggestions(localMatches.slice(0, 15));
+      }
+    }
+
+    // Debounced query to backend for full search + online fallback
     if (debounceTimer.current) clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(() => {
       fetchUniversities(newVal);
-    }, 200);
+    }, 150);
   };
 
   const handleSelect = (univ: University) => {

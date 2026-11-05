@@ -121,6 +121,16 @@ export default function PageTransition() {
       const raw = anchor.getAttribute("href");
       if (!raw || raw.startsWith("#")) return;
 
+      // Never delay or block auth and registration routes with transition curtain
+      if (
+        raw.startsWith("/register") ||
+        raw.startsWith("/login") ||
+        raw === "/register" ||
+        raw === "/login"
+      ) {
+        return;
+      }
+
       let url: URL;
       try {
         url = new URL(anchor.href, window.location.href);

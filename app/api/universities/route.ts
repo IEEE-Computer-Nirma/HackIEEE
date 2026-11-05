@@ -42,10 +42,13 @@ function saveCustomUniversity(univ: University) {
 async function fetchOnlineUniversities(query: string): Promise<University[]> {
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 2000); // 2-second safety timeout
+    const timeout = setTimeout(() => controller.abort(), 1200); // 1.2-second fast safety timeout
     const res = await fetch(
-      `http://universities.hipolabs.com/search?country=India&name=${encodeURIComponent(query)}`,
-      { signal: controller.signal }
+      `https://universities.hipolabs.com/search?country=India&name=${encodeURIComponent(query)}`,
+      {
+        signal: controller.signal,
+        next: { revalidate: 86400 }, // Cache in Next.js data cache for 24 hours
+      }
     );
     clearTimeout(timeout);
     if (!res.ok) return [];
@@ -71,11 +74,18 @@ export async function GET(req: NextRequest) {
   const all = [...INITIAL_UNIVERSITIES, ...getCustomUniversities()];
 
   if (!q) {
-    // Return top recommendations
-    return NextResponse.json({
-      success: true,
-      universities: all.slice(0, 15),
-    });
+    // Return complete catalog upfront so clients can cache and search instantly at 0ms latency
+    return NextResponse.json(
+      {
+        success: true,
+        universities: all,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+        },
+      }
+    );
   }
 
   // 1. Filter local curated list with fuzzy match
@@ -109,10 +119,17 @@ export async function GET(req: NextRequest) {
     return 0;
   });
 
-  return NextResponse.json({
-    success: true,
-    universities: matched.slice(0, 15),
-  });
+  return NextResponse.json(
+    {
+      success: true,
+      universities: matched.slice(0, 15),
+    },
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+      },
+    }
+  );
 }
 
 export async function POST(req: NextRequest) {
