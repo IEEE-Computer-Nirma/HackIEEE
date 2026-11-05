@@ -10,6 +10,7 @@ interface Step1PersonalProps {
   updateFormData: (fields: Partial<RegistrationFormData>) => void;
   errors: Record<string, string>;
   isDark?: boolean;
+  onSetError?: (field: string, error: string | null) => void;
 }
 
 const COUNTRY_CODES = [
@@ -28,9 +29,43 @@ export default function Step1Personal({
   updateFormData,
   errors,
   isDark = false,
+  onSetError,
 }: Step1PersonalProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordValue, setPasswordValue] = useState("");
+  const [checkingPersonal, setCheckingPersonal] = useState(false);
+  const [checkingCollege, setCheckingCollege] = useState(false);
+
+  const checkEmailExists = async (field: "personalEmail" | "collegeEmail", value: string) => {
+    const trimmed = value.trim().toLowerCase();
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return;
+
+    if (field === "personalEmail") setCheckingPersonal(true);
+    else setCheckingCollege(true);
+
+    try {
+      const res = await fetch("/api/register/check-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [field]: trimmed }),
+      });
+      const data = await res.json();
+      if (data.exists) {
+        const conflictMsg = "This email, or this particular email ID, is already being used for registration.";
+        onSetError?.(field, conflictMsg);
+      } else {
+        // Clear previous conflict error if email is now unique
+        if (errors[field]?.includes("already being used")) {
+          onSetError?.(field, null);
+        }
+      }
+    } catch (err) {
+      console.warn("[Check Email] Failed to verify email:", err);
+    } finally {
+      if (field === "personalEmail") setCheckingPersonal(false);
+      else setCheckingCollege(false);
+    }
+  };
 
   const nameParts = (formData.fullName || "").split(" ");
   const firstName = nameParts[0] || "";
@@ -103,9 +138,17 @@ export default function Step1Personal({
 
       {/* Email Address */}
       <div>
-        <label htmlFor="reg-email" className={labelClass}>
-          Email <span className={asteriskClass}>*</span>
-        </label>
+        <div className="flex items-center justify-between mb-1.5">
+          <label htmlFor="reg-email" className={labelClass.replace(" mb-1.5", "")}>
+            Personal Email <span className={asteriskClass}>*</span>
+          </label>
+          {checkingPersonal && (
+            <span className={`text-[11px] font-mono flex items-center gap-1 ${subtextClass}`}>
+              <span className="w-2 h-2 rounded-full border border-current border-t-transparent animate-spin" />
+              Checking...
+            </span>
+          )}
+        </div>
         <div className="relative">
           <input
             id="reg-email"
@@ -114,7 +157,11 @@ export default function Step1Personal({
             required
             autoComplete="email"
             value={formData.personalEmail}
-            onChange={(e) => updateFormData({ personalEmail: e.target.value })}
+            onChange={(e) => {
+              updateFormData({ personalEmail: e.target.value });
+              if (errors.personalEmail) onSetError?.("personalEmail", null);
+            }}
+            onBlur={(e) => checkEmailExists("personalEmail", e.target.value)}
             placeholder="deep@computer.org"
             className={`w-full px-4 py-3 rounded-xl text-sm transition-all outline-none ${inputClass} ${
               errors.personalEmail ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/30" : ""
@@ -240,24 +287,38 @@ export default function Step1Personal({
         </div>
       </div>
 
-      {/* College Email (Optional) */}
+      {/* College / Student Email (Required) */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label htmlFor="reg-collegeemail" className={labelClass.replace(" mb-1.5", "")}>
-            College / Institutional Email
+            College / Student Email <span className={asteriskClass}>*</span>
           </label>
-          <span className={`text-[11px] font-mono ${subtextClass}`}>Optional</span>
+          {checkingCollege && (
+            <span className={`text-[11px] font-mono flex items-center gap-1 ${subtextClass}`}>
+              <span className="w-2 h-2 rounded-full border border-current border-t-transparent animate-spin" />
+              Checking...
+            </span>
+          )}
         </div>
-        <input
-          id="reg-collegeemail"
-          name="collegeEmail"
-          type="email"
-          autoComplete="email"
-          value={formData.collegeEmail || ""}
-          onChange={(e) => updateFormData({ collegeEmail: e.target.value })}
-          placeholder="deep.j@nirmauni.ac.in"
-          className={`w-full px-4 py-3 rounded-xl text-sm transition-all outline-none ${inputClass}`}
-        />
+        <div className="relative">
+          <input
+            id="reg-collegeemail"
+            name="collegeEmail"
+            type="email"
+            required
+            autoComplete="email"
+            value={formData.collegeEmail || ""}
+            onChange={(e) => {
+              updateFormData({ collegeEmail: e.target.value });
+              if (errors.collegeEmail) onSetError?.("collegeEmail", null);
+            }}
+            onBlur={(e) => checkEmailExists("collegeEmail", e.target.value)}
+            placeholder="deep.j@nirmauni.ac.in"
+            className={`w-full px-4 py-3 rounded-xl text-sm transition-all outline-none ${inputClass} ${
+              errors.collegeEmail ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/30" : ""
+            }`}
+          />
+        </div>
         {errors.collegeEmail && (
           <p className="mt-1 text-xs text-red-500 font-medium">{errors.collegeEmail}</p>
         )}

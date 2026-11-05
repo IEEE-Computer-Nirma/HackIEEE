@@ -114,6 +114,7 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState<RegistrationFormData>(initialRegistrationFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isValidatingEmail, setIsValidatingEmail] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -233,13 +234,45 @@ export default function RegisterPage() {
     return true;
   };
 
-  const handleGoForward = () => {
-    if (validateStep(currentStep)) {
-      const next = currentStep + 1;
-      setCurrentStep(next);
-      setMaxAccessibleStep((prev) => Math.max(prev, next));
-      window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleGoForward = async () => {
+    if (!validateStep(currentStep)) return;
+
+    // Duplicate check on Step 1: verify personalEmail and collegeEmail
+    if (currentStep === 1) {
+      setIsValidatingEmail(true);
+      setSubmitError(null);
+      try {
+        const res = await fetch("/api/register/check-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            personalEmail: formData.personalEmail,
+            collegeEmail: formData.collegeEmail,
+          }),
+        });
+        const data = await res.json();
+        if (data.exists) {
+          const conflictMsg = data.message || "This email, or this particular email ID, is already being used for registration.";
+          setSubmitError(conflictMsg);
+          setErrors((prev) => ({
+            ...prev,
+            ...(data.conflicts?.personalEmail ? { personalEmail: conflictMsg } : {}),
+            ...(data.conflicts?.collegeEmail ? { collegeEmail: conflictMsg } : {}),
+          }));
+          setIsValidatingEmail(false);
+          return;
+        }
+      } catch (err) {
+        console.error("Email verification error:", err);
+      } finally {
+        setIsValidatingEmail(false);
+      }
     }
+
+    const next = currentStep + 1;
+    setCurrentStep(next);
+    setMaxAccessibleStep((prev) => Math.max(prev, next));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleGoBackward = () => {
@@ -474,7 +507,8 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={handleGoForward}
-              className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full border text-xs font-mono font-bold transition-colors ${
+              disabled={isValidatingEmail}
+              className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full border text-xs font-mono font-bold transition-colors disabled:opacity-50 ${
                 isDark
                   ? "border-[#ffa64d]/40 bg-[#e2822f]/20 text-[#f3e6cf] hover:bg-[#e2822f]/30"
                   : "border-[#edd5c0] bg-[#faefe3] text-[#c06820] hover:bg-[#f6e6d5]"
@@ -482,7 +516,7 @@ export default function RegisterPage() {
               title="Next step"
               aria-label="Next step"
             >
-              <span>Next</span>
+              <span>{isValidatingEmail ? "Checking..." : "Next"}</span>
               <ChevronDown size={13} className={isDark ? "text-[#ffa64d]" : "text-[#c06820]"} />
             </button>
           )}
@@ -723,6 +757,19 @@ export default function RegisterPage() {
                       updateFormData={updateFormData}
                       errors={errors}
                       isDark={isDark}
+                      onSetError={(field, msg) => {
+                        setErrors((prev) => {
+                          const next = { ...prev };
+                          if (msg) next[field] = msg;
+                          else delete next[field];
+                          return next;
+                        });
+                        if (msg) {
+                          setSubmitError(msg);
+                        } else if (submitError?.includes("already being used")) {
+                          setSubmitError(null);
+                        }
+                      }}
                     />
                   )}
                   {currentStep === 2 && (
@@ -790,10 +837,20 @@ export default function RegisterPage() {
                     {currentStep < 5 ? (
                       <button
                         type="submit"
-                        className="flex-1 py-4 px-7 rounded-full bg-[#c06820] hover:bg-[#ad5915] active:scale-[0.99] text-sm sm:text-base font-extrabold tracking-wider uppercase transition-all flex items-center justify-center gap-2 cursor-pointer font-sans shadow-[0_8px_25px_rgba(192,104,32,0.35)] text-white"
+                        disabled={isValidatingEmail}
+                        className="flex-1 py-4 px-7 rounded-full bg-[#c06820] hover:bg-[#ad5915] active:scale-[0.99] disabled:opacity-60 text-sm sm:text-base font-extrabold tracking-wider uppercase transition-all flex items-center justify-center gap-2 cursor-pointer font-sans shadow-[0_8px_25px_rgba(192,104,32,0.35)] text-white"
                       >
-                        <span>Continue to Next Phase</span>
-                        <ArrowRight size={16} />
+                        {isValidatingEmail ? (
+                          <>
+                            <Loader2 size={16} className="animate-spin text-white" />
+                            <span>Verifying Email Availability...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>Continue to Next Phase</span>
+                            <ArrowRight size={16} />
+                          </>
+                        )}
                       </button>
                     ) : (
                       <button

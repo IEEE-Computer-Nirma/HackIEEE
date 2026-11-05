@@ -93,48 +93,49 @@ export async function POST(req: NextRequest) {
 
     const data = parsed.data;
 
-    // 2. Check existing registration by personal email (Local JSON backup store)
-    const existingList = getStoredRegistrations();
-    const existingIndex = existingList.findIndex(
-      (r) =>
-        (r.data.personalEmail as string)?.toLowerCase().trim() ===
-        data.personalEmail.toLowerCase().trim()
-    );
+    // 2. Prevent duplicate registrations (Check Supabase primary database)
+    const supabase = getSupabaseAdminClient();
+    if (supabase) {
+      const emailToCheck = data.personalEmail.toLowerCase().trim();
+      const collegeToCheck = data.collegeEmail?.toLowerCase().trim();
 
-    let registrationId: string;
-    let successMessage = "Registration submitted successfully!";
-
-    if (existingIndex >= 0) {
-      // Update existing record
-      registrationId = existingList[existingIndex].registrationId;
-      existingList[existingIndex] = {
-        registrationId,
-        createdAt: existingList[existingIndex].createdAt,
-        data: {
-          ...data,
-          updatedAt: new Date().toISOString(),
-        },
-      };
-      try {
-        fs.writeFileSync(REGISTRATIONS_FILE, JSON.stringify(existingList, null, 2), "utf-8");
-      } catch (err) {
-        console.error("Failed to update registration locally:", err);
+      let queryFilter = `email.ilike.${emailToCheck},college_email.ilike.${emailToCheck}`;
+      if (collegeToCheck) {
+        queryFilter += `,email.ilike.${collegeToCheck},college_email.ilike.${collegeToCheck}`;
       }
-      successMessage = "Your registration has been updated!";
-    } else {
-      // Create new registration record
-      registrationId = generateRegistrationId();
-      saveRegistration({
-        registrationId,
-        createdAt: new Date().toISOString(),
-        data: {
-          ...data,
-          registrationId,
-        },
-      });
+
+      const { data: existingRows, error: checkErr } = await supabase
+        .from("registrations")
+        .select("id, email, college_email")
+        .or(queryFilter)
+        .limit(1);
+
+      if (checkErr) {
+        console.warn("[Register API] Duplicate check error:", checkErr);
+      } else if (existingRows && existingRows.length > 0) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "This email, or this particular email ID, is already being used for registration.",
+          },
+          { status: 409 }
+        );
+      }
     }
 
-    // 3. Supabase Sync (Primary Database)
+    // 3. Generate registration ID and persist to local JSON backup
+    const registrationId = generateRegistrationId();
+    saveRegistration({
+      registrationId,
+      createdAt: new Date().toISOString(),
+      data: {
+        ...data,
+        registrationId,
+      },
+    });
+    const successMessage = "Registration submitted successfully!";
+
+    // 4. Supabase Sync (Primary Database)
     try {
       const supabase = getSupabaseAdminClient();
       if (supabase) {

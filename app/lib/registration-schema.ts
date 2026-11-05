@@ -100,11 +100,11 @@ export const step1PersonalSchema = z.object({
   collegeEmail: z
     .string()
     .trim()
-    .refine((val) => val === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-      message: "Please enter a valid college email address",
-    })
-    .optional()
-    .default(""),
+    .min(1, "College / Student email is required")
+    .refine(
+      (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+      "Please enter a valid college / student email address"
+    ),
 });
 
 export const step2AcademicSchema = z.object({
