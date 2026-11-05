@@ -5,7 +5,7 @@ export async function GET() {
   const { html } = renderRegistrationEmail({
     name: "Priyansh Patel",
     email: "priyanshpatel9506@gmail.com",
-    registrationId: "HI27-PP-3K34",
+    registrationId: "HI27-PP03-8K94",
     college: "Nirma University, Ahmedabad",
     degree: "B.Tech",
     branch: "Computer Science and Engineering",

@@ -64,7 +64,7 @@ export default function EmailPreviewPage() {
       >
         <div className="w-full bg-[#0b0906] rounded-2xl border border-[#f8cf96]/25 shadow-2xl overflow-hidden p-2">
           <div className="bg-[#140e0a] px-4 py-2 border-b border-[#f8cf96]/15 flex items-center justify-between text-[11px] font-mono text-[#f3e6cf]/50">
-            <span>Subject: Registration Confirmed: HackIEEE 2026-27 [HI27-PP-3K34]</span>
+            <span>Subject: Registration Confirmed: HackIEEE 2027 [HI27-PP03-8K94]</span>
             <span className="text-emerald-400 font-sans">Verified Delivery</span>
           </div>
           <iframe

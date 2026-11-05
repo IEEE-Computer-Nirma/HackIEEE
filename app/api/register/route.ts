@@ -66,28 +66,28 @@ function extractUniversityCode(university: string): string {
   return "UN";
 }
 
-function extractYearDigit(yearOfStudy?: string): string {
-  if (!yearOfStudy) return "1";
+function extractYearTwoDigits(yearOfStudy?: string): string {
+  if (!yearOfStudy) return "01";
   const digitMatch = yearOfStudy.match(/[1-5]/);
-  if (digitMatch) return digitMatch[0];
+  if (digitMatch) return `0${digitMatch[0]}`;
   const lower = yearOfStudy.toLowerCase();
-  if (lower.includes("first") || lower.includes("1st")) return "1";
-  if (lower.includes("second") || lower.includes("2nd")) return "2";
-  if (lower.includes("third") || lower.includes("3rd")) return "3";
-  if (lower.includes("fourth") || lower.includes("4th")) return "4";
-  if (lower.includes("fifth") || lower.includes("5th")) return "5";
-  return "1";
+  if (lower.includes("first") || lower.includes("1st")) return "01";
+  if (lower.includes("second") || lower.includes("2nd")) return "02";
+  if (lower.includes("third") || lower.includes("3rd")) return "03";
+  if (lower.includes("fourth") || lower.includes("4th")) return "04";
+  if (lower.includes("fifth") || lower.includes("5th")) return "05";
+  return "01";
 }
 
 /**
- * Generates a distinct 3-character alphanumeric suffix.
- * Guarantees all 3 characters within the suffix are distinct from each other (e.g. K34, zero repeated chars).
- * 36 characters * 35 * 34 = 42,840 distinct permutations.
+ * Generates a distinct 4-character alphanumeric security cipher token.
+ * Guarantees all 4 characters within the cipher are distinct from each other (e.g. 8K94, zero repeated chars).
+ * 36 characters * 35 * 34 * 33 = 1,413,720 distinct combinations.
  */
-function generateDistinctSuffix(): string {
+function generateDistinct4CharToken(): string {
   const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const chosen: string[] = [];
-  while (chosen.length < 3) {
+  while (chosen.length < 4) {
     const char = chars.charAt(Math.floor(Math.random() * chars.length));
     if (!chosen.includes(char)) {
       chosen.push(char);
@@ -97,13 +97,11 @@ function generateDistinctSuffix(): string {
 }
 
 /**
- * Generates a guaranteed unique registration ID in the format HI27-PP-3K34.
- * Format:
- *   HI    - HackIEEE
- *   27    - Event Year (2027)
- *   PP    - Participant Initials (e.g. Priyansh Patel -> PP)
- *   3     - Year of Study digit (1-5)
- *   K34   - 3 distinct unique alphanumeric characters
+ * Generates a guaranteed unique registration ID in the balanced 4-4-4 format:
+ * Format: HI27-PP03-8K94
+ *   HI27 : HackIEEE 2027 (Fixed 4 chars)
+ *   PP03 : Participant Initials (PP) + 2-digit Year of Study (01, 02, 03, 04, 05) (4 chars)
+ *   8K94 : 4 distinct alphanumeric security cipher token (4 chars)
  * Checks both local storage and Supabase to guarantee zero collisions.
  */
 async function generateUniqueRegistrationId(
@@ -111,15 +109,15 @@ async function generateUniqueRegistrationId(
   supabase: ReturnType<typeof getSupabaseAdminClient>
 ): Promise<string> {
   const initials = extractInitials(params.fullName);
-  const year = extractYearDigit(params.yearOfStudy);
-  const prefix = `HI27-${initials}-${year}`;
+  const yearTwoDigits = extractYearTwoDigits(params.yearOfStudy);
+  const prefix = `HI27-${initials}${yearTwoDigits}-`;
 
   const stored = getStoredRegistrations();
   const existingIds = new Set(stored.map((r) => r.registrationId));
 
-  for (let attempt = 0; attempt < 20; attempt++) {
-    const suffix = generateDistinctSuffix();
-    const candidateId = `${prefix}${suffix}`;
+  for (let attempt = 0; attempt < 25; attempt++) {
+    const cipher = generateDistinct4CharToken();
+    const candidateId = `${prefix}${cipher}`;
 
     if (existingIds.has(candidateId)) {
       continue;
@@ -134,7 +132,7 @@ async function generateUniqueRegistrationId(
           .limit(1);
 
         if (row && row.length > 0) {
-          continue; // collision detected, retry with fresh suffix
+          continue; // collision detected, retry with fresh cipher
         }
       } catch (err) {
         console.warn("[ID Generation] Supabase uniqueness check warning:", err);
@@ -145,7 +143,7 @@ async function generateUniqueRegistrationId(
   }
 
   // Fallback with timestamp micro-hash if all random attempts collided
-  return `${prefix}${Date.now().toString(36).slice(-3).toUpperCase()}`;
+  return `${prefix}${Date.now().toString(36).slice(-4).toUpperCase()}`;
 }
 
 export async function POST(req: NextRequest) {

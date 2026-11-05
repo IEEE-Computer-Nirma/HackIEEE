@@ -184,7 +184,7 @@ export default function RegisterPage() {
   }, []);
 
   const activeSuccessData = registeredSuccessData || (isDemoSuccess ? {
-    registrationId: "HI27-PP-3K34",
+    registrationId: "HI27-PP03-8K94",
     participantName: "Priyansh Patel",
     email: "priyanshpatel9506@gmail.com",
   } : null);
