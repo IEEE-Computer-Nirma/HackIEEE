@@ -1,4 +1,5 @@
 import { getDuneRiseWordmarkSvg } from "./dune-wordmark";
+import { getIeeeCsLogoSvg } from "./ieee-cs-logo";
 
 /**
  * Registration Confirmation Email Template
@@ -78,6 +79,7 @@ export function renderRegistrationEmail({
   }
 
   const wordmarkSvg = getDuneRiseWordmarkSvg(300);
+  const ieeeCsLogoSvg = getIeeeCsLogoSvg(190);
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -97,8 +99,13 @@ export function renderRegistrationEmail({
           <!-- Header Section -->
           <tr>
             <td style="padding: 38px 36px 20px; text-align: center;">
-              <!-- Eyebrow / Kicker -->
-              <p style="margin: 0 0 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: #e2822f;">
+              <!-- Official IEEE Computer Society Nirma University Logo -->
+              <div style="margin: 0 auto 18px; text-align: center;">
+                ${ieeeCsLogoSvg}
+              </div>
+
+              <!-- Eyebrow / Kicker in Yellow -->
+              <p style="margin: 0 0 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #facc15;">
                 IEEE Computer Society Nirma University
               </p>
 
@@ -235,9 +242,9 @@ export function renderRegistrationEmail({
 
           <!-- Minimalist Clean Footer (No contact address) -->
           <tr>
-            <td style="padding: 20px 36px 24px; border-top: 1px solid rgba(248, 207, 150, 0.1); background-color: #0d0906; text-align: center; font-size: 11px; line-height: 1.6; color: rgba(243, 230, 207, 0.5);">
+            <td style="padding: 22px 36px 24px; border-top: 1px solid rgba(248, 207, 150, 0.1); background-color: #0d0906; text-align: center; font-size: 11px; line-height: 1.6; color: rgba(243, 230, 207, 0.5);">
               <p style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(243, 230, 207, 0.75);">
-                Organised by IEEE Computer Society Nirma University
+                Organised by <span style="color: #facc15; font-weight: 700;">IEEE Computer Society Nirma University</span>
               </p>
             </td>
           </tr>

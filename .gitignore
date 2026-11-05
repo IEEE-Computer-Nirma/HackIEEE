@@ -37,3 +37,6 @@ next-env.d.ts
 
 # local runtime data
 .data/
+
+# email previews
+public/email-preview.html
