@@ -747,73 +747,6 @@ svg.lucide * {
   }
 }
 
-/* ── Squish Switch (day / night) ──────────────────────────── */
-.squish {
-  position: relative;
-  flex: none;
-  width: 62px;
-  height: 34px;
-  padding: 0;
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  cursor: pointer;
-  background: var(--glass);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  color: var(--text);
-}
-.squish .thumb {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-  background: var(--sand);
-  color: var(--sand-ink);
-  display: grid;
-  place-items: center;
-  transition: left 0.42s cubic-bezier(0.3, 1.5, 0.5, 1), width 0.18s ease;
-}
-.squish .thumb svg {
-  width: 14px;
-  height: 14px;
-}
-.squish:hover .thumb {
-  width: 29px;
-}
-.squish:active .thumb {
-  width: 36px;
-}
-:root[data-theme="day"] .squish .thumb {
-  left: calc(100% - 29px);
-}
-:root[data-theme="day"] .squish:hover .thumb {
-  left: calc(100% - 32px);
-}
-:root[data-theme="day"] .squish:active .thumb {
-  left: calc(100% - 39px);
-}
-.squish .track-icon {
-  position: absolute;
-  top: 9px;
-  width: 14px;
-  height: 14px;
-  opacity: 0.6;
-}
-.squish .track-icon--l {
-  left: 9px;
-}
-.squish .track-icon--r {
-  right: 9px;
-}
-.squish .icon-sun,
-:root[data-theme="day"] .squish .icon-moon {
-  display: none;
-}
-:root[data-theme="day"] .squish .icon-sun {
-  display: block;
-}
 
 /* ── Intro (first visit per tab) ──────────────────────────── */
 /* Covers the page from first paint: a "click to enter" gate, then the loading
@@ -1025,78 +958,6 @@ svg.lucide * {
   }
 }
 
-/* ── Bell Toggle (add to calendar) ────────────────────────── */
-.bell {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  min-height: 46px;
-  padding: 10px 20px 10px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  cursor: pointer;
-  background: var(--surface-solid);
-  color: var(--text);
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background 0.35s, color 0.35s, border-color 0.35s;
-}
-.bell svg {
-  width: 22px;
-  height: 22px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform-origin: 50% 12%;
-}
-.bell .dot {
-  position: absolute;
-  left: 28px;
-  top: 10px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--spice-hot);
-  border: 2px solid var(--surface-solid);
-  transform: scale(0);
-  transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
-}
-.bell[data-done="true"] {
-  background: var(--spice);
-  border-color: transparent;
-  color: #1a0f06;
-}
-.bell[data-done="true"] .dot {
-  transform: scale(1);
-  background: #fff4e2;
-  border-color: var(--spice);
-}
-.bell.ring svg {
-  animation: ring 0.85s cubic-bezier(0.77, 0, 0.175, 1);
-}
-@keyframes ring {
-  0% {
-    transform: rotate(0);
-  }
-  15% {
-    transform: rotate(-17deg);
-  }
-  35% {
-    transform: rotate(14deg);
-  }
-  55% {
-    transform: rotate(-9deg);
-  }
-  75% {
-    transform: rotate(5deg);
-  }
-  100% {
-    transform: rotate(0);
-  }
-}
 
 /* ── Toast ────────────────────────────────────────────────── */
 .toast {
@@ -1129,26 +990,6 @@ svg.lucide * {
   }
 }
 
-/* ── Shape waves canvas ───────────────────────────────────── */
-.waves {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: var(--waves-opacity);
-  --waves-mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 70%, transparent 100%);
-  -webkit-mask-image: var(--waves-mask);
-  mask-image: var(--waves-mask);
-}
-/* Keep text-heavy tops calm; let the field build up behind the cards. */
-.waves--calm-top {
-  --waves-mask: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 30%, #000 58%, #000 78%, transparent 100%);
-}
-.waves canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
 
 /* ── Eclipse (shared by timeline motes and page transition) ─ */
 .eclipse {

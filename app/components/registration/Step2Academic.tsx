@@ -37,16 +37,6 @@ export default function Step2Academic({
 
   return (
     <div className="space-y-5">
-      {/* Section Header */}
-      <div className={`pb-3 border-b ${isDark ? "border-[rgba(248,207,150,0.15)]" : "border-[#f0e4d7]"}`}>
-        <h3 className={`text-xl font-[family-name:var(--font-dune)] lowercase tracking-[0.06em] ${isDark ? "text-white" : "text-[#2b2318]"}`}>
-          academic information
-        </h3>
-        <p className={`text-xs mt-0.5 ${isDark ? "text-[#f3e6cf]/70" : "text-[#7f7669]"}`}>
-          Tell us about your educational background.
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* University / Institution Name */}
         <div className="md:col-span-2">

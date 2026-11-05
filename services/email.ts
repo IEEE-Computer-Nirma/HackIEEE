@@ -64,8 +64,9 @@ export async function sendRegistrationConfirmationEmail(data: RegistrationEmailD
 
     console.log(`[Email Service] Confirmation email sent successfully! Message ID: ${result.data?.id}`);
     return { success: true, id: result.data?.id };
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const errorMsg = err instanceof Error ? err.message : "Failed to dispatch email";
     console.error("[Email Service] Unexpected error sending email:", err);
-    return { success: false, error: err.message || "Failed to dispatch email" };
+    return { success: false, error: errorMsg };
   }
 }

@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
         ? "This email, or this particular email ID, is already being used for registration."
         : null,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[Check Email API] Unexpected error:", err);
     return NextResponse.json(
       {

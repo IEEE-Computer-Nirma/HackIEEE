@@ -12,6 +12,23 @@ interface UniversityAutocompleteProps {
   isDark?: boolean;
 }
 
+function dedupeUniversities(list: University[]): University[] {
+  const seenIds = new Set<string>();
+  const seenNames = new Set<string>();
+  const out: University[] = [];
+  for (const item of list) {
+    const idKey = (item.id || "").toLowerCase().trim();
+    const nameKey = (item.name || "").toLowerCase().trim();
+    if ((idKey && seenIds.has(idKey)) || (nameKey && seenNames.has(nameKey))) {
+      continue;
+    }
+    if (idKey) seenIds.add(idKey);
+    if (nameKey) seenNames.add(nameKey);
+    out.push(item);
+  }
+  return out;
+}
+
 export default function UniversityAutocomplete({
   value,
   onChange,
@@ -22,7 +39,7 @@ export default function UniversityAutocomplete({
   const [query, setQuery] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
   // Pre-seed with curated universities immediately so dropdown opens at 0ms latency
-  const [suggestions, setSuggestions] = useState<University[]>(() => INITIAL_UNIVERSITIES.slice(0, 25));
+  const [suggestions, setSuggestions] = useState<University[]>(() => dedupeUniversities(INITIAL_UNIVERSITIES.slice(0, 25)));
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
@@ -39,7 +56,7 @@ export default function UniversityAutocomplete({
 
   // In-memory cache pre-seeded with empty query
   const cacheRef = useRef<Record<string, University[]>>({
-    "": INITIAL_UNIVERSITIES,
+    "": dedupeUniversities(INITIAL_UNIVERSITIES),
   });
 
   const fetchUniversities = useCallback(async (searchQuery: string) => {
@@ -54,8 +71,9 @@ export default function UniversityAutocomplete({
       const res = await fetch(`/api/universities?q=${encodeURIComponent(searchQuery)}`);
       const data = await res.json();
       if (data.success && Array.isArray(data.universities)) {
-        cacheRef.current[key] = data.universities;
-        setSuggestions(data.universities);
+        const deduped = dedupeUniversities(data.universities);
+        cacheRef.current[key] = deduped;
+        setSuggestions(deduped);
       }
     } catch (err) {
       console.error("Failed to fetch universities:", err);
@@ -78,7 +96,7 @@ export default function UniversityAutocomplete({
 
     const clean = newVal.toLowerCase().trim();
     if (!clean) {
-      setSuggestions(cacheRef.current[""] || INITIAL_UNIVERSITIES.slice(0, 25));
+      setSuggestions(cacheRef.current[""] || dedupeUniversities(INITIAL_UNIVERSITIES.slice(0, 25)));
     } else {
       // Instant local preview for zero-latency feedback
       const localMatches = INITIAL_UNIVERSITIES.filter(
@@ -89,7 +107,7 @@ export default function UniversityAutocomplete({
           u.state?.toLowerCase().includes(clean)
       );
       if (localMatches.length > 0) {
-        setSuggestions(localMatches.slice(0, 15));
+        setSuggestions(dedupeUniversities(localMatches.slice(0, 15)));
       }
     }
 
@@ -233,7 +251,7 @@ export default function UniversityAutocomplete({
               const isCurrent = value.toLowerCase().trim() === univ.name.toLowerCase().trim();
               return (
                 <button
-                  key={`${univ.id}-${idx}`}
+                  key={`${univ.id || univ.name || "univ"}-${idx}`}
                   type="button"
                   onClick={() => handleSelect(univ)}
                   onMouseEnter={() => setSelectedIndex(idx)}

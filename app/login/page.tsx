@@ -63,8 +63,9 @@ function LoginFormContent() {
         },
       });
       if (error) throw error;
-    } catch (err: any) {
-      setErrorMessage(err.message || `Failed to sign in with ${provider}`);
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : `Failed to sign in with ${provider}`;
+      setErrorMessage(errorMsg);
       setSocialLoading(null);
     }
   };
@@ -87,8 +88,9 @@ function LoginFormContent() {
       setTimeout(() => {
         window.location.href = "/";
       }, 800);
-    } catch (err: any) {
-      setErrorMessage(err.message || "Invalid credentials. Please verify your email and password.");
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : "Invalid credentials. Please verify your email and password.";
+      setErrorMessage(errorMsg);
     } finally {
       setLoading(false);
     }

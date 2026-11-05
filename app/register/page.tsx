@@ -101,14 +101,6 @@ const STEP_THEMES: Record<
   },
 };
 
-function GoogleIcon() {
-  return null;
-}
-
-function GithubIcon() {
-  return null;
-}
-
 export default function RegisterPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [maxAccessibleStep, setMaxAccessibleStep] = useState(1);
@@ -117,14 +109,12 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isValidatingEmail, setIsValidatingEmail] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   // ── Multi-Theme Support: Dark, Light, & System Default ──
   const [themeMode, setThemeMode] = useState<ThemeMode>("light");
   const [systemPrefersDark, setSystemPrefersDark] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     document.title = "Register | HackIEEE 2026-27";
     try {
       const saved = localStorage.getItem("hackieee-theme-mode") as ThemeMode | null;
@@ -314,22 +304,12 @@ export default function RegisterPage() {
         email: result.email || formData.personalEmail,
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (err: any) {
-      setSubmitError(err.message || "An unexpected error occurred during submission.");
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : "An unexpected error occurred during submission.";
+      setSubmitError(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleStartNewRegistration = () => {
-    setRegisteredSuccessData(null);
-    setIsDemoSuccess(false);
-    setFormData(initialRegistrationFormData);
-    setCurrentStep(1);
-    setMaxAccessibleStep(1);
-    setErrors({});
-    setSubmitError(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

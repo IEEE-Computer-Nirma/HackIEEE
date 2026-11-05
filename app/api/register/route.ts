@@ -52,20 +52,6 @@ function extractInitials(name: string): string {
   return "XX";
 }
 
-function extractUniversityCode(university: string): string {
-  const clean = university.replace(/[^A-Za-z\s]/g, "").trim();
-  const words = clean
-    .split(/\s+/)
-    .filter((w) => !["of", "and", "the", "for", "in", "at"].includes(w.toLowerCase()));
-  if (words.length >= 2) {
-    return (words[0][0] + words[1][0]).toUpperCase();
-  }
-  if (words.length === 1 && words[0].length >= 2) {
-    return words[0].slice(0, 2).toUpperCase();
-  }
-  return "UN";
-}
-
 function extractYearTwoDigits(yearOfStudy?: string): string {
   if (!yearOfStudy) return "01";
   const digitMatch = yearOfStudy.match(/[1-5]/);

@@ -55,7 +55,7 @@ async function fetchOnlineUniversities(query: string): Promise<University[]> {
     const data = await res.json();
     if (!Array.isArray(data)) return [];
 
-    return data.slice(0, 8).map((item: any, idx: number) => ({
+    return data.slice(0, 8).map((item: { name: string; "state-province"?: string }, idx: number) => ({
       id: `online-${idx}-${item.name.toLowerCase().replace(/[^a-z0-9]/g, "-").slice(0, 30)}`,
       name: item.name,
       country: "India",
@@ -71,7 +71,19 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q")?.toLowerCase().trim() || "";
 
-  const all = [...INITIAL_UNIVERSITIES, ...getCustomUniversities()];
+  const rawAll = [...INITIAL_UNIVERSITIES, ...getCustomUniversities()];
+  const seenIds = new Set<string>();
+  const seenNames = new Set<string>();
+  const all: University[] = [];
+  for (const u of rawAll) {
+    const idKey = (u.id || "").toLowerCase().trim();
+    const nameKey = (u.name || "").toLowerCase().trim();
+    if (!seenIds.has(idKey) && !seenNames.has(nameKey)) {
+      if (idKey) seenIds.add(idKey);
+      if (nameKey) seenNames.add(nameKey);
+      all.push(u);
+    }
+  }
 
   if (!q) {
     // Return complete catalog upfront so clients can cache and search instantly at 0ms latency
@@ -100,12 +112,16 @@ export async function GET(req: NextRequest) {
   // 2. If fewer than 5 local matches and search query is at least 2 chars, fetch from online API fallback
   if (matched.length < 5 && q.length >= 2) {
     const onlineMatches = await fetchOnlineUniversities(q);
+    const existingIds = new Set(matched.map((m) => (m.id || "").toLowerCase().trim()));
     const existingNames = new Set(matched.map((m) => m.name.toLowerCase().trim()));
 
     for (const online of onlineMatches) {
-      if (!existingNames.has(online.name.toLowerCase().trim())) {
+      const idKey = (online.id || "").toLowerCase().trim();
+      const nameKey = online.name.toLowerCase().trim();
+      if (!existingIds.has(idKey) && !existingNames.has(nameKey)) {
         matched.push(online);
-        existingNames.add(online.name.toLowerCase().trim());
+        if (idKey) existingIds.add(idKey);
+        existingNames.add(nameKey);
       }
     }
   }
