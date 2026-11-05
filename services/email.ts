@@ -12,7 +12,8 @@ export async function sendRegistrationConfirmationEmail(data: RegistrationEmailD
 
   try {
     const { subject, html, text } = renderRegistrationEmail(data);
-    const fromAddress = process.env.RESEND_FROM_EMAIL?.trim() || "HackIEEE <onboarding@resend.dev>";
+    const fromAddress = process.env.RESEND_FROM_EMAIL?.trim() || "HackIEEE <noreply@hack.ieeenirma.org>";
+    const replyTo = process.env.RESEND_REPLY_TO?.trim() || undefined;
 
     console.log(`[Email Service] Dispatching confirmation email to ${data.email} via Resend from ${fromAddress}...`);
 
@@ -22,6 +23,7 @@ export async function sendRegistrationConfirmationEmail(data: RegistrationEmailD
       subject,
       html,
       text,
+      ...(replyTo ? { replyTo } : {}),
     });
 
     if (result.error) {
@@ -36,8 +38,11 @@ export async function sendRegistrationConfirmationEmail(data: RegistrationEmailD
       ) {
         console.log(`[Email Service] Sandbox test mode: forwarding email for participant ${data.email} to deepensify@gmail.com...`);
         const fallbackSubject = `[Participant: ${data.email}] ${subject}`;
+        const sandboxFrom = fromAddress.includes("@resend.dev")
+          ? fromAddress
+          : "HackIEEE <onboarding@resend.dev>";
         const fallbackResult = await resend.emails.send({
-          from: fromAddress,
+          from: sandboxFrom,
           to: ["deepensify@gmail.com"],
           subject: fallbackSubject,
           html: `<div style="padding: 12px 16px; background: #24170d; color: #f8cf96; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; border: 1px solid #c06820; border-radius: 8px; margin: 16px auto 24px; max-width: 580px; line-height: 1.5;">
