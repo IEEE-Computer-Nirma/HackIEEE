@@ -4,20 +4,44 @@ import { vercelAdapter } from "@flags-sdk/vercel";
 export type AuthNavMode = "registration_only" | "both" | "login_only" | "none";
 
 /**
+ * Resolves local / environment fallback for AUTH_NAV_MODE.
+ * Supports explicit AUTH_NAV_MODE values, with backward-compatibility for IS_REGISTRATION_ACTIVE.
+ */
+export function getFallbackAuthNavMode(): AuthNavMode {
+  const envMode = process.env.AUTH_NAV_MODE?.trim() as AuthNavMode | undefined;
+  if (
+    envMode === "registration_only" ||
+    envMode === "both" ||
+    envMode === "login_only" ||
+    envMode === "none"
+  ) {
+    return envMode;
+  }
+  // Backward compatibility with legacy IS_REGISTRATION_ACTIVE toggle
+  if (process.env.IS_REGISTRATION_ACTIVE === "false") {
+    return "none";
+  }
+  if (process.env.IS_REGISTRATION_ACTIVE === "true") {
+    return "both";
+  }
+  return "both";
+}
+
+/**
  * Vercel Feature Flag: AUTH_NAV_MODE (Type: String)
  * Variants:
+ *  - "both": Shows Login on left side, Register on the right corner (Default live mode)
  *  - "registration_only": Shows Register button on the right corner
- *  - "both": Shows Login on left side, Register on the right corner
  *  - "login_only": Shows Login button on the right corner
- *  - "none": Shows Contact Us button
+ *  - "none": Shows Contact Us button (Registration closed)
  */
 export const authNavMode = flag<AuthNavMode>({
   key: "AUTH_NAV_MODE",
   adapter: vercelAdapter(),
-  defaultValue: "registration_only",
+  defaultValue: getFallbackAuthNavMode(),
   options: [
-    { value: "registration_only", label: "Registration Only" },
     { value: "both", label: "Both Login & Register" },
+    { value: "registration_only", label: "Registration Only" },
     { value: "login_only", label: "Login Only" },
     { value: "none", label: "None (Contact Us Only)" },
   ],

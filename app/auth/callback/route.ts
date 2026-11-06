@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "../../lib/supabase/server";
-import { authNavMode } from "@/app/flags";
+import { authNavMode, getFallbackAuthNavMode } from "@/app/flags";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -10,7 +10,8 @@ export async function GET(request: NextRequest) {
     const mode = await authNavMode();
     active = mode === "registration_only" || mode === "both";
   } catch {
-    active = true;
+    const fallbackMode = getFallbackAuthNavMode();
+    active = fallbackMode === "registration_only" || fallbackMode === "both";
   }
 
   if (!active) {

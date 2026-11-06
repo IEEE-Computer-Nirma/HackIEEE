@@ -107,25 +107,28 @@ All configurable keys and flags are defined in `.env.local.example`. To customiz
 
 ### 2. Feature Flags
 
-Feature flags control site functionality dynamically without requiring code changes. They can be set locally via `.env.local` or on Vercel via **Environment Variables** and **Vercel Flags Toolbar**.
+Feature flags control site functionality dynamically without requiring code changes. They can be configured in `.env.local` or on Vercel via **Environment Variables** and **Vercel Flags Toolbar**.
 
 | Flag / Environment Variable | Default | Description |
 |---|---|---|
-| `IS_REGISTRATION_ACTIVE` | `false` | Master toggle for HackIEEE registrations. See below for detailed states. |
+| `AUTH_NAV_MODE` | `"both"` | Master navigation & auth mode flag: `"both"`, `"registration_only"`, `"login_only"`, or `"none"`. |
+| `IS_REGISTRATION_ACTIVE` | `true` | Backward-compatible toggle (`true` ➔ `"both"`, `false` ➔ `"none"`). |
 | `SHOW_KIRO_COLLABORATION` | `false` | Toggles the Kiro collaboration badge in the Hero section. |
 
-#### Registration Flag States (`IS_REGISTRATION_ACTIVE`)
+#### Navigation & Auth Flag Modes (`AUTH_NAV_MODE`)
 
-- **`false` (Pre-launch / Closed)**:
-  - **Navbar**: Displays the **Contact Us** button.
-  - **Hero**: Shows the **Tracks & Challenges** and **Timeline** action buttons.
-  - **Direct routes (`/register`, `/login`)**: Automatically redirect users back to the home page (`/`).
-  - **Backend API (`POST /api/register`)**: Protects the database and returns `403 Forbidden`.
-- **`true` (Live / Active)**:
-  - **Navbar**: Displays **Register** and **Login** buttons.
+- **`"both"` (Default Live Mode)**:
+  - **Navbar**: Displays **Login** on left side and **Register** CTA on right corner.
   - **Hero**: Shows the **Register for HackIEEE** call-to-action button.
-  - **Direct routes (`/register`, `/login`)**: Unlocked and accessible for multi-step registration and user login.
-  - **Backend API (`POST /api/register`)**: Fully active, validating submissions and sending email confirmations.
+  - **Routes & API**: `/register`, `/login`, and `POST /api/register` are unlocked and active.
+- **`"registration_only"`**:
+  - **Navbar**: Displays **Register** CTA on the right corner.
+- **`"login_only"`**:
+  - **Navbar**: Displays **Login** button on the right corner.
+- **`"none"` (Pre-launch / Closed)**:
+  - **Navbar**: Displays the **Contact Us** button.
+  - **Hero**: Shows **Tracks & Challenges** and **Timeline** action buttons.
+  - **Routes & API**: Direct `/register` and `POST /api/register` return `403 Forbidden`.
 
 ---
 

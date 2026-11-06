@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getSupabaseAdminClient } from "@/app/lib/supabase/server";
 import { sendRegistrationConfirmationEmail } from "@/services/email";
-import { authNavMode } from "@/app/flags";
+import { authNavMode, getFallbackAuthNavMode } from "@/app/flags";
 
 const REGISTRATIONS_FILE = path.join(process.cwd(), ".data", "registrations.json");
 
@@ -139,7 +139,8 @@ export async function POST(req: NextRequest) {
     const mode = await authNavMode();
     active = mode === "registration_only" || mode === "both";
   } catch {
-    active = true;
+    const fallbackMode = getFallbackAuthNavMode();
+    active = fallbackMode === "registration_only" || fallbackMode === "both";
   }
 
   const isDev = process.env.NODE_ENV === "development";

@@ -3,7 +3,7 @@ import { IBM_Plex_Mono, Lexend } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { authNavMode, type AuthNavMode } from "./flags";
+import { authNavMode, getFallbackAuthNavMode, type AuthNavMode } from "./flags";
 import PageTransition from "./components/PageTransition";
 import Intro from "./components/Intro";
 import SoundToggle from "./components/SoundToggle";
@@ -143,11 +143,11 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let navMode: AuthNavMode = "registration_only";
+  let navMode: AuthNavMode = getFallbackAuthNavMode();
   try {
     navMode = await authNavMode();
   } catch {
-    navMode = "registration_only";
+    navMode = getFallbackAuthNavMode();
   }
 
   return (
