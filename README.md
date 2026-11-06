@@ -162,9 +162,17 @@ hackieee/
 │   ├── layout.tsx       # Root layout with metadata and providers
 │   └── page.tsx         # Home page composition
 ├── public/              # Static assets (images, audio, SVGs)
-├── docs/                # Project documentation
+├── docs/                # Architecture plans and project documentation
+├── supabase/            # Database schemas, RLS policies, migrations & SQL queries
 └── next.config.ts       # Next.js configuration
 ```
+
+> [!IMPORTANT]
+> **Database Schema Location Rule:**  
+> All Supabase schemas, SQL migrations, RLS policies, and query scripts **must strictly remain in the `supabase/` directory**, never in `docs/`.
+> - [`supabase/schema.sql`](supabase/schema.sql): Base table definitions (`registrations`), indexes, and RLS policies.
+> - [`supabase/admin-schema.sql`](supabase/admin-schema.sql): Admin access control table (`admin_users`) and Supabase Realtime publication setup.
+> - [`supabase/queries.sql`](supabase/queries.sql): Ready-to-run participant inspection, count, and analytics queries for the Supabase SQL Editor.
 
 ---
 
