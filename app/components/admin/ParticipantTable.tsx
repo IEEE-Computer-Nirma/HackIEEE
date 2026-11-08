@@ -37,6 +37,7 @@ export interface Registration {
 interface ParticipantTableProps {
   registrations: Registration[];
   onViewDetails: (participant: Registration) => void;
+  onFilteredRegistrationsChange?: (filtered: Registration[]) => void;
 }
 
 const YEAR_OPTIONS = [
@@ -91,6 +92,7 @@ function matchesDegree(value: string, selected: string) {
 export default function ParticipantTable({
   registrations,
   onViewDetails,
+  onFilteredRegistrationsChange,
 }: ParticipantTableProps) {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -183,6 +185,10 @@ export default function ParticipantTable({
     selectedYears,
     selectedDegrees,
   ]);
+
+  useEffect(() => {
+    onFilteredRegistrationsChange?.(filteredRegistrations);
+  }, [filteredRegistrations, onFilteredRegistrationsChange]);
 
   // Toggle multi-select filter values
   function toggleValue(
