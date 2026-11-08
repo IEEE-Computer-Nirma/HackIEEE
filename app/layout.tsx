@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Lexend } from "next/font/google";
+import { IBM_Plex_Mono, Lexend, Geist } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -11,6 +11,9 @@ import StructuredData from "./components/StructuredData";
 import UniversitiesPrefetcher from "./components/UniversitiesPrefetcher";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const lexend = Lexend({
   variable: "--font-lexend",
@@ -151,7 +154,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <head>
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context" />
         <StructuredData />
