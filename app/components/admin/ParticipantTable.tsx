@@ -39,6 +39,12 @@ export interface Registration {
   branch: string;
   year_of_study: string;
   graduation_year?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
+  linkedin_url?: string | null;
+  github_url?: string | null;
+  hear_about?: string | null;
   is_ieee_member: boolean;
   is_ieee_cs_member: boolean;
   ieee_membership_number?: string | null;

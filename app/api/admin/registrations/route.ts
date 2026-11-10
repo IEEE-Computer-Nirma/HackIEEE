@@ -6,7 +6,6 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     const authHeader = req.headers.get("authorization");
-    const isDev = process.env.NODE_ENV === "development";
     const supabaseAdmin = getSupabaseAdminClient();
 
     if (!supabaseAdmin) {
@@ -19,61 +18,67 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // 1. Authorization Verification
-    let authorized = false;
-    let userEmail: string | null = null;
-
-    if (authHeader?.startsWith("Bearer ")) {
-      const token = authHeader.replace("Bearer ", "").trim();
-      const supabaseUser = getSupabaseServerClient();
-      const { data: userData, error: userError } = await supabaseUser.auth.getUser(token);
-
-      if (!userError && userData?.user?.email) {
-        userEmail = userData.user.email;
-
-        // Verify if user email exists in admin_users table
-        const { data: adminRecord, error: adminErr } = await supabaseAdmin
-          .from("admin_users")
-          .select("id, email, role, is_active")
-          .eq("email", userEmail)
-          .eq("is_active", true)
-          .maybeSingle();
-
-        if (!adminErr && adminRecord) {
-          authorized = true;
-          // Update last_login timestamp asynchronously
-          supabaseAdmin
-            .from("admin_users")
-            .update({ last_login: new Date().toISOString() })
-            .eq("id", adminRecord.id)
-            .then();
-        }
-      }
-    }
-
-    // In development mode, allow access if no token was passed yet, but log it
-    if (!authorized && isDev) {
-      authorized = true;
-    }
-
-    if (!authorized) {
+    // 1. Strict Authentication Verification
+    if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json(
         {
           success: false,
-          error: "Unauthorized. You must be an active organizer or admin to access this resource.",
+          error: "Unauthorized: Missing authentication token. Please sign in with Google.",
         },
         { status: 401 }
       );
     }
 
-    // 2. Query Parameters
+    const token = authHeader.replace("Bearer ", "").trim();
+    const supabaseUser = getSupabaseServerClient();
+    const { data: userData, error: userError } = await supabaseUser.auth.getUser(token);
+
+    if (userError || !userData?.user?.email) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Unauthorized: Invalid or expired session. Please sign in again.",
+        },
+        { status: 401 }
+      );
+    }
+
+    const userEmail = userData.user.email.toLowerCase().trim();
+
+    // 2. Whitelist Verification against admin_users table
+    const { data: adminRecord, error: adminErr } = await supabaseAdmin
+      .from("admin_users")
+      .select("id, email, full_name, role, is_active")
+      .ilike("email", userEmail)
+      .eq("is_active", true)
+      .maybeSingle();
+
+    if (adminErr || !adminRecord) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Access Denied: The account "${userEmail}" is not authorized. You must be in the organizer whitelist.`,
+          userEmail,
+        },
+        { status: 403 }
+      );
+    }
+
+    // Update last_login timestamp asynchronously
+    supabaseAdmin
+      .from("admin_users")
+      .update({ last_login: new Date().toISOString() })
+      .eq("id", adminRecord.id)
+      .then();
+
+    // 3. Query Parameters
     const url = new URL(req.url);
     const search = url.searchParams.get("search")?.trim().toLowerCase();
     const college = url.searchParams.get("college")?.trim();
     const membership = url.searchParams.get("membership")?.trim().toLowerCase();
     const limit = parseInt(url.searchParams.get("limit") || "2000", 10);
 
-    // 3. Database Query
+    // 4. Database Query
     let query = supabaseAdmin
       .from("registrations")
       .select("*")
@@ -124,6 +129,11 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      admin: {
+        email: adminRecord.email,
+        fullName: adminRecord.full_name || userData.user.user_metadata?.full_name || "Organizer",
+        role: adminRecord.role || "organizer",
+      },
       count: results.length,
       registrations: results,
     });

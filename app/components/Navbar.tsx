@@ -83,8 +83,8 @@ export default function Navbar({
     if (toastTimer.current) clearTimeout(toastTimer.current);
   }, []);
 
-  // Suppress landing page topbar on standalone registration & login pages
-  if (isAuthPage) {
+  // Suppress landing page topbar on admin, standalone registration & login pages
+  if (pathname?.startsWith("/admin") || isAuthPage) {
     return null;
   }
 

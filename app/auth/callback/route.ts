@@ -4,6 +4,8 @@ import { authNavMode, getFallbackAuthNavMode } from "@/app/flags";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
+  const next = searchParams.get("next") || "/register?step=confirmed";
+  const isAdminAuth = next.startsWith("/admin");
 
   let active = false;
   try {
@@ -14,12 +16,12 @@ export async function GET(request: NextRequest) {
     active = fallbackMode === "registration_only" || fallbackMode === "both";
   }
 
-  if (!active) {
+  // Allow admin login callback regardless of public registration flag
+  if (!active && !isAdminAuth) {
     return NextResponse.redirect(`${origin}/`);
   }
 
   const code = searchParams.get("code");
-  const next = searchParams.get("next") || "/register?step=confirmed";
 
   if (code) {
     const supabase = getSupabaseServerClient();
@@ -30,5 +32,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Redirect on error or missing code
-  return NextResponse.redirect(`${origin}/login?error=auth_failed`);
+  return NextResponse.redirect(
+    `${origin}${isAdminAuth ? "/admin?error=auth_failed" : "/login?error=auth_failed"}`
+  );
 }
