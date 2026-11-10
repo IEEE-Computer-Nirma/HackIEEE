@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Mail, Phone, MapPin, Copy, CircleCheck, ArrowUpRight } from "lucide-react";
 import SmoothLink from "./SmoothLink";
-import { CONTACT_EMAIL } from "../data/timeline";
+import { CONTACT_EMAIL } from "../data/contact";
 
 const InstagramIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

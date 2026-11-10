@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 import { MUSIC_SRC, SOUND_EVENT, getSoundState, initSound, setSound } from "./sound";
 
 const subscribe = (cb: () => void) => {
@@ -12,11 +13,13 @@ const subscribe = (cb: () => void) => {
    is remembered on this device. The bars dance while it plays; while the
    browser is still holding the sound back, it pulses and a click starts it. */
 export default function SoundToggle() {
+  const pathname = usePathname();
   const state = useSyncExternalStore(subscribe, getSoundState, () => "off" as const);
   const on = state === "on";
 
   useEffect(initSound, []);
 
+  if (pathname?.startsWith("/admin")) return null;
   if (!MUSIC_SRC.length) return null;
 
   return (

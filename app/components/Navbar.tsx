@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Mail, Copy, LogIn, UserPlus } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
-import { CONTACT_EMAIL } from "../data/timeline";
+import { CONTACT_EMAIL } from "../data/contact";
 
 export type AuthNavMode = "registration_only" | "both" | "login_only" | "none";
 
@@ -83,8 +83,8 @@ export default function Navbar({
     if (toastTimer.current) clearTimeout(toastTimer.current);
   }, []);
 
-  // Suppress landing page topbar on standalone registration & login pages
-  if (isAuthPage) {
+  // Suppress landing page topbar on admin, standalone registration & login pages
+  if (pathname?.startsWith("/admin") || isAuthPage) {
     return null;
   }
 
