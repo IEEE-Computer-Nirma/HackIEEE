@@ -1,6 +1,6 @@
 import { Mic, ArrowRight } from "lucide-react";
 import { Terminal, Dish, Phosphor, Turntable } from "@lucasmarkes/hairline/react";
-import { CONTACT_EMAIL } from "../data/timeline";
+import { CONTACT_EMAIL } from "../data/contact";
 
 const SPEAKER_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Speaker enquiry — hackieee 2026")}`;
 

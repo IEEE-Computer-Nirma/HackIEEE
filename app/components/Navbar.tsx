@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Mail, Copy, LogIn, UserPlus } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
-import { CONTACT_EMAIL } from "../data/timeline";
+import { CONTACT_EMAIL } from "../data/contact";
 
 export type AuthNavMode = "registration_only" | "both" | "login_only" | "none";
 
