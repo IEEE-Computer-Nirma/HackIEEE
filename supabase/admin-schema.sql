@@ -48,13 +48,19 @@ CREATE POLICY "Admins can view their own record"
   TO authenticated
   USING (email = auth.jwt() ->> 'email');
 
--- 4. Initial Organizer / Admin Whitelist (replace/add your team emails here)
+-- 4. Initial Organizer / Admin Whitelist
 INSERT INTO public.admin_users (email, full_name, role, is_active)
 VALUES 
   ('lead@ieeenirma.org', 'Lead Organizer', 'owner', true),
-  ('deep@computer.org', 'Technical Coordinator', 'admin', true)
+  ('deep@computer.org', 'Technical Coordinator', 'admin', true),
+  ('priyanshpatel9506@gmail.com', 'Priyansh Patel', 'owner', true),
+  ('keyajeni0@gmail.com', 'Keya Jeni', 'admin', true),
+  ('mahiacharya81@gmail.com', 'Mahi Acharya', 'admin', true),
+  ('vishwaghori@gmail.com', 'Vishwa Ghori', 'admin', true),
+  ('meet.r.patel1109@gmail.com', 'Meet Patel', 'admin', true),
+  ('shahridham0512@gmail.com', 'Ridham Shah', 'admin', true)
 ON CONFLICT (email) DO UPDATE 
-SET role = EXCLUDED.role, is_active = true;
+SET role = EXCLUDED.role, is_active = true, full_name = EXCLUDED.full_name;
 
 -- 5. Verification Queries
 SELECT schemaname, tablename FROM pg_publication_tables WHERE pubname = 'supabase_realtime';
