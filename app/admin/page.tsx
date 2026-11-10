@@ -27,6 +27,8 @@ import StatCardsGrid from "@/app/components/admin/StatCardsGrid";
 import RegistrationTrendChart from "@/app/components/admin/RegistrationTrendChart";
 import DemographicsDonutChart from "@/app/components/admin/DemographicsDonutChart";
 import TopCollegesChart from "@/app/components/admin/TopCollegesChart";
+import SankeyDiagram from "@/app/components/admin/SankeyDiagram";
+import SunburstDiagram from "@/app/components/admin/SunburstDiagram";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -395,9 +397,10 @@ export default function AdminDashboardPage() {
                 <Workflow className="h-4 w-4" />
                 Deep Cohorts
               </span>
-              <Badge variant="outline" className="text-[9px] px-1 py-0 border-zinc-700 text-zinc-400">
-                Phase 3
-              </Badge>
+              <span className="flex items-center gap-1 text-[9px] font-mono text-cyan-400 px-1.5 py-0.5 rounded bg-cyan-950/40 border border-cyan-900/50">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                Live
+              </span>
             </button>
           </div>
 
@@ -538,12 +541,15 @@ export default function AdminDashboardPage() {
           )}
 
           {activeTab === "deep" && (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/30 p-12 text-center space-y-3">
-              <Workflow className="h-10 w-10 text-zinc-500 mx-auto" />
-              <h3 className="text-base font-semibold text-zinc-200">Deep Cohort Analytics (Phase 3)</h3>
-              <p className="text-xs text-zinc-400 max-w-md mx-auto">
-                Next up in Phase 3: Sankey Flow Diagram (University ➔ Branch ➔ IEEE) and Radial Sunburst Hierarchy Tree.
-              </p>
+            <div className="space-y-6 animate-in fade-in-0 duration-200">
+              {/* 4 Live KPI Stat Cards */}
+              <StatCardsGrid registrations={registrations} />
+
+              {/* Sankey Flow Diagram */}
+              <SankeyDiagram registrations={registrations} />
+
+              {/* Sunburst Radial Hierarchy */}
+              <SunburstDiagram registrations={registrations} />
             </div>
           )}
         </main>
