@@ -16,6 +16,8 @@
     "@types/three": "^0.186.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "flags": "^4.4.0",
     "gsap": "^3.15.0",
     "howler": "^2.2.4",
@@ -26,7 +28,9 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "resend": "^6.26.0",
+    "tailwind-merge": "^3.7.0",
     "three": "^0.186.1",
+    "xlsx": "^0.18.5",
     "zod": "^4.6.7"
   },
   "devDependencies": {
