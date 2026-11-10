@@ -315,11 +315,11 @@ export default function AdminDashboardPage() {
 
   // ── 4. Authenticated & Authorized: Shadcn Sidebar Dashboard ──
   return (
-    <div className="flex min-h-screen bg-zinc-950 text-zinc-100 font-sans">
-      {/* ── Left Sidebar (Shadcn Style) ── */}
-      <aside className="w-64 flex-shrink-0 border-r border-zinc-800/80 bg-zinc-950 flex flex-col justify-between">
-        {/* Top: Branding & Navigation */}
-        <div className="p-5 space-y-6">
+    <div className="flex h-screen w-screen overflow-hidden bg-zinc-950 text-zinc-100 font-sans">
+      {/* ── Left Sidebar (Shadcn Style - Fixed in View) ── */}
+      <aside className="w-64 h-full flex-shrink-0 border-r border-zinc-800/80 bg-zinc-950 flex flex-col justify-between select-none z-20">
+        {/* Top: Branding & Navigation (Scrolls if viewport is very short) */}
+        <div className="p-4 space-y-5 overflow-y-auto flex-1">
           {/* Logo & Portal Identity */}
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 border border-zinc-800 shadow-sm text-zinc-100">
@@ -414,11 +414,23 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Bottom Sidebar Footer: User Card & Sign Out */}
-        <div className="p-4 border-t border-zinc-800/80 bg-zinc-900/40 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 border border-zinc-700 text-xs font-bold text-zinc-100">
+        {/* Bottom Sidebar Footer: Log Out & User Profile Card (Pinned & Always Visible) */}
+        <div className="p-3 border-t border-zinc-800/80 bg-zinc-900/50 space-y-2.5 mt-auto flex-shrink-0">
+          {/* Logout Button prominently visible just above user info */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSignOut}
+            className="w-full justify-start text-xs h-8 border-zinc-800 bg-zinc-950/70 text-zinc-300 hover:text-red-400 hover:bg-red-950/30 hover:border-red-900/50 transition-colors shadow-sm"
+          >
+            <LogOut className="mr-2 h-3.5 w-3.5 text-zinc-400" />
+            Log Out
+          </Button>
+
+          {/* User Card */}
+          <div className="flex items-center justify-between p-2 rounded-lg bg-zinc-950/80 border border-zinc-800/60">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-zinc-800 border border-zinc-700 text-xs font-bold text-zinc-100">
                 {adminProfile?.fullName?.charAt(0).toUpperCase() || currentUserEmail?.charAt(0).toUpperCase()}
               </div>
               <div className="flex flex-col min-w-0">
@@ -433,30 +445,20 @@ export default function AdminDashboardPage() {
             <Badge
               variant="outline"
               className={cn(
-                "text-[9px] uppercase tracking-wider px-1.5 py-0",
+                "text-[9px] uppercase tracking-wider px-1.5 py-0 flex-shrink-0",
                 adminProfile?.role === "owner" ? "border-amber-700/60 text-amber-300" : "border-zinc-700 text-zinc-300"
               )}
             >
               {adminProfile?.role || "Admin"}
             </Badge>
           </div>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleSignOut}
-            className="w-full justify-start text-xs h-8 text-zinc-400 hover:text-red-400 hover:bg-red-950/30"
-          >
-            <LogOut className="mr-2 h-3.5 w-3.5" />
-            Sign Out
-          </Button>
         </div>
       </aside>
 
-      {/* ── Main Content Area ── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        {/* Top Header Bar */}
-        <header className="sticky top-0 z-30 h-16 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md px-6 flex items-center justify-between">
+      {/* ── Main Content Area (Inner-scrollable) ── */}
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-hidden">
+        {/* Top Header Bar (Fixed & Pinned) */}
+        <header className="h-14 flex-shrink-0 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md px-6 flex items-center justify-between z-10">
           <div>
             <div className="flex items-center gap-1.5 text-xs text-zinc-400">
               <span>Admin</span>
@@ -492,8 +494,8 @@ export default function AdminDashboardPage() {
           </div>
         </header>
 
-        {/* Content Body */}
-        <main className="p-6 space-y-6 flex-1">
+        {/* Content Body (Inner-scrollable) */}
+        <main className="flex-1 overflow-y-auto p-6 space-y-6">
           {activeTab === "participants" && (
             <>
               {/* Metric KPI Strip */}

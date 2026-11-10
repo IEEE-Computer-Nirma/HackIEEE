@@ -414,15 +414,15 @@ export default function ParticipantTable({
       {/* ── Interactive Shadcn Table ── */}
       <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 overflow-hidden shadow-sm">
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-36">Registration ID</TableHead>
-              <TableHead>Participant</TableHead>
-              <TableHead>College & Branch</TableHead>
-              <TableHead className="w-28">Year / Degree</TableHead>
-              <TableHead className="w-32">IEEE Status</TableHead>
-              <TableHead className="w-32">Registered</TableHead>
-              <TableHead className="w-20 text-right">Action</TableHead>
+          <TableHeader className="sticky top-0 z-10 bg-zinc-900/95 backdrop-blur-sm">
+            <TableRow className="border-b border-zinc-800/80">
+              <TableHead className="w-36 min-w-[130px]">Registration ID</TableHead>
+              <TableHead className="min-w-[190px]">Participant</TableHead>
+              <TableHead className="min-w-[220px]">College & Branch</TableHead>
+              <TableHead className="w-28 min-w-[110px]">Year / Degree</TableHead>
+              <TableHead className="w-32 min-w-[120px]">IEEE Status</TableHead>
+              <TableHead className="w-32 min-w-[120px]">Registered</TableHead>
+              <TableHead className="w-20 min-w-[80px] text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -543,9 +543,9 @@ export default function ParticipantTable({
         </Table>
       </div>
 
-      {/* ── Pagination Footer ── */}
+      {/* ── Pagination Footer (Docked & Accessible Toolbar) ── */}
       {filteredRegistrations.length > 0 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-400 pt-1">
+        <div className="rounded-lg border border-zinc-800/80 bg-zinc-900/50 p-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-400 shadow-sm">
           <div className="flex items-center gap-2">
             <span>Rows per page:</span>
             <select
@@ -554,39 +554,46 @@ export default function ParticipantTable({
                 setPageSize(Number(e.target.value));
                 setPage(1);
               }}
-              className="h-7 rounded border border-zinc-800 bg-zinc-900 px-2 text-xs text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400"
+              className="h-7 rounded border border-zinc-800 bg-zinc-900 px-2 text-xs text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400 cursor-pointer"
             >
               <option value={10}>10</option>
               <option value={25}>25</option>
               <option value={50}>50</option>
               <option value={100}>100</option>
             </select>
+            <span className="text-zinc-600">|</span>
             <span>
-              Page {currentPage} of {totalPages}
+              Showing <strong className="text-zinc-200">{paginatedRegistrations.length}</strong> of{" "}
+              <strong className="text-zinc-200">{filteredRegistrations.length}</strong> records
             </span>
           </div>
 
-          <div className="flex items-center gap-1">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={currentPage <= 1}
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="h-7 px-2 text-xs"
-            >
-              <ChevronLeft className="h-3.5 w-3.5 mr-1" />
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={currentPage >= totalPages}
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              className="h-7 px-2 text-xs"
-            >
-              Next
-              <ChevronRight className="h-3.5 w-3.5 ml-1" />
-            </Button>
+          <div className="flex items-center gap-2">
+            <span>
+              Page <strong className="text-zinc-200">{currentPage}</strong> of <strong className="text-zinc-200">{totalPages}</strong>
+            </span>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                className="h-7 px-2.5 text-xs border-zinc-800"
+              >
+                <ChevronLeft className="h-3.5 w-3.5 mr-1" />
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage >= totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                className="h-7 px-2.5 text-xs border-zinc-800"
+              >
+                Next
+                <ChevronRight className="h-3.5 w-3.5 ml-1" />
+              </Button>
+            </div>
           </div>
         </div>
       )}
