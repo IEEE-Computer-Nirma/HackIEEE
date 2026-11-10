@@ -23,6 +23,10 @@ import ParticipantTable, {
 } from "@/app/components/admin/ParticipantTable";
 import ParticipantDetailModal from "@/app/components/admin/ParticipantDetailModal";
 import ExportToolbar from "@/app/components/admin/ExportToolbar";
+import StatCardsGrid from "@/app/components/admin/StatCardsGrid";
+import RegistrationTrendChart from "@/app/components/admin/RegistrationTrendChart";
+import DemographicsDonutChart from "@/app/components/admin/DemographicsDonutChart";
+import TopCollegesChart from "@/app/components/admin/TopCollegesChart";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -372,9 +376,10 @@ export default function AdminDashboardPage() {
                 <BarChart3 className="h-4 w-4" />
                 Visual Analytics
               </span>
-              <Badge variant="outline" className="text-[9px] px-1 py-0 border-zinc-700 text-zinc-400">
-                Phase 2
-              </Badge>
+              <span className="flex items-center gap-1 text-[9px] font-mono text-emerald-400 px-1.5 py-0.5 rounded bg-emerald-950/40 border border-emerald-900/50">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Live
+              </span>
             </button>
 
             <button
@@ -498,44 +503,8 @@ export default function AdminDashboardPage() {
         <main className="flex-1 overflow-y-auto p-6 space-y-6">
           {activeTab === "participants" && (
             <>
-              {/* Metric KPI Strip */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex items-center justify-between shadow-sm">
-                  <div>
-                    <p className="text-xs text-zinc-400 font-medium">Total Registrations</p>
-                    <p className="text-2xl font-bold tracking-tight text-zinc-100 mt-1">
-                      {registrations.length}
-                    </p>
-                  </div>
-                  <div className="h-10 w-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300">
-                    <Users className="h-5 w-5" />
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex items-center justify-between shadow-sm">
-                  <div>
-                    <p className="text-xs text-zinc-400 font-medium">IEEE Members</p>
-                    <p className="text-2xl font-bold tracking-tight text-emerald-400 mt-1">
-                      {registrations.filter((r) => r.is_ieee_member).length}
-                    </p>
-                  </div>
-                  <div className="h-10 w-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-emerald-400">
-                    <Radio className="h-5 w-5" />
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex items-center justify-between shadow-sm">
-                  <div>
-                    <p className="text-xs text-zinc-400 font-medium">Unique Colleges</p>
-                    <p className="text-2xl font-bold tracking-tight text-zinc-100 mt-1">
-                      {new Set(registrations.map((r) => r.university).filter(Boolean)).size}
-                    </p>
-                  </div>
-                  <div className="h-10 w-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300">
-                    <Database className="h-5 w-5" />
-                  </div>
-                </div>
-              </div>
+              {/* 4 Live KPI Stat Cards */}
+              <StatCardsGrid registrations={registrations} />
 
               {/* Multi-Format Export Toolbar */}
               <ExportToolbar
@@ -553,12 +522,18 @@ export default function AdminDashboardPage() {
           )}
 
           {activeTab === "analytics" && (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/30 p-12 text-center space-y-3">
-              <BarChart3 className="h-10 w-10 text-zinc-500 mx-auto" />
-              <h3 className="text-base font-semibold text-zinc-200">Visual Analytics (Phase 2)</h3>
-              <p className="text-xs text-zinc-400 max-w-md mx-auto">
-                Next up in Phase 2: Live Velocity Line Chart, Donut/Circle Demographics (IEEE vs Non-IEEE), and Top 10 Ranked Colleges Leaderboard.
-              </p>
+            <div className="space-y-6 animate-in fade-in-0 duration-200">
+              {/* 4 Live KPI Stat Cards */}
+              <StatCardsGrid registrations={registrations} />
+
+              {/* Velocity Line & Area Chart */}
+              <RegistrationTrendChart registrations={registrations} />
+
+              {/* 2-Column Grid: Donut Demographics & Top Colleges Leaderboard */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <DemographicsDonutChart registrations={registrations} />
+                <TopCollegesChart registrations={registrations} />
+              </div>
             </div>
           )}
 
