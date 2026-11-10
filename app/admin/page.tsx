@@ -17,6 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/app/lib/supabase/client";
+import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import ParticipantTable, {
   type Registration,
 } from "@/app/components/admin/ParticipantTable";
@@ -116,12 +117,29 @@ export default function AdminDashboardPage() {
 
   // Check initial session & listen for auth state changes
   React.useEffect(() => {
-    fetchRegistrations();
+    const initAuth = async () => {
+      const supabase = getSupabaseBrowserClient();
+      if (typeof window !== "undefined") {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get("code");
+        if (code) {
+          try {
+            await supabase.auth.exchangeCodeForSession(code);
+            window.history.replaceState({}, document.title, window.location.pathname);
+          } catch (err) {
+            console.error("[Admin Auth] Code exchange error:", err);
+          }
+        }
+      }
+      await fetchRegistrations();
+    };
+
+    initAuth();
 
     const supabase = getSupabaseBrowserClient();
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
       if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
         fetchRegistrations();
       } else if (event === "SIGNED_OUT") {

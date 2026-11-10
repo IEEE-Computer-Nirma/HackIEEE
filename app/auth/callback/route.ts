@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseServerClient } from "../../lib/supabase/server";
+import { createServerClient } from "@supabase/ssr";
 import { authNavMode, getFallbackAuthNavMode } from "@/app/flags";
 
 export async function GET(request: NextRequest) {
@@ -24,11 +24,30 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
 
   if (code) {
-    const supabase = getSupabaseServerClient();
+    let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+    supabaseUrl = supabaseUrl.replace(/\/rest\/v1\/?$/, "").replace(/\/+$/, "");
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+    const response = NextResponse.redirect(`${origin}${next}`);
+
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
+        },
+      },
+    });
+
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+      return response;
     }
+    console.error("[Auth Callback] Exchange error:", error);
   }
 
   // Redirect on error or missing code
