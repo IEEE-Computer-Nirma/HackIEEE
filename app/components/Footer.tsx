@@ -68,9 +68,9 @@ export default function Footer() {
       <div className="relative z-10 mx-auto w-full max-w-6xl px-5 md:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="display text-3xl tracking-[0.3em] text-ink">hackieee</p>
+            <p className="display text-3xl tracking-[0.3em] text-ink">HackIEEE</p>
             <p className="mt-5 max-w-sm text-[0.95rem] leading-relaxed text-ink-2">
-              Where innovation meets impact. hackieee 2027 brings together the brightest minds to build solutions
+              Where innovation meets impact. HackIEEE 2027 brings together the brightest minds to build solutions
               that matter.
             </p>
           </div>
@@ -153,11 +153,11 @@ export default function Footer() {
             color: "transparent",
           }}
         >
-          hackieee
+          HackIEEE
         </p>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-line pt-6 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-ink-3 sm:flex-row">
-          <p>hackieee 2027</p>
+          <p>HackIEEE 2027</p>
           <p className="text-center">Organised by: IEEE Computer Society at Nirma University</p>
         </div>
       </div>

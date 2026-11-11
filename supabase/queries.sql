@@ -1,5 +1,5 @@
 -- ==============================================================================
--- HackIEEE 2026-27: Supabase SQL Analysis & Participant Queries
+-- HackIEEE 2027: Supabase SQL Analysis & Participant Queries
 -- ==============================================================================
 -- Run these queries directly in Supabase SQL Editor to analyze participant data:
 -- ==============================================================================

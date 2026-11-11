@@ -46,11 +46,11 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon at Nirma University",
-    template: "%s | HackIEEE 2026-27",
+    default: "HackIEEE 2027 | National-Level 48-Hour Offline Hackathon at Nirma University",
+    template: "%s | HackIEEE 2027",
   },
   description:
-    "HackIEEE 2026-27 is a national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
+    "HackIEEE 2027 is a national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
   keywords: [
     "HackIEEE",
     "HackIEEE 2026",
@@ -112,17 +112,17 @@ export const metadata: Metadata = {
     "event-duration": "48-Hour Offline Finale",
   },
   openGraph: {
-    title: "HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon",
+    title: "HackIEEE 2027 | National-Level 48-Hour Offline Hackathon",
     description:
       "India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Build, stage, and ship considered products.",
     url: siteUrl,
-    siteName: "HackIEEE 2026-27",
+    siteName: "HackIEEE 2027",
     images: [
       {
         url: "/OG-Tag.png",
         width: 1200,
         height: 630,
-        alt: "HackIEEE 2026-27 — National-Level 48-Hour Offline Hackathon",
+        alt: "HackIEEE 2027 — National-Level 48-Hour Offline Hackathon",
       },
     ],
     locale: "en_US",
@@ -130,7 +130,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon",
+    title: "HackIEEE 2027 | National-Level 48-Hour Offline Hackathon",
     description:
       "India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
     images: ["/OG-Tag.png"],

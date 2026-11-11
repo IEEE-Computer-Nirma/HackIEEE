@@ -6,10 +6,10 @@ export default function StructuredData() {
         "@type": "WebSite",
         "@id": "https://hack.ieeenirma.org/#website",
         "url": "https://hack.ieeenirma.org",
-        "name": "HackIEEE 2026-27",
-        "alternateName": ["HackIEEE", "HackIEEE 2026", "hack.ieeenirma.org"],
+        "name": "HackIEEE 2027",
+        "alternateName": ["HackIEEE", "hack.ieeenirma.org"],
         "description":
-          "Official portal for HackIEEE 2026-27, India's premier national-level 48-hour offline hackathon hosted by IEEE Computer Society at Nirma University, supported by Kiro.",
+          "Official portal for HackIEEE 2027, India's premier national-level 48-hour offline hackathon hosted by IEEE Computer Society at Nirma University, supported by Kiro.",
         "inLanguage": "en-US",
         "publisher": {
           "@id": "https://hack.ieeenirma.org/#organization",
@@ -53,15 +53,14 @@ export default function StructuredData() {
       {
         "@type": "Event",
         "@id": "https://hack.ieeenirma.org/#event",
-        "name": "HackIEEE 2026-27 — National-Level Offline Hackathon",
+        "name": "HackIEEE 2027 — National-Level Offline Hackathon",
         "alternateName": [
           "HackIEEE National Hackathon",
-          "HackIEEE 2026",
           "HackIEEE 2027",
           "IEEE Nirma National Hackathon",
         ],
         "description":
-          "HackIEEE 2026-27 is India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Bringing together top collegiate developers and innovators across India to build and ship production-grade solutions.",
+          "HackIEEE 2027 is India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Bringing together top collegiate developers and innovators across India to build and ship production-grade solutions.",
         "keywords": [
           "National-Level Hackathon",
           "Hackathon India",
@@ -153,11 +152,11 @@ export default function StructuredData() {
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "What is HackIEEE 2026-27 and what makes it a national-level hackathon?",
+            "name": "What is HackIEEE 2027 and what makes it a national-level hackathon?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text":
-                "HackIEEE 2026-27 is a national-level 48-hour offline hackathon organised by the IEEE Computer Society Student Branch Chapter at Nirma University, supported by Kiro. It draws top collegiate developers, designers, and problem solvers from engineering institutes across India to compete, prototype, and build solutions.",
+                "HackIEEE 2027 is a national-level 48-hour offline hackathon organised by the IEEE Computer Society Student Branch Chapter at Nirma University, supported by Kiro. It draws top collegiate developers, designers, and problem solvers from engineering institutes across India to compete, prototype, and build solutions.",
             },
           },
           {
@@ -184,7 +183,7 @@ export default function StructuredData() {
             "acceptedAnswer": {
               "@type": "Answer",
               "text":
-                "Yes, registration for HackIEEE 2026-27 is completely free of charge. Shortlisted finalist teams attending the offline finale are provided with venue access, high-speed internet, meals, refreshments, mentorship, and overnight hacking facilities.",
+                "Yes, registration for HackIEEE 2027 is completely free of charge. Shortlisted finalist teams attending the offline finale are provided with venue access, high-speed internet, meals, refreshments, mentorship, and overnight hacking facilities.",
             },
           },
           {

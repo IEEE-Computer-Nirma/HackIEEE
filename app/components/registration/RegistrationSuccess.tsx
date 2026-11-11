@@ -55,11 +55,11 @@ export default function RegistrationSuccess({
 
       {/* Welcome Title */}
       <h3
-        className={`text-2xl sm:text-3xl font-[family-name:var(--font-dune)] tracking-[0.05em] lowercase mb-2 ${
+        className={`text-2xl sm:text-3xl font-[family-name:var(--font-dune)] tracking-[0.05em] mb-2 ${
           isDark ? "text-white" : "text-[#231b12]"
         }`}
       >
-        welcome to hackieee
+        welcome to HackIEEE
       </h3>
 
       {/* Participant Subtitle */}

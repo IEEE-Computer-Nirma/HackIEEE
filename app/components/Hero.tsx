@@ -71,7 +71,7 @@ export default async function Hero() {
 
   const currentYear = new Date().getFullYear();
   return (
-    <section id="top" className="hero" aria-label={`hackieee ${currentYear}`}>
+    <section id="top" className="hero" aria-label={`HackIEEE ${currentYear}`}>
       <Backdrop />
       <div className="hero__scrim" />
       <Decorations />
@@ -79,7 +79,7 @@ export default async function Hero() {
       <div className="hero__content">
         <div className={`hero__lift flex w-full flex-col items-center ${!showCollaboration ? "-mt-8 md:-mt-14" : ""}`}>
           {showCollaboration && (
-            /* Kiro stands alone: unified obsidian supporter badge on solid black. */
+            /* Kiro stands alone: 2-line obsidian supporter badge on solid black with large logo. */
             <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
               <a
                 href="https://kiro.dev"
@@ -89,7 +89,6 @@ export default async function Hero() {
                 aria-label="Supported by Kiro - kiro.dev"
               >
                 <span className="hero-collab__label">Supported by</span>
-                <span className="hero-collab__divider" aria-hidden="true" />
                 <span className="hero-collab__logo-wrap">
                   <Image
                     src={KIRO_LOGO.src}
@@ -106,7 +105,7 @@ export default async function Hero() {
           )}
 
           <h1 className="w-full">
-            <span className="sr-only">hackieee</span>
+            <span className="sr-only">HackIEEE</span>
             <HeroTitle />
           </h1>
 

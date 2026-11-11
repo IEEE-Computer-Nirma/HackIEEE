@@ -1,5 +1,5 @@
 -- ==============================================================================
--- HackIEEE 2026-27: Supabase Database Schema for Registrations
+-- HackIEEE 2027: Supabase Database Schema for Registrations
 -- ==============================================================================
 -- Run this script in your Supabase Project:
 -- Supabase Dashboard -> SQL Editor -> New Query -> Paste & Run

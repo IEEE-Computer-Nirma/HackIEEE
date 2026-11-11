@@ -2,7 +2,7 @@ import { Mic, ArrowRight } from "lucide-react";
 import { Terminal, Dish, Phosphor, Turntable } from "@lucasmarkes/hairline/react";
 import { CONTACT_EMAIL } from "../data/contact";
 
-const SPEAKER_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Speaker enquiry — hackieee 2026")}`;
+const SPEAKER_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Speaker enquiry — HackIEEE 2027")}`;
 
 const SPEAKERS = [
   {
@@ -78,7 +78,7 @@ export default function Speakers() {
               <Mic size={22} strokeWidth={1.5} />
             </span>
             <div>
-              <h3 className="text-2xl font-medium tracking-tight text-ink">Want to speak at hackieee?</h3>
+              <h3 className="text-2xl font-medium tracking-tight text-ink">Want to speak at HackIEEE?</h3>
               <p className="mt-2 max-w-lg text-[0.95rem] leading-relaxed text-ink-2">
                 We&apos;re looking for speakers and workshop hosts. Tell us what you&apos;d like to share.
               </p>

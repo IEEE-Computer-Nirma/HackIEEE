@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# HackIEEE 2026-27: Agent Guidelines & Architecture Standards
+# HackIEEE 2027: Agent Guidelines & Architecture Standards
 
 > **Notice to AI Agents & Developers:**  
 > These rules document the fundamental architectural decisions for the HackIEEE codebase. Whenever an architecture, flag, or environment standard changes, update this document and `.env.local.example` immediately.
