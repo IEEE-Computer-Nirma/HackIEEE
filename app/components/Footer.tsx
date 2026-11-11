@@ -68,7 +68,7 @@ export default function Footer() {
       <div className="relative z-10 mx-auto w-full max-w-6xl px-5 md:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="display text-3xl tracking-[0.3em] text-ink">HackIEEE</p>
+            <p className="display lowercase text-3xl tracking-[0.3em] text-ink">hackieee</p>
             <p className="mt-5 max-w-sm text-[0.95rem] leading-relaxed text-ink-2">
               Where innovation meets impact. HackIEEE 2027 brings together the brightest minds to build solutions
               that matter.
@@ -145,7 +145,7 @@ export default function Footer() {
         {/* oversized wordmark sinking into the sand */}
         <p
           aria-hidden="true"
-          className="display pointer-events-none -mr-[0.18em] mt-16 select-none whitespace-nowrap text-center text-[9.4vw] leading-none tracking-[0.18em] md:mt-24 md:text-[min(8.4vw,7.4rem)]"
+          className="display lowercase pointer-events-none -mr-[0.18em] mt-16 select-none whitespace-nowrap text-center text-[9.4vw] leading-none tracking-[0.18em] md:mt-24 md:text-[min(8.4vw,7.4rem)]"
           style={{
             background: "linear-gradient(180deg, var(--line-strong), transparent 85%)",
             WebkitBackgroundClip: "text",
@@ -153,7 +153,7 @@ export default function Footer() {
             color: "transparent",
           }}
         >
-          HackIEEE
+          hackieee
         </p>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-line pt-6 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-ink-3 sm:flex-row">

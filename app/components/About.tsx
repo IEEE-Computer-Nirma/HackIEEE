@@ -4,6 +4,7 @@ import Image from "next/image";
 import SmoothLink from "./SmoothLink";
 import GhostFibers from "./GhostFibers";
 import DuneEdge from "./DuneEdge";
+import { showKiroInAbout, getFallbackShowKiroInAbout } from "../flags";
 
 const features = [
   {
@@ -32,7 +33,17 @@ const facts = [
   { value: "04", label: "Max team size" },
 ];
 
-export default function About() {
+export default async function About() {
+  let showSupportedBy = getFallbackShowKiroInAbout();
+  try {
+    const flagVal = await showKiroInAbout();
+    if (typeof flagVal === "boolean") {
+      showSupportedBy = flagVal;
+    }
+  } catch {
+    showSupportedBy = getFallbackShowKiroInAbout();
+  }
+
   return (
     <section id="about" className="relative scroll-mt-4 overflow-hidden px-5 pb-16 pt-20 md:px-8 md:pb-28 md:pt-32">
       <DuneEdge id="about-edge" />
@@ -80,7 +91,7 @@ export default function About() {
         <div className="reveal max-w-3xl">
           <p className="eyebrow">01 — About</p>
           <h2 className="section-title mt-5">
-            What is <span className="text-spice">HackIEEE</span>?
+            What is <span className="text-spice lowercase">hackieee</span>?
           </h2>
           <p className="section-lead mt-6">
             More than a hackathon — it&apos;s a launchpad for the next generation of innovators, builders, and
@@ -127,9 +138,40 @@ export default function About() {
           })}
         </div>
 
-        {/* Organisers. The logo's height is tied to the Kiro logo's in the hero
-            (see .org-logo in globals.css), so its emblem is never the smaller one. */}
-        <div id="organisers" className="reveal mt-16 md:mt-24">
+        {/* Variant 2: Supported by KIRO above Organised by */}
+        {showSupportedBy && (
+          <div id="supporters" className="reveal mt-16 md:mt-24">
+            <h3 className="mono-meta flex items-center justify-center gap-4 text-center text-[0.62rem] font-normal text-ink-3 md:text-[0.7rem]">
+              <span className="h-px w-10 bg-line-strong md:w-20" />
+              Supported by
+              <span className="h-px w-10 bg-line-strong md:w-20" />
+            </h3>
+            <a
+              href="https://kiro.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 flex flex-col items-center gap-5 text-center group"
+              aria-label="Supported by KIRO - kiro.dev"
+            >
+              <div className="inline-flex items-center justify-center rounded-2xl bg-black px-6 py-3.5 border border-line-strong shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:border-spice/50">
+                <Image
+                  src="/collab/kiro-logo.png"
+                  alt="KIRO"
+                  width={2000}
+                  height={511}
+                  unoptimized
+                  className="h-10 sm:h-12 w-auto object-contain"
+                />
+              </div>
+              <span className="text-[0.95rem] font-medium text-ink transition-colors group-hover:text-spice">
+                KIRO
+              </span>
+            </a>
+          </div>
+        )}
+
+        {/* Organisers */}
+        <div id="organisers" className={`reveal ${showSupportedBy ? "mt-12 md:mt-16" : "mt-16 md:mt-24"}`}>
           <h3 className="mono-meta flex items-center justify-center gap-4 text-center text-[0.62rem] font-normal text-ink-3 md:text-[0.7rem]">
             <span className="h-px w-10 bg-line-strong md:w-20" />
             Organised by

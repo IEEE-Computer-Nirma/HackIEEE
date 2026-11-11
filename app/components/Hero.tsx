@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
-import { showKiroCollaboration, getFallbackShowKiroCollaboration, authNavMode, getFallbackAuthNavMode } from "../flags";
+import { showKiroInHero, getFallbackShowKiroInHero, authNavMode, getFallbackAuthNavMode } from "../flags";
 
 /* The Kiro logo exactly as supplied: horizontal lockup (2000 x 511),
    CSS sets the height (.hero-collab__logo). */
@@ -50,14 +50,14 @@ function Decorations() {
 }
 
 export default async function Hero() {
-  let showCollaboration = getFallbackShowKiroCollaboration();
+  let showCollaboration = getFallbackShowKiroInHero();
   try {
-    const flagVal = await showKiroCollaboration();
+    const flagVal = await showKiroInHero();
     if (typeof flagVal === "boolean") {
       showCollaboration = flagVal;
     }
   } catch {
-    showCollaboration = getFallbackShowKiroCollaboration();
+    showCollaboration = getFallbackShowKiroInHero();
   }
 
   let registrationActive = false;
@@ -69,7 +69,7 @@ export default async function Hero() {
     registrationActive = fallbackMode === "registration_only" || fallbackMode === "both";
   }
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2027;
   return (
     <section id="top" className="hero" aria-label={`HackIEEE ${currentYear}`}>
       <Backdrop />
@@ -77,22 +77,22 @@ export default async function Hero() {
       <Decorations />
 
       <div className="hero__content">
-        <div className={`hero__lift flex w-full flex-col items-center ${!showCollaboration ? "-mt-8 md:-mt-14" : ""}`}>
+        <div className="hero__lift flex w-full flex-col items-center pt-5 md:pt-12">
           {showCollaboration && (
-            /* Kiro stands alone: 2-line obsidian supporter badge on solid black with large logo. */
+            /* Kiro stands alone: prominent 2-line obsidian supporter badge on solid black. */
             <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
               <a
                 href="https://kiro.dev"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hero-collab__badge"
-                aria-label="Supported by Kiro - kiro.dev"
+                aria-label="Supported by KIRO - kiro.dev"
               >
                 <span className="hero-collab__label">Supported by</span>
                 <span className="hero-collab__logo-wrap">
                   <Image
                     src={KIRO_LOGO.src}
-                    alt="Kiro"
+                    alt="KIRO"
                     width={KIRO_LOGO.width}
                     height={KIRO_LOGO.height}
                     unoptimized
@@ -104,17 +104,17 @@ export default async function Hero() {
             </div>
           )}
 
-          <h1 className="w-full">
+          <h1 className="w-full flex justify-center items-center">
             <span className="sr-only">HackIEEE</span>
             <HeroTitle />
           </h1>
 
-          <p className="hero__tagline rise mt-9 md:mt-10" style={{ "--d": "1100ms" } as React.CSSProperties}>
+          <p className="hero__tagline rise text-center mt-10 md:mt-14" style={{ "--d": "1100ms" } as React.CSSProperties}>
             Build, stage and ship code that feels considered, from first draft to launch.
           </p>
 
           <div
-            className="rise mt-9 flex w-full flex-col items-center gap-3 min-[360px]:w-auto min-[360px]:flex-row md:mt-11 md:gap-5"
+            className="rise mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row md:mt-14 md:gap-5"
             style={{ "--d": "1350ms" } as React.CSSProperties}
           >
             {registrationActive ? (
@@ -123,20 +123,21 @@ export default async function Hero() {
                   href="/register"
                   prefetch={true}
                   data-no-transition
-                  className="btn btn-sand w-full min-[360px]:w-auto font-medium"
+                  className="btn btn-sand w-full max-w-[280px] sm:max-w-none sm:w-auto font-medium !text-[#1d130a] justify-center"
+                  style={{ color: "#1d130a" }}
                 >
-                  Register for HackIEEE <ArrowRight size={18} strokeWidth={1.75} />
+                  <span className="!text-[#1d130a]">Register for HackIEEE</span> <ArrowRight size={18} strokeWidth={1.75} className="!text-[#1d130a]" />
                 </Link>
-                <SmoothLink href="#tracks" className="btn btn-ghost w-full min-[360px]:w-auto">
+                <SmoothLink href="#tracks" className="btn btn-ghost w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center">
                   Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
                 </SmoothLink>
               </>
             ) : (
               <>
-                <SmoothLink href="#tracks" className="btn btn-sand w-full min-[360px]:w-auto">
+                <SmoothLink href="#tracks" className="btn btn-sand w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center">
                   Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
                 </SmoothLink>
-                <SmoothLink href="#timeline" className="btn btn-ghost w-full min-[360px]:w-auto">
+                <SmoothLink href="#timeline" className="btn btn-ghost w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center">
                   Timeline <ArrowRight size={18} strokeWidth={1.75} />
                 </SmoothLink>
               </>

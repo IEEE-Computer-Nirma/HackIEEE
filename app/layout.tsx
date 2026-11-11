@@ -3,7 +3,13 @@ import { IBM_Plex_Mono, Lexend } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { authNavMode, getFallbackAuthNavMode, type AuthNavMode } from "./flags";
+import {
+  authNavMode,
+  getFallbackAuthNavMode,
+  type AuthNavMode,
+  showKiroInNav,
+  getFallbackShowKiroInNav,
+} from "./flags";
 import PageTransition from "./components/PageTransition";
 import Intro from "./components/Intro";
 import SoundToggle from "./components/SoundToggle";
@@ -53,7 +59,6 @@ export const metadata: Metadata = {
     "HackIEEE 2027 is a national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
   keywords: [
     "HackIEEE",
-    "HackIEEE 2026",
     "HackIEEE 2027",
     "National Level Hackathon",
     "National Hackathon India",
@@ -65,7 +70,7 @@ export const metadata: Metadata = {
     "Ahmedabad Hackathon",
     "Gujarat Tech Hackathon",
     "Student Hackathon 2027",
-    "Kiro Hackathon",
+    "KIRO Hackathon",
     "Coding Marathon",
     "Hardware and Software Hackathon",
     "IEEE Computer Society",
@@ -150,6 +155,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     navMode = getFallbackAuthNavMode();
   }
 
+  let kiroInNav = getFallbackShowKiroInNav();
+  try {
+    const flagVal = await showKiroInNav();
+    if (typeof flagVal === "boolean") {
+      kiroInNav = flagVal;
+    }
+  } catch {
+    kiroInNav = getFallbackShowKiroInNav();
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -163,7 +178,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Intro />
         <UniversitiesPrefetcher />
         <PageTransition />
-        <Navbar authNavMode={navMode} />
+        <Navbar authNavMode={navMode} showKiroInNav={kiroInNav} />
         <SoundToggle />
         {children}
         {process.env.NODE_ENV === "production" && (

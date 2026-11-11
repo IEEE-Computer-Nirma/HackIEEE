@@ -20,14 +20,20 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - **Primary Flag: `AUTH_NAV_MODE` (String)**
   The navigation bar and authentication state are controlled via `AUTH_NAV_MODE` defined in `app/flags.ts`.
   It supports 4 distinct variants:
-  - `"both"`: Displays `[Login]` button on the left and `[Register]` CTA on the right corner (Default active state).
-  - `"registration_only"`: Displays `[Register]` CTA on the right corner only.
+  - `"both"`: Displays `[Login]` button on the left and `[Register]` CTA on the right corner.
+  - `"registration_only"`: Displays `[Register]` CTA on the right corner only (Default active state).
   - `"login_only"`: Displays `[Login]` button on the right corner only.
   - `"none"`: Displays `[Contact Us]` only (Registration closed; routes `/register` and `POST /api/register` return 403 Forbidden).
 
 - **Backward Compatibility: `IS_REGISTRATION_ACTIVE` (Boolean)**
   - Legacy toggle: `IS_REGISTRATION_ACTIVE="false"` automatically maps to `AUTH_NAV_MODE="none"`.
-  - `IS_REGISTRATION_ACTIVE="true"` automatically maps to `AUTH_NAV_MODE="both"`.
+  - `IS_REGISTRATION_ACTIVE="true"` automatically maps to `AUTH_NAV_MODE="registration_only"`.
+
+- **KIRO Supporter Badge Trial Flags (Boolean on/off):**
+  - `SHOW_KIRO_COLLABORATION` (Master Toggle, default: `true`).
+  - `SHOW_KIRO_IN_HERO` (Variant 1: Hero 2-line obsidian badge above title, default: `false`).
+  - `SHOW_KIRO_IN_ABOUT` (Variant 2: About "Supported by" section above Organised by, default: `false`).
+  - `SHOW_KIRO_IN_NAV` (Variant 3: Top-left header bar badge beside navigation, default: `true` — Active).
 
 - **Local Development Fallback Rule:**
   - `app/flags.ts` must always resolve its `defaultValue` and error catch blocks using `getFallbackAuthNavMode()`.

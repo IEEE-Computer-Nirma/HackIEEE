@@ -22,9 +22,9 @@ export function getFallbackAuthNavMode(): AuthNavMode {
     return "none";
   }
   if (process.env.IS_REGISTRATION_ACTIVE === "true") {
-    return "both";
+    return "registration_only";
   }
-  return "both";
+  return "registration_only";
 }
 
 /**
@@ -48,7 +48,7 @@ export const authNavMode = flag<AuthNavMode>({
 });
 
 /**
- * Resolves local / environment fallback for SHOW_KIRO_COLLABORATION.
+ * Resolves local / environment fallback for SHOW_KIRO_COLLABORATION (Master Toggle).
  * Defaults to true for active event collaboration, unless explicitly disabled with "false".
  */
 export function getFallbackShowKiroCollaboration(): boolean {
@@ -62,4 +62,51 @@ export const showKiroCollaboration = flag<boolean>({
   key: "showKiroCollaboration",
   adapter: vercelAdapter(),
   defaultValue: getFallbackShowKiroCollaboration(),
+});
+
+/**
+ * Variant 1: Hero Section 2-line badge above HACKIEEE title
+ */
+export function getFallbackShowKiroInHero(): boolean {
+  if (process.env.SHOW_KIRO_COLLABORATION === "false") return false;
+  if (process.env.SHOW_KIRO_IN_HERO === "true") return true;
+  if (process.env.SHOW_KIRO_IN_HERO === "false") return false;
+  return false; // Default OFF
+}
+
+export const showKiroInHero = flag<boolean>({
+  key: "SHOW_KIRO_IN_HERO",
+  adapter: vercelAdapter(),
+  defaultValue: getFallbackShowKiroInHero(),
+});
+
+/**
+ * Variant 2: About Section "Supported by" block above "Organised by"
+ */
+export function getFallbackShowKiroInAbout(): boolean {
+  if (process.env.SHOW_KIRO_COLLABORATION === "false") return false;
+  if (process.env.SHOW_KIRO_IN_ABOUT === "true") return true;
+  return false; // Default OFF
+}
+
+export const showKiroInAbout = flag<boolean>({
+  key: "SHOW_KIRO_IN_ABOUT",
+  adapter: vercelAdapter(),
+  defaultValue: getFallbackShowKiroInAbout(),
+});
+
+/**
+ * Variant 3: Top-left header bar badge beside navigation (Active Variant)
+ */
+export function getFallbackShowKiroInNav(): boolean {
+  if (process.env.SHOW_KIRO_COLLABORATION === "false") return false;
+  if (process.env.SHOW_KIRO_IN_NAV === "false") return false;
+  if (process.env.SHOW_KIRO_IN_NAV === "true") return true;
+  return true; // Default ON
+}
+
+export const showKiroInNav = flag<boolean>({
+  key: "SHOW_KIRO_IN_NAV",
+  adapter: vercelAdapter(),
+  defaultValue: getFallbackShowKiroInNav(),
 });
