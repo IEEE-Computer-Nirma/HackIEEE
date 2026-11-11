@@ -5,9 +5,9 @@ import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
 import { showKiroCollaboration, authNavMode, getFallbackAuthNavMode } from "../flags";
 
-/* The Kiro logo exactly as supplied: its intrinsic size sets the aspect ratio,
-   CSS sets only the height (.hero-collab__logo). */
-const KIRO_LOGO = { src: "/collab/kiro-logo.svg", width: 1200, height: 1200 };
+/* The Kiro logo exactly as supplied: horizontal lockup (2000 x 511),
+   CSS sets the height (.hero-collab__logo). */
+const KIRO_LOGO = { src: "/collab/kiro-logo.png", width: 2000, height: 511 };
 
 function Backdrop() {
   const common = { alt: "", sizes: "100vw", quality: 80 };
@@ -79,25 +79,28 @@ export default async function Hero() {
       <div className="hero__content">
         <div className={`hero__lift flex w-full flex-col items-center ${!showCollaboration ? "-mt-8 md:-mt-14" : ""}`}>
           {showCollaboration && (
-            /* Kiro stands alone: its own block, never beside another logo. */
+            /* Kiro stands alone: unified obsidian supporter badge on solid black. */
             <div className="hero-collab rise" style={{ "--d": "200ms" } as React.CSSProperties}>
-              <p className="hero-collab__label">In Collaboration With</p>
               <a
                 href="https://kiro.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center transition-transform duration-300 hover:scale-105"
-                aria-label="Kiro - kiro.dev"
+                className="hero-collab__badge"
+                aria-label="Supported by Kiro - kiro.dev"
               >
-                <Image
-                  src={KIRO_LOGO.src}
-                  alt="Kiro"
-                  width={KIRO_LOGO.width}
-                  height={KIRO_LOGO.height}
-                  unoptimized
-                  loading="eager"
-                  className="hero-collab__logo"
-                />
+                <span className="hero-collab__label">Supported by</span>
+                <span className="hero-collab__divider" aria-hidden="true" />
+                <span className="hero-collab__logo-wrap">
+                  <Image
+                    src={KIRO_LOGO.src}
+                    alt="Kiro"
+                    width={KIRO_LOGO.width}
+                    height={KIRO_LOGO.height}
+                    unoptimized
+                    priority
+                    className="hero-collab__logo"
+                  />
+                </span>
               </a>
             </div>
           )}

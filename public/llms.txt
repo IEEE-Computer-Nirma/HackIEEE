@@ -1,6 +1,6 @@
 # HackIEEE 2026-27 | National-Level 48-Hour Offline Hackathon
 
-> HackIEEE is India's premier national-level hackathon hosted by the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, in collaboration with Kiro. A high-intensity 48-hour offline hackathon inviting top engineering talent and student innovators from across the country to build, stage, and ship considered code.
+> HackIEEE is India's premier national-level hackathon hosted by the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, supported by Kiro. A high-intensity 48-hour offline hackathon inviting top engineering talent and student innovators from across the country to build, stage, and ship considered code.
 
 - **Event:** HackIEEE 2026-27 (Inaugural Edition)
 - **Scope & Scale:** All-India National-Level Hackathon

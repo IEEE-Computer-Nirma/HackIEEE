@@ -9,7 +9,7 @@ export default function StructuredData() {
         "name": "HackIEEE 2026-27",
         "alternateName": ["HackIEEE", "HackIEEE 2026", "hack.ieeenirma.org"],
         "description":
-          "Official portal for HackIEEE 2026-27, India's premier national-level 48-hour offline hackathon hosted by IEEE Computer Society at Nirma University in collaboration with Kiro.",
+          "Official portal for HackIEEE 2026-27, India's premier national-level 48-hour offline hackathon hosted by IEEE Computer Society at Nirma University, supported by Kiro.",
         "inLanguage": "en-US",
         "publisher": {
           "@id": "https://hack.ieeenirma.org/#organization",
@@ -157,7 +157,7 @@ export default function StructuredData() {
             "acceptedAnswer": {
               "@type": "Answer",
               "text":
-                "HackIEEE 2026-27 is a national-level 48-hour offline hackathon organised by the IEEE Computer Society Student Branch Chapter at Nirma University in collaboration with Kiro. It draws top collegiate developers, designers, and problem solvers from engineering institutes across India to compete, prototype, and build solutions.",
+                "HackIEEE 2026-27 is a national-level 48-hour offline hackathon organised by the IEEE Computer Society Student Branch Chapter at Nirma University, supported by Kiro. It draws top collegiate developers, designers, and problem solvers from engineering institutes across India to compete, prototype, and build solutions.",
             },
           },
           {
