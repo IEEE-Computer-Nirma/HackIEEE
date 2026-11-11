@@ -47,8 +47,19 @@ export const authNavMode = flag<AuthNavMode>({
   ],
 });
 
+/**
+ * Resolves local / environment fallback for SHOW_KIRO_COLLABORATION.
+ * Defaults to true for active event collaboration, unless explicitly disabled with "false".
+ */
+export function getFallbackShowKiroCollaboration(): boolean {
+  if (process.env.SHOW_KIRO_COLLABORATION === "false") {
+    return false;
+  }
+  return true;
+}
+
 export const showKiroCollaboration = flag<boolean>({
   key: "showKiroCollaboration",
   adapter: vercelAdapter(),
-  defaultValue: process.env.SHOW_KIRO_COLLABORATION === "true",
+  defaultValue: getFallbackShowKiroCollaboration(),
 });

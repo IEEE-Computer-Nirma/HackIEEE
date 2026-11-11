@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import HeroTitle from "./HeroTitle";
 import SmoothLink from "./SmoothLink";
-import { showKiroCollaboration, authNavMode, getFallbackAuthNavMode } from "../flags";
+import { showKiroCollaboration, getFallbackShowKiroCollaboration, authNavMode, getFallbackAuthNavMode } from "../flags";
 
 /* The Kiro logo exactly as supplied: horizontal lockup (2000 x 511),
    CSS sets the height (.hero-collab__logo). */
@@ -50,14 +50,14 @@ function Decorations() {
 }
 
 export default async function Hero() {
-  let showCollaboration = process.env.SHOW_KIRO_COLLABORATION === "true";
+  let showCollaboration = getFallbackShowKiroCollaboration();
   try {
     const flagVal = await showKiroCollaboration();
     if (typeof flagVal === "boolean") {
       showCollaboration = flagVal;
     }
   } catch {
-    showCollaboration = process.env.SHOW_KIRO_COLLABORATION === "true";
+    showCollaboration = getFallbackShowKiroCollaboration();
   }
 
   let registrationActive = false;
