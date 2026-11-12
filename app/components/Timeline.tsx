@@ -38,7 +38,7 @@ const MILESTONES: TimelineMilestone[] = [
     step: "02",
     title: "Problem Statement Declaration",
     date: "December 20, 2026",
-    description: "Challenge tracks unveiled & shortlisted teams confirmed.",
+    description: "Challenge tracks unveiled & online event guidelines released.",
     xPercent: 50,
     yPercent: 57,
     googleDates: "20261220T053000Z/20261220T143000Z",
@@ -48,7 +48,7 @@ const MILESTONES: TimelineMilestone[] = [
     step: "03",
     title: "Final Round",
     date: "January 2–4, 2027",
-    description: "48-hour national offline hackathon & grand finale at Nirma.",
+    description: "48-hour national online hackathon & virtual grand finale.",
     xPercent: 82,
     yPercent: 68,
     googleDates: "20270102T043000Z/20270105T123000Z",
@@ -194,7 +194,7 @@ export default function Timeline() {
         {/* Global Add to Calendar Button */}
         <div className="mt-6 flex items-center justify-center">
           <a
-            href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=hackieee+2026+Hackathon&dates=20270102T043000Z/20270105T123000Z&details=The+flagship+Dune-themed+48-hour+hackathon+at+Nirma+University.&location=Nirma+University%2C+Ahmedabad"
+            href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=HackIEEE+2027+%7C+National+48-Hour+Online+Hackathon&dates=20270102T043000Z/20270105T123000Z&details=The+flagship+Dune-themed+48-hour+online+hackathon+organised+by+IEEE+Computer+Society+at+Nirma+University.&location=Online+Event"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 rounded-full border border-spice/40 bg-black/45 px-4 py-2 font-mono text-xs text-sand shadow-lg backdrop-blur-md transition-all duration-300 hover:border-sand hover:bg-spice/20 hover:shadow-[0_0_20px_var(--glow)]"
@@ -214,7 +214,7 @@ export default function Timeline() {
             `hackieee 2026: ${item.title}`
           )}&dates=${item.googleDates}&details=${encodeURIComponent(
             `${item.title} (${item.step}) - hackieee 2026. ${item.description}`
-          )}&location=${encodeURIComponent("Nirma University, Ahmedabad")}`;
+          )}&location=${encodeURIComponent("Online Event (IEEE CS, Nirma University)")}`;
 
           return (
             <div
@@ -277,7 +277,7 @@ export default function Timeline() {
             `hackieee 2026: ${item.title}`
           )}&dates=${item.googleDates}&details=${encodeURIComponent(
             `${item.title} (${item.step}) - hackieee 2026. ${item.description}`
-          )}&location=${encodeURIComponent("Nirma University, Ahmedabad")}`;
+          )}&location=${encodeURIComponent("Online Event (IEEE CS, Nirma University)")}`;
 
           return (
             <article
