@@ -38,7 +38,7 @@ const MILESTONES: TimelineMilestone[] = [
     step: "02",
     title: "Problem Statement Declaration",
     date: "December 20, 2026",
-    description: "Challenge tracks unveiled & shortlisted teams confirmed.",
+    description: "Challenge tracks unveiled & online event guidelines released.",
     xPercent: 50,
     yPercent: 57,
     googleDates: "20261220T053000Z/20261220T143000Z",
@@ -213,8 +213,8 @@ export default function Timeline() {
           const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
             `HackIEEE 2027: ${item.title}`
           )}&dates=${item.googleDates}&details=${encodeURIComponent(
-            `${item.title} (${item.step}) - HackIEEE 2027. ${item.description}`
-          )}&location=${encodeURIComponent("Nirma University, Ahmedabad")}`;
+            `${item.title} (${item.step}) - hackieee 2026. ${item.description}`
+          )}&location=${encodeURIComponent("Online Event (IEEE CS, Nirma University)")}`;
 
           return (
             <div
@@ -276,8 +276,8 @@ export default function Timeline() {
           const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
             `HackIEEE 2027: ${item.title}`
           )}&dates=${item.googleDates}&details=${encodeURIComponent(
-            `${item.title} (${item.step}) - HackIEEE 2027. ${item.description}`
-          )}&location=${encodeURIComponent("Nirma University, Ahmedabad")}`;
+            `${item.title} (${item.step}) - hackieee 2026. ${item.description}`
+          )}&location=${encodeURIComponent("Online Event (IEEE CS, Nirma University)")}`;
 
           return (
             <article

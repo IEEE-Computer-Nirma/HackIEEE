@@ -582,7 +582,7 @@ export default function RegisterPage() {
                 isDark ? "text-[#f3e6cf]/75" : "text-[#6e6456]"
               }`}
             >
-              Follow these 5 quick phases to activate your participant space for the 48-hour offline hackathon.
+              Follow these 5 quick phases to activate your participant space for the 48-hour online hackathon.
             </p>
           </div>
 
@@ -668,7 +668,7 @@ export default function RegisterPage() {
                 : "text-[#8a8073] border-[#ede3d5]"
             }`}
           >
-            <span>48-Hour Sprint</span>
+            <span>48-Hour Online Sprint</span>
             <span>•</span>
             <span>Nirma University</span>
             <span>•</span>

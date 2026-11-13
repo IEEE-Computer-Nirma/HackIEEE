@@ -155,7 +155,7 @@ export default function RegistrationSuccess({
             3
           </span>
           <p className={isDark ? "text-[#f3e6cf]/80" : "text-[#5c5245]"}>
-            Prepare your project ideas for the 48-hour offline hackathon sprint!
+            Prepare your project ideas for the 48-hour online hackathon sprint!
           </p>
         </div>
       </div>

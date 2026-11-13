@@ -52,17 +52,18 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HackIEEE 2027 | National-Level 48-Hour Offline Hackathon at Nirma University",
+    default: "HackIEEE 2027 | 48-Hour Hackathon at Nirma University",
     template: "%s | HackIEEE 2027",
   },
   description:
-    "HackIEEE 2027 is a national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
+    "HackIEEE 2027 is a national 48-hour hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
   keywords: [
     "HackIEEE",
     "HackIEEE 2027",
     "National Level Hackathon",
     "National Hackathon India",
-    "48-Hour Offline Hackathon",
+    "48-Hour Online Hackathon",
+    "Online Hackathon India",
     "48-Hour Hackathon",
     "All-India Hackathon",
     "IEEE Hackathon India",
@@ -113,13 +114,13 @@ export const metadata: Metadata = {
     "geo.placename": "Ahmedabad, Gujarat, India",
     "geo.position": "23.1287;72.5447",
     "ICBM": "23.1287, 72.5447",
-    "event-type": "National-Level Hackathon",
-    "event-duration": "48-Hour Offline Finale",
+    "event-type": "National-Level Online Hackathon",
+    "event-duration": "48-Hour Online Hackathon",
   },
   openGraph: {
     title: "HackIEEE 2027 | National-Level 48-Hour Offline Hackathon",
     description:
-      "India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Build, stage, and ship considered products.",
+      "India's premier national 48-hour online hackathon organised by IEEE Computer Society Nirma University. Build, stage, and ship considered products.",
     url: siteUrl,
     siteName: "HackIEEE 2027",
     images: [
@@ -135,9 +136,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HackIEEE 2027 | National-Level 48-Hour Offline Hackathon",
+    title: "HackIEEE 2027 | 48-Hour Online Hackathon",
     description:
-      "India's premier national 48-hour offline hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
+      "India's premier national 48-hour online hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
     images: ["/OG-Tag.png"],
   },
 };

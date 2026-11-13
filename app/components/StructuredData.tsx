@@ -22,6 +22,14 @@ export default function StructuredData() {
         "alternateName": ["IEEE CS Nirma", "IEEE CS SBNU", "HackIEEE Organizers"],
         "url": "https://hack.ieeenirma.org",
         "logo": "https://hack.ieeenirma.org/organisers/ieee-cs-nirma.svg",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Sarkhej - Gandhinagar Highway, Gota",
+          "addressLocality": "Ahmedabad",
+          "addressRegion": "Gujarat",
+          "postalCode": "382481",
+          "addressCountry": "IN",
+        },
         "sameAs": [
           "https://ieee-computer-nirma.github.io/",
           "https://www.linkedin.com/company/ieee-computer-nirma-university/",
@@ -64,7 +72,8 @@ export default function StructuredData() {
         "keywords": [
           "National-Level Hackathon",
           "Hackathon India",
-          "48-Hour Offline Hackathon",
+          "48-Hour Online Hackathon",
+          "Online Hackathon India",
           "48-Hour Hackathon",
           "IEEE Hackathon",
           "All-India Coding Competition",
@@ -76,7 +85,7 @@ export default function StructuredData() {
         "startDate": "2027-01-02T09:00:00+05:30",
         "endDate": "2027-01-04T18:00:00+05:30",
         "duration": "P3D",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
         "eventStatus": "https://schema.org/EventScheduled",
         "typicalAgeRange": "18-25",
         "audience": {
@@ -96,21 +105,8 @@ export default function StructuredData() {
           },
         },
         "location": {
-          "@type": "Place",
-          "name": "Nirma University",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Sarkhej - Gandhinagar Highway, Gota",
-            "addressLocality": "Ahmedabad",
-            "addressRegion": "Gujarat",
-            "postalCode": "382481",
-            "addressCountry": "IN",
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 23.1287,
-            "longitude": 72.5447,
-          },
+          "@type": "VirtualLocation",
+          "url": "https://hack.ieeenirma.org",
         },
         "organizer": {
           "@type": "Organization",
@@ -136,7 +132,7 @@ export default function StructuredData() {
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock",
           "validFrom": "2026-11-15T00:00:00+05:30",
-          "description": "Free registration for all national applicants. Selected finalists receive mentorship, hacking space, meals, and overnight accommodation support during the 48-hour sprint.",
+          "description": "Free registration for all national applicants. Participants receive live virtual mentorship, technical workshops, and project evaluation support during the 48-hour online hackathon sprint.",
         },
                 "about": [
           { "@type": "Thing", "name": "Hackathon" },
@@ -170,16 +166,16 @@ export default function StructuredData() {
           },
           {
             "@type": "Question",
-            "name": "Where is the HackIEEE grand finale held?",
+            "name": "How and where is the HackIEEE 48-hour hackathon held?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text":
-                "The 48-hour grand finale is held offline on the campus of Nirma University, located on the Sarkhej - Gandhinagar Highway, Ahmedabad, Gujarat (PIN: 382481), India, on January 2–4, 2027.",
+                "HackIEEE 2026-27 is conducted 100% online as a 48-hour online hackathon on January 2–4, 2027, hosted by the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, Gujarat, India.",
             },
           },
           {
             "@type": "Question",
-            "name": "Is registration free, and what is provided to shortlisted finalists?",
+            "name": "Is registration free, and what support is provided to participants?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text":
