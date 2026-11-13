@@ -115,7 +115,7 @@ export default function RegisterPage() {
   const [systemPrefersDark, setSystemPrefersDark] = useState(false);
 
   useEffect(() => {
-    document.title = "Register | HackIEEE 2026-27";
+    document.title = "Register | HackIEEE 2027";
     try {
       const saved = localStorage.getItem("hackieee-theme-mode") as ThemeMode | null;
       if (saved && ["light", "dark", "system"].includes(saved)) {
@@ -561,16 +561,16 @@ export default function RegisterPage() {
                 }}
               />
               <span
-                className={`font-[family-name:var(--font-dune)] lowercase tracking-[0.12em] text-xs font-bold ${
+                className={`font-[family-name:var(--font-dune)] tracking-[0.12em] text-xs font-bold ${
                   isDark ? "text-[#ffa64d]" : "text-[#c06820]"
                 }`}
               >
-                hackieee 2026-27
+                hackieee 2027
               </span>
             </div>
 
             <h1
-              className={`text-3xl sm:text-4xl xl:text-[2.65rem] font-[family-name:var(--font-dune)] tracking-[0.05em] lowercase leading-tight ${
+              className={`text-3xl sm:text-4xl xl:text-[2.65rem] font-[family-name:var(--font-dune)] tracking-[0.05em] leading-tight ${
                 isDark ? "text-white" : "text-[#231b12]"
               }`}
             >

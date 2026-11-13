@@ -174,7 +174,7 @@ export default function PageTransition() {
       <div ref={markRef} className="page-curtain__mark">
         <div className="page-curtain__orbit" />
         <div className="eclipse page-curtain__planet" />
-        <span className="page-curtain__label">hackieee</span>
+        <span className="page-curtain__label">HackIEEE</span>
       </div>
     </div>
   );

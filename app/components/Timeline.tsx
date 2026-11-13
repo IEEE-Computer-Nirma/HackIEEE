@@ -48,7 +48,7 @@ const MILESTONES: TimelineMilestone[] = [
     step: "03",
     title: "Final Round",
     date: "January 2–4, 2027",
-    description: "48-hour national online hackathon & virtual grand finale.",
+    description: "48-hour national hackathon & grand finale.",
     xPercent: 82,
     yPercent: 68,
     googleDates: "20270102T043000Z/20270105T123000Z",
@@ -194,7 +194,7 @@ export default function Timeline() {
         {/* Global Add to Calendar Button */}
         <div className="mt-6 flex items-center justify-center">
           <a
-            href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=HackIEEE+2027+%7C+National+48-Hour+Online+Hackathon&dates=20270102T043000Z/20270105T123000Z&details=The+flagship+Dune-themed+48-hour+online+hackathon+organised+by+IEEE+Computer+Society+at+Nirma+University.&location=Online+Event"
+            href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=HackIEEE+2027+Hackathon&dates=20270102T043000Z/20270105T123000Z&details=The+flagship+Dune-themed+48-hour+hackathon.&location=Nirma+University%2C+Ahmedabad"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 rounded-full border border-spice/40 bg-black/45 px-4 py-2 font-mono text-xs text-sand shadow-lg backdrop-blur-md transition-all duration-300 hover:border-sand hover:bg-spice/20 hover:shadow-[0_0_20px_var(--glow)]"
@@ -211,7 +211,7 @@ export default function Timeline() {
       <div className="relative z-10 mx-auto hidden min-h-[520px] w-full max-w-6xl md:block">
         {MILESTONES.map((item) => {
           const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-            `hackieee 2026: ${item.title}`
+            `HackIEEE 2027: ${item.title}`
           )}&dates=${item.googleDates}&details=${encodeURIComponent(
             `${item.title} (${item.step}) - hackieee 2026. ${item.description}`
           )}&location=${encodeURIComponent("Online Event (IEEE CS, Nirma University)")}`;
@@ -274,7 +274,7 @@ export default function Timeline() {
       <div className="relative z-10 mx-auto max-w-sm space-y-4 md:hidden">
         {MILESTONES.map((item) => {
           const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-            `hackieee 2026: ${item.title}`
+            `HackIEEE 2027: ${item.title}`
           )}&dates=${item.googleDates}&details=${encodeURIComponent(
             `${item.title} (${item.step}) - hackieee 2026. ${item.description}`
           )}&location=${encodeURIComponent("Online Event (IEEE CS, Nirma University)")}`;

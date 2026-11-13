@@ -9,7 +9,7 @@ import HorizonStars from "./components/HorizonStars";
 export default function NotFound() {
   // Ensure document title reflects 404 state
   useEffect(() => {
-    document.title = "404 — Sector Uncharted | HackIEEE 2026-27";
+    document.title = "404 — Sector Uncharted | HackIEEE 2027";
   }, []);
 
   return (

@@ -3,7 +3,13 @@ import { IBM_Plex_Mono, Lexend } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { authNavMode, getFallbackAuthNavMode, type AuthNavMode } from "./flags";
+import {
+  authNavMode,
+  getFallbackAuthNavMode,
+  type AuthNavMode,
+  showKiroInNav,
+  getFallbackShowKiroInNav,
+} from "./flags";
 import PageTransition from "./components/PageTransition";
 import Intro from "./components/Intro";
 import SoundToggle from "./components/SoundToggle";
@@ -46,14 +52,13 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HackIEEE 2026-27 | National-Level 48-Hour Online Hackathon — Nirma University",
-    template: "%s | HackIEEE 2026-27",
+    default: "HackIEEE 2027 | 48-Hour Hackathon at Nirma University",
+    template: "%s | HackIEEE 2027",
   },
   description:
-    "HackIEEE 2026-27 is a national 48-hour online hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
+    "HackIEEE 2027 is a national 48-hour hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
   keywords: [
     "HackIEEE",
-    "HackIEEE 2026",
     "HackIEEE 2027",
     "National Level Hackathon",
     "National Hackathon India",
@@ -66,7 +71,7 @@ export const metadata: Metadata = {
     "Ahmedabad Hackathon",
     "Gujarat Tech Hackathon",
     "Student Hackathon 2027",
-    "Kiro Hackathon",
+    "KIRO Hackathon",
     "Coding Marathon",
     "Hardware and Software Hackathon",
     "IEEE Computer Society",
@@ -113,17 +118,17 @@ export const metadata: Metadata = {
     "event-duration": "48-Hour Online Hackathon",
   },
   openGraph: {
-    title: "HackIEEE 2026-27 | National-Level 48-Hour Online Hackathon",
+    title: "HackIEEE 2027 | National-Level 48-Hour Offline Hackathon",
     description:
       "India's premier national 48-hour online hackathon organised by IEEE Computer Society Nirma University. Build, stage, and ship considered products.",
     url: siteUrl,
-    siteName: "HackIEEE 2026-27",
+    siteName: "HackIEEE 2027",
     images: [
       {
         url: "/OG-Tag.png",
         width: 1200,
         height: 630,
-        alt: "HackIEEE 2026-27 — National-Level 48-Hour Online Hackathon",
+        alt: "HackIEEE 2027 — National-Level 48-Hour Offline Hackathon",
       },
     ],
     locale: "en_US",
@@ -131,7 +136,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HackIEEE 2026-27 | National-Level 48-Hour Online Hackathon",
+    title: "HackIEEE 2027 | 48-Hour Online Hackathon",
     description:
       "India's premier national 48-hour online hackathon organised by IEEE Computer Society Nirma University. Register now to innovate, build, and ship.",
     images: ["/OG-Tag.png"],
@@ -151,6 +156,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     navMode = getFallbackAuthNavMode();
   }
 
+  let kiroInNav = getFallbackShowKiroInNav();
+  try {
+    const flagVal = await showKiroInNav();
+    if (typeof flagVal === "boolean") {
+      kiroInNav = flagVal;
+    }
+  } catch {
+    kiroInNav = getFallbackShowKiroInNav();
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -164,7 +179,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Intro />
         <UniversitiesPrefetcher />
         <PageTransition />
-        <Navbar authNavMode={navMode} />
+        <Navbar authNavMode={navMode} showKiroInNav={kiroInNav} />
         <SoundToggle />
         {children}
         {process.env.NODE_ENV === "production" && (

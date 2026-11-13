@@ -39,7 +39,7 @@ const WORD = ["H", "A", "C", "K", "i", "e", "e", "e"];
 const ORIGINS = [0, 1492, 2956, 4440, 5946, 6841, 8336, 9832];
 
 /**
- * Returns an inline SVG of hackieee in authentic Dune Rise letterforms.
+ * Returns an inline SVG of HackIEEE in authentic Dune Rise letterforms.
  * Uses the warm sand color (#f8cf96) matching the website branding.
  */
 export function getDuneRiseWordmarkSvg(width = 280): string {
@@ -50,7 +50,7 @@ export function getDuneRiseWordmarkSvg(width = 280): string {
     return `<path d="${glyph.s[0].o}" transform="translate(${ORIGINS[i]}, 800) scale(1, -1)" fill="#f8cf96" />`;
   }).join("");
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10800 800" width="${width}" height="${height}" style="display: block; margin: 0 auto; max-width: 100%; height: auto;" role="img" aria-label="hackieee">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10800 800" width="${width}" height="${height}" style="display: block; margin: 0 auto; max-width: 100%; height: auto;" role="img" aria-label="HackIEEE">
   ${letterPaths}
 </svg>`;
 }

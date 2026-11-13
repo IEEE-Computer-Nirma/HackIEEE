@@ -1,5 +1,5 @@
 -- ==============================================================================
--- HackIEEE 2026-27: Supabase Admin Access Control & Realtime Setup
+-- HackIEEE 2027: Supabase Admin Access Control & Realtime Setup
 -- ==============================================================================
 -- Execute this script in:
 -- Supabase Dashboard -> SQL Editor -> New Query -> Paste & Run

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Mail, Copy, LogIn, UserPlus } from "lucide-react";
 import SmoothLink, { smoothScrollTo } from "./SmoothLink";
@@ -12,6 +13,7 @@ export type AuthNavMode = "registration_only" | "both" | "login_only" | "none";
 interface NavbarProps {
   authNavMode?: AuthNavMode;
   isRegistrationActive?: boolean;
+  showKiroInNav?: boolean;
 }
 
 const links = [
@@ -24,6 +26,7 @@ const links = [
 export default function Navbar({
   authNavMode,
   isRegistrationActive = true,
+  showKiroInNav = false,
 }: NavbarProps) {
   // Resolve mode: default to registration_only (or none if registration is explicitly false)
   const mode: AuthNavMode =
@@ -131,6 +134,29 @@ export default function Navbar({
         className={`fixed inset-0 z-[60] bg-bg/95 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-500 md:hidden ${isMobileMenuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
       >
         <div className="flex flex-col items-center gap-7 text-2xl font-medium mt-12 w-full px-6">
+          {showKiroInNav && (
+            <a
+              href="https://kiro.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="topbar-kiro-badge !inline-flex mb-2"
+              aria-label="Supported by KIRO - kiro.dev"
+            >
+              <span className="topbar-kiro-badge__label">Supported by</span>
+              <span className="topbar-kiro-badge__divider" aria-hidden="true" />
+              <span className="topbar-kiro-badge__logo-wrap">
+                <Image
+                  src="/collab/kiro-logo.png"
+                  alt="KIRO"
+                  width={2000}
+                  height={511}
+                  unoptimized
+                  className="topbar-kiro-badge__logo"
+                />
+              </span>
+            </a>
+          )}
           {links.map((l) => (
             <SmoothLink
               key={l.label}
@@ -148,7 +174,7 @@ export default function Navbar({
               <Link
                 href="/login"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full px-6 py-3 rounded-full border border-line-strong bg-surface text-ink text-base flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 rounded-full border border-line-strong bg-surface text-ink text-base flex items-center justify-center gap-2 hover:bg-surface-solid transition-colors"
               >
                 <LogIn size={18} />
                 Sign In
@@ -158,10 +184,11 @@ export default function Navbar({
                 prefetch={true}
                 data-no-transition
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
+                className="w-full px-6 py-3.5 rounded-full bg-sand !text-[#1d130a] text-base font-semibold flex items-center justify-center gap-2 shadow-lg hover:brightness-105 transition-all"
+                style={{ color: "#1d130a" }}
               >
-                <UserPlus size={18} />
-                Register
+                <UserPlus size={18} strokeWidth={2.2} className="!text-[#1d130a]" style={{ color: "#1d130a" }} />
+                <span className="!text-[#1d130a] font-semibold" style={{ color: "#1d130a" }}>Register</span>
               </Link>
             </div>
           )}
@@ -173,10 +200,11 @@ export default function Navbar({
                 prefetch={true}
                 data-no-transition
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
+                className="w-full px-6 py-3.5 rounded-full bg-sand !text-[#1d130a] text-base font-semibold flex items-center justify-center gap-2 shadow-lg hover:brightness-105 transition-all"
+                style={{ color: "#1d130a" }}
               >
-                <UserPlus size={18} />
-                Register
+                <UserPlus size={18} strokeWidth={2.2} className="!text-[#1d130a]" style={{ color: "#1d130a" }} />
+                <span className="!text-[#1d130a] font-semibold" style={{ color: "#1d130a" }}>Register</span>
               </Link>
             </div>
           )}
@@ -186,10 +214,11 @@ export default function Navbar({
               <Link
                 href="/login"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full px-6 py-3 rounded-full bg-sand text-ink-strong text-base font-semibold flex items-center justify-center gap-2 shadow-lg"
+                className="w-full px-6 py-3.5 rounded-full bg-sand !text-[#1d130a] text-base font-semibold flex items-center justify-center gap-2 shadow-lg hover:brightness-105 transition-all"
+                style={{ color: "#1d130a" }}
               >
-                <LogIn size={18} />
-                Sign In
+                <LogIn size={18} strokeWidth={2.2} className="!text-[#1d130a]" style={{ color: "#1d130a" }} />
+                <span className="!text-[#1d130a] font-semibold" style={{ color: "#1d130a" }}>Sign In</span>
               </Link>
             </div>
           )}
@@ -208,8 +237,32 @@ export default function Navbar({
       </div>
 
       <header className={`topbar z-[70] ${hidden && !isMobileMenuOpen ? "is-hidden" : ""} ${onHero && !isMobileMenuOpen ? "on-hero" : ""}`}>
-        {/* Spacer for grid balance on desktop */}
-        <div className="topbar-spacer" aria-hidden="true" />
+        {/* Column 1: Variant 3 (Supported by KIRO in top left beside header) or empty spacer */}
+        {showKiroInNav ? (
+          <a
+            href="https://kiro.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="topbar-kiro-badge"
+            aria-label="Supported by KIRO - kiro.dev"
+          >
+            <span className="topbar-kiro-badge__label">Supported by</span>
+            <span className="topbar-kiro-badge__divider" aria-hidden="true" />
+            <span className="topbar-kiro-badge__logo-wrap">
+              <Image
+                src="/collab/kiro-logo.png"
+                alt="KIRO"
+                width={2000}
+                height={511}
+                unoptimized
+                priority
+                className="topbar-kiro-badge__logo"
+              />
+            </span>
+          </a>
+        ) : (
+          <div className="topbar-spacer" aria-hidden="true" />
+        )}
 
         <nav className="pill-nav hidden md:flex" aria-label="Main">
           {pills}
@@ -218,8 +271,8 @@ export default function Navbar({
         <div className="topbar-actions col-start-3 flex items-center justify-end gap-2 md:gap-3">
           {/* Mode 1: Both (Login on the left, Register on the right corner) */}
           {mode === "both" && (
-            <div className="hidden md:flex items-center gap-2.5">
-              <Link href="/login" className="contact-btn">
+            <div className="hidden md:flex items-center gap-2 md:gap-2.5">
+              <Link href="/login" className="contact-btn !h-[52px]">
                 <LogIn size={16} strokeWidth={1.75} />
                 <span>Login</span>
               </Link>
@@ -227,23 +280,25 @@ export default function Navbar({
                 href="/register" 
                 prefetch={true}
                 data-no-transition
-                className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
+                className="btn btn-sand !h-[52px] !min-h-[52px] !py-0 !px-6 !text-sm font-semibold rounded-full shadow-sm hover:brightness-105 flex items-center justify-center !text-[#1d130a]"
+                style={{ color: "#1d130a" }}
               >
-                <span>Register</span>
+                <span className="!text-[#1d130a] font-semibold" style={{ color: "#1d130a" }}>Register</span>
               </Link>
             </div>
           )}
 
           {/* Mode 2: Registration Only (Register on the right corner) */}
           {mode === "registration_only" && (
-            <div className="hidden md:flex items-center">
+            <div className="hidden md:flex items-center gap-2">
               <Link 
                 href="/register" 
                 prefetch={true}
                 data-no-transition
-                className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
+                className="btn btn-sand !h-[52px] !min-h-[52px] !py-0 !px-6 !text-sm font-semibold rounded-full shadow-sm hover:brightness-105 flex items-center justify-center !text-[#1d130a]"
+                style={{ color: "#1d130a" }}
               >
-                <span>Register</span>
+                <span className="!text-[#1d130a] font-semibold" style={{ color: "#1d130a" }}>Register</span>
               </Link>
             </div>
           )}
@@ -253,17 +308,18 @@ export default function Navbar({
             <div className="hidden md:flex items-center">
               <Link 
                 href="/login" 
-                className="btn btn-sand !py-1.5 !px-4 !text-xs font-semibold rounded-full shadow-sm hover:brightness-105"
+                className="btn btn-sand !h-[52px] !min-h-[52px] !py-0 !px-6 !text-sm font-semibold rounded-full shadow-sm hover:brightness-105 flex items-center justify-center !text-[#1d130a]"
+                style={{ color: "#1d130a" }}
               >
-                <LogIn size={16} strokeWidth={1.75} />
-                <span>Login</span>
+                <LogIn size={16} strokeWidth={1.75} className="!text-[#1d130a]" style={{ color: "#1d130a" }} />
+                <span className="!text-[#1d130a] font-semibold" style={{ color: "#1d130a" }}>Login</span>
               </Link>
             </div>
           )}
 
           {/* Mode 4: None (Contact Us on the right corner) */}
           {mode === "none" && isHome && (
-            <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex">
+            <a href="#contact" onClick={handleContactClick} className="contact-btn hidden md:flex !h-[52px] items-center justify-center">
               <Mail size={17} strokeWidth={1.75} />
               <span>Contact Us</span>
             </a>
