@@ -137,33 +137,34 @@ export default function RegistrationTrendChart({
         </div>
 
         {/* Time Filter Pills */}
-        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-zinc-950/80 border border-zinc-800 text-xs">
+        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-zinc-950/80 border border-zinc-800 text-xs w-full sm:w-auto justify-between sm:justify-start">
           {(
             [
-              { label: "7 Days", value: "7d" },
-              { label: "14 Days", value: "14d" },
-              { label: "30 Days", value: "30d" },
-              { label: "All Time", value: "all" },
+              { label: "7 Days", short: "7D", value: "7d" },
+              { label: "14 Days", short: "14D", value: "14d" },
+              { label: "30 Days", short: "30D", value: "30d" },
+              { label: "All Time", short: "All", value: "all" },
             ] as const
           ).map((item) => (
             <button
               key={item.value}
               onClick={() => setTimeRange(item.value)}
               className={cn(
-                "px-2.5 py-1 rounded-md font-medium transition-colors text-xs",
+                "px-2 sm:px-2.5 py-1 rounded-md font-medium transition-colors text-xs flex-1 sm:flex-initial text-center",
                 timeRange === item.value
                   ? "bg-zinc-800 text-zinc-100 shadow-sm"
                   : "text-zinc-400 hover:text-zinc-200"
               )}
             >
-              {item.label}
+              <span className="hidden xs:inline">{item.label}</span>
+              <span className="xs:hidden">{item.short}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* ── Metric Snapshot Summary ── */}
-      <div className="flex items-center gap-6 text-xs border-b border-zinc-800/60 pb-3">
+      <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-2 text-xs border-b border-zinc-800/60 pb-3">
         <div className="flex items-center gap-1.5">
           <span className="text-zinc-500">Period Registrations:</span>
           <strong className="text-zinc-200 font-mono text-sm">{rangeTotal}</strong>
@@ -175,7 +176,7 @@ export default function RegistrationTrendChart({
             {peakDaily} / day
           </span>
         </div>
-        <div className="hidden sm:flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5">
           <span className="text-zinc-500">Trajectory:</span>
           <span className="text-zinc-300 font-mono">
             {chartData.length > 0
@@ -186,7 +187,7 @@ export default function RegistrationTrendChart({
       </div>
 
       {/* ── Recharts Canvas ── */}
-      <div className="h-[270px] w-full pt-1">
+      <div className="h-[220px] sm:h-[260px] md:h-[280px] w-full pt-1">
         {chartData.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-zinc-500 space-y-1">
             <Calendar className="h-6 w-6 text-zinc-600" />

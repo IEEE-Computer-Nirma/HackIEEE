@@ -232,13 +232,13 @@ export default function ParticipantTable({
     <div className="space-y-4">
       {/* ── Toolbar: Search & Filter Toggle ── */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="relative flex-1 max-w-md">
+        <div className="relative flex-1 max-w-md w-full">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-500" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search ID, name, email, phone, college, branch..."
-            className="pl-9 pr-8"
+            placeholder="Search ID, name, email, phone, college..."
+            className="pl-9 pr-8 text-xs sm:text-sm"
           />
           {search && (
             <button
@@ -251,30 +251,32 @@ export default function ParticipantTable({
           )}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant={showFilters ? "secondary" : "outline"}
-            size="sm"
-            onClick={() => setShowFilters((prev) => !prev)}
-            className="text-xs"
-          >
-            <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
-            Filters {hasActiveFilters && "(Active)"}
-          </Button>
-
-          {hasActiveFilters && (
+        <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2">
+          <div className="flex items-center gap-2">
             <Button
-              variant="ghost"
+              variant={showFilters ? "secondary" : "outline"}
               size="sm"
-              onClick={resetFilters}
-              className="text-xs text-zinc-400 hover:text-zinc-100"
+              onClick={() => setShowFilters((prev) => !prev)}
+              className="text-xs h-8"
             >
-              <RotateCcw className="mr-1 h-3 w-3" />
-              Reset
+              <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
+              Filters {hasActiveFilters && "(Active)"}
             </Button>
-          )}
 
-          <div className="text-xs text-zinc-400 pl-2 border-l border-zinc-800">
+            {hasActiveFilters && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={resetFilters}
+                className="text-xs h-8 text-zinc-400 hover:text-zinc-100"
+              >
+                <RotateCcw className="mr-1 h-3 w-3" />
+                Reset
+              </Button>
+            )}
+          </div>
+
+          <div className="text-xs text-zinc-400 pl-2 sm:border-l sm:border-zinc-800">
             Showing <strong className="text-zinc-200">{filteredRegistrations.length}</strong> of{" "}
             <strong className="text-zinc-200">{registrations.length}</strong>
           </div>
@@ -283,10 +285,10 @@ export default function ParticipantTable({
 
       {/* ── Collapsible Filter Pills Panel ── */}
       {showFilters && (
-        <div className="rounded-lg border border-zinc-800/80 bg-zinc-900/40 p-4 space-y-3.5 animate-in fade-in-0 duration-150">
+        <div className="rounded-lg border border-zinc-800/80 bg-zinc-900/40 p-3 sm:p-4 space-y-3.5 animate-in fade-in-0 duration-150">
           {/* Membership Filter */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-zinc-400 flex items-center gap-1 w-24">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2">
+            <span className="text-xs font-medium text-zinc-400 flex items-center gap-1 sm:w-24 flex-shrink-0">
               <Award className="h-3 w-3 text-zinc-500" />
               Membership:
             </span>
@@ -315,8 +317,8 @@ export default function ParticipantTable({
           </div>
 
           {/* Year of Study Filter */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-zinc-400 flex items-center gap-1 w-24">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2">
+            <span className="text-xs font-medium text-zinc-400 flex items-center gap-1 sm:w-24 flex-shrink-0">
               <GraduationCap className="h-3 w-3 text-zinc-500" />
               Year:
             </span>
@@ -342,8 +344,8 @@ export default function ParticipantTable({
           </div>
 
           {/* Degree Filter */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-zinc-400 flex items-center gap-1 w-24">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2">
+            <span className="text-xs font-medium text-zinc-400 flex items-center gap-1 sm:w-24 flex-shrink-0">
               <Filter className="h-3 w-3 text-zinc-500" />
               Degree:
             </span>
@@ -371,7 +373,7 @@ export default function ParticipantTable({
           {/* Colleges Multi-Select Filter */}
           {uniqueColleges.length > 0 && (
             <div className="pt-2 border-t border-zinc-800/60">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                 <span className="text-xs font-medium text-zinc-400 flex items-center gap-1">
                   <Building2 className="h-3 w-3 text-zinc-500" />
                   Universities / Colleges ({uniqueColleges.length})
@@ -382,7 +384,7 @@ export default function ParticipantTable({
                     value={collegeSearch}
                     onChange={(e) => setCollegeSearch(e.target.value)}
                     placeholder="Search universities..."
-                    className="h-7 w-48 text-xs bg-zinc-950/60"
+                    className="h-7 w-full sm:w-48 text-xs bg-zinc-950/60"
                   />
                 )}
               </div>
@@ -410,6 +412,12 @@ export default function ParticipantTable({
           )}
         </div>
       )}
+
+      {/* ── Mobile Table Scroll Hint ── */}
+      <div className="md:hidden flex items-center justify-between text-[11px] text-zinc-500 px-1 select-none">
+        <span>← Swipe table horizontally →</span>
+        <span>Tap row for full details</span>
+      </div>
 
       {/* ── Interactive Shadcn Table ── */}
       <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 overflow-hidden shadow-sm">
@@ -546,33 +554,35 @@ export default function ParticipantTable({
       {/* ── Pagination Footer (Docked & Accessible Toolbar) ── */}
       {filteredRegistrations.length > 0 && (
         <div className="rounded-lg border border-zinc-800/80 bg-zinc-900/50 p-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-400 shadow-sm">
-          <div className="flex items-center gap-2">
-            <span>Rows per page:</span>
-            <select
-              value={pageSize}
-              onChange={(e) => {
-                setPageSize(Number(e.target.value));
-                setPage(1);
-              }}
-              className="h-7 rounded border border-zinc-800 bg-zinc-900 px-2 text-xs text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400 cursor-pointer"
-            >
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-            <span className="text-zinc-600">|</span>
-            <span>
+          <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+            <div className="flex items-center gap-2">
+              <span>Rows:</span>
+              <select
+                value={pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                  setPage(1);
+                }}
+                className="h-7 rounded border border-zinc-800 bg-zinc-900 px-2 text-xs text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400 cursor-pointer"
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+            <span className="text-zinc-600 hidden sm:inline">|</span>
+            <span className="text-[11px] sm:text-xs">
               Showing <strong className="text-zinc-200">{paginatedRegistrations.length}</strong> of{" "}
-              <strong className="text-zinc-200">{filteredRegistrations.length}</strong> records
+              <strong className="text-zinc-200">{filteredRegistrations.length}</strong>
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span>
+          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
+            <span className="text-[11px] sm:text-xs">
               Page <strong className="text-zinc-200">{currentPage}</strong> of <strong className="text-zinc-200">{totalPages}</strong>
             </span>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <Button
                 variant="outline"
                 size="sm"
@@ -580,8 +590,8 @@ export default function ParticipantTable({
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 className="h-7 px-2.5 text-xs border-zinc-800"
               >
-                <ChevronLeft className="h-3.5 w-3.5 mr-1" />
-                Previous
+                <ChevronLeft className="h-3.5 w-3.5 mr-0.5 sm:mr-1" />
+                Prev
               </Button>
               <Button
                 variant="outline"
@@ -591,7 +601,7 @@ export default function ParticipantTable({
                 className="h-7 px-2.5 text-xs border-zinc-800"
               >
                 Next
-                <ChevronRight className="h-3.5 w-3.5 ml-1" />
+                <ChevronRight className="h-3.5 w-3.5 ml-0.5 sm:ml-1" />
               </Button>
             </div>
           </div>

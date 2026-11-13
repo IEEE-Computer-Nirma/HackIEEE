@@ -61,7 +61,7 @@ export default function SankeyDiagram({ registrations }: SankeyDiagramProps) {
       if (containerRef.current) {
         const w = containerRef.current.clientWidth;
         setDimensions({
-          width: Math.max(w, 500),
+          width: Math.max(w, 560),
           height: 380,
         });
       }
@@ -209,7 +209,7 @@ export default function SankeyDiagram({ registrations }: SankeyDiagramProps) {
           </p>
         </div>
 
-        <div className="flex items-center gap-4 text-[11px] text-zinc-400 font-mono">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[11px] text-zinc-400 font-mono">
           <div className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
             <span>Colleges</span>
@@ -228,30 +228,36 @@ export default function SankeyDiagram({ registrations }: SankeyDiagramProps) {
       </div>
 
       {/* ── Active Hover Readout Bar ── */}
-      <div className="h-7 px-3 rounded-lg bg-zinc-950/80 border border-zinc-800 flex items-center justify-between text-xs font-mono">
+      <div className="min-h-[28px] h-auto py-1 px-3 rounded-lg bg-zinc-950/80 border border-zinc-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 text-xs font-mono">
         {hoveredLink ? (
-          <div className="flex items-center gap-2 text-zinc-200">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-zinc-200">
             <span className="text-emerald-400 font-semibold">{hoveredLink.sourceName}</span>
             <span className="text-zinc-500">➔</span>
             <span className="text-blue-400 font-semibold">{hoveredLink.targetName}</span>
-            <span className="text-zinc-600">•</span>
+            <span className="text-zinc-600 hidden sm:inline">•</span>
             <span className="text-zinc-300">
-              <strong>{hoveredLink.value}</strong> attendees ({hoveredLink.percent} of cohort)
+              <strong>{hoveredLink.value}</strong> attendees ({hoveredLink.percent})
             </span>
           </div>
         ) : (
           <div className="flex items-center gap-2 text-zinc-500 text-[11px]">
-            <Info className="h-3.5 w-3.5 text-zinc-600" />
-            <span>Hover over any ribbon or block to inspect flow distribution volume.</span>
+            <Info className="h-3.5 w-3.5 text-zinc-600 flex-shrink-0" />
+            <span>Tap or hover over any ribbon to inspect flow volume.</span>
           </div>
         )}
-        <span className="text-zinc-500 text-[11px]">
+        <span className="text-zinc-500 text-[11px] flex-shrink-0">
           {totalCount} Total Registrations
         </span>
       </div>
 
+      {/* ── Mobile Diagram Scroll Hint ── */}
+      <div className="md:hidden flex items-center justify-between text-[11px] text-zinc-500 px-1 pt-1 select-none">
+        <span>← Swipe diagram horizontally →</span>
+        <span>Tap ribbon to inspect</span>
+      </div>
+
       {/* ── Sankey SVG Canvas ── */}
-      <div ref={containerRef} className="w-full overflow-x-auto pt-2">
+      <div ref={containerRef} className="w-full overflow-x-auto pt-1">
         {layoutNodes.length === 0 ? (
           <div className="h-[320px] flex flex-col items-center justify-center text-zinc-500 text-xs">
             No participant flow data available yet.
@@ -260,7 +266,7 @@ export default function SankeyDiagram({ registrations }: SankeyDiagramProps) {
           <svg
             width={dimensions.width}
             height={dimensions.height}
-            className="select-none overflow-visible"
+            className="select-none overflow-visible min-w-[560px]"
           >
             {/* Draw Links (Flow Ribbons) */}
             <g className="fill-none">
@@ -278,6 +284,14 @@ export default function SankeyDiagram({ registrations }: SankeyDiagramProps) {
                     strokeWidth={Math.max(1.5, link.width || 0)}
                     strokeOpacity={0.35}
                     className="transition-all hover:stroke-opacity-80 cursor-pointer"
+                    onClick={() => {
+                      setHoveredLink({
+                        sourceName: srcNode.name,
+                        targetName: tgtNode.name,
+                        value: link.value,
+                        percent: ((link.value / totalCount) * 100).toFixed(1) + "%",
+                      });
+                    }}
                     onMouseEnter={() => {
                       setHoveredLink({
                         sourceName: srcNode.name,

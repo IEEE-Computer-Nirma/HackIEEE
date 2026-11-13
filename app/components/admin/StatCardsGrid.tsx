@@ -85,9 +85,9 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
   }, [registrations]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {/* ── Card 1: Total Registrations ── */}
-      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
+      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3.5 sm:p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-zinc-400">Total Registrations</span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 group-hover:text-zinc-100 transition-colors">
@@ -97,7 +97,7 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
 
         <div className="mt-3">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold tracking-tight text-zinc-100 font-mono">
+            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100 font-mono">
               {stats.total}
             </span>
             <span className="flex items-center gap-1 text-[11px] font-medium text-emerald-400">
@@ -118,7 +118,7 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
       </div>
 
       {/* ── Card 2: IEEE Membership Breakdown ── */}
-      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
+      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3.5 sm:p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-zinc-400">IEEE Membership</span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 text-emerald-400">
@@ -128,7 +128,7 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
 
         <div className="mt-3">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold tracking-tight text-emerald-400 font-mono">
+            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-400 font-mono">
               {stats.ieeeMembers}
             </span>
             <span className="text-xs font-mono text-zinc-400 font-medium">
@@ -149,7 +149,7 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
       </div>
 
       {/* ── Card 3: Colleges Represented ── */}
-      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
+      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3.5 sm:p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-zinc-400">Institutions</span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 group-hover:text-zinc-100 transition-colors">
@@ -159,7 +159,7 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
 
         <div className="mt-3">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold tracking-tight text-zinc-100 font-mono">
+            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100 font-mono">
               {stats.uniqueColleges}
             </span>
             <span className="text-xs text-zinc-400">Universities</span>
@@ -176,7 +176,7 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
       </div>
 
       {/* ── Card 4: Top Ranked College ── */}
-      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
+      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3.5 sm:p-4 flex flex-col justify-between shadow-sm relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-zinc-400">#1 Top College</span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 text-amber-400">
@@ -185,9 +185,9 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
         </div>
 
         <div className="mt-3">
-          <div className="flex items-baseline justify-between gap-1">
+          <div className="flex items-baseline justify-between gap-1 min-w-0">
             <span
-              className="text-sm font-bold tracking-tight text-zinc-100 truncate max-w-[170px]"
+              className="text-sm font-bold tracking-tight text-zinc-100 truncate min-w-0 flex-1 pr-1"
               title={stats.topCollegeName}
             >
               {stats.topCollegeName}
@@ -201,7 +201,7 @@ export default function StatCardsGrid({ registrations }: StatCardsGridProps) {
           </div>
 
           <div className="flex items-center justify-between mt-2 pt-2 border-t border-zinc-800/60 text-[11px] text-zinc-400">
-            <span className="truncate max-w-[180px] text-zinc-500" title={stats.runnerUpName || ""}>
+            <span className="truncate flex-1 min-w-0 pr-1 text-zinc-500" title={stats.runnerUpName || ""}>
               {stats.runnerUpName ? `#2 ${stats.runnerUpName}` : "Awaiting more records"}
             </span>
             {stats.runnerUpCount > 0 && (

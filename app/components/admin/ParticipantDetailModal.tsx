@@ -50,10 +50,10 @@ export default function ParticipantDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-zinc-950 border-zinc-800 p-6 text-zinc-100">
+      <DialogContent className="w-[95vw] sm:max-w-2xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto bg-zinc-950 border-zinc-800 p-4 sm:p-6 text-zinc-100">
         {/* ── Modal Header ── */}
-        <DialogHeader className="border-b border-zinc-800 pb-4">
-          <div className="flex flex-wrap items-center justify-between gap-2 pr-6">
+        <DialogHeader className="border-b border-zinc-800 pb-3 sm:pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pr-6">
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs font-semibold px-2.5 py-1 rounded bg-zinc-900 border border-zinc-700/80 text-zinc-200">
                 {participant.registration_id}
@@ -76,7 +76,7 @@ export default function ParticipantDetailModal({
               </span>
             )}
           </div>
-          <DialogTitle className="text-xl font-bold text-zinc-100 mt-2">
+          <DialogTitle className="text-lg sm:text-xl font-bold text-zinc-100 mt-1 sm:mt-2">
             {participant.full_name}
           </DialogTitle>
           <DialogDescription className="text-xs text-zinc-400">
@@ -250,12 +250,12 @@ export default function ParticipantDetailModal({
         </div>
 
         {/* ── Modal Footer ── */}
-        <DialogFooter className="flex items-center justify-between sm:justify-between border-t border-zinc-800 pt-4">
+        <DialogFooter className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 border-t border-zinc-800 pt-3 sm:pt-4">
           <Button
             variant="outline"
             size="sm"
             onClick={handleCopyId}
-            className="text-xs"
+            className="text-xs h-8 justify-center"
           >
             {copied ? (
               <>
@@ -270,11 +270,12 @@ export default function ParticipantDetailModal({
             )}
           </Button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <a
               href={`mailto:${participant.email}?subject=HackIEEE 2027 Registration Update (${participant.registration_id})`}
+              className="flex-1 sm:flex-initial"
             >
-              <Button variant="secondary" size="sm" className="text-xs">
+              <Button variant="secondary" size="sm" className="text-xs h-8 w-full justify-center">
                 <Mail className="h-3.5 w-3.5 mr-1.5" />
                 Email Attendee
               </Button>
@@ -283,7 +284,7 @@ export default function ParticipantDetailModal({
               variant="default"
               size="sm"
               onClick={() => onOpenChange(false)}
-              className="text-xs"
+              className="text-xs h-8 flex-1 sm:flex-initial justify-center"
             >
               Close
             </Button>
