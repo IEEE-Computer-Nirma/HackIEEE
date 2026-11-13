@@ -32,6 +32,17 @@ interface CollegeStat {
 export default function TopCollegesChart({
   registrations,
 }: TopCollegesChartProps) {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(typeof window !== "undefined" && window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const collegeData = React.useMemo(() => {
     if (!registrations || registrations.length === 0) return [];
 
@@ -57,8 +68,9 @@ export default function TopCollegesChart({
     return sorted.map(([name, stat], idx) => {
       // Shorten lengthy institution names for clean Y-axis labels
       let short = name;
-      if (short.length > 28) {
-        short = short.slice(0, 26) + "…";
+      const maxLen = isMobile ? 16 : 28;
+      if (short.length > maxLen) {
+        short = short.slice(0, maxLen - 2) + "…";
       }
 
       return {
@@ -71,7 +83,7 @@ export default function TopCollegesChart({
         share: ((stat.total / totalRegs) * 100).toFixed(1),
       };
     });
-  }, [registrations]);
+  }, [registrations, isMobile]);
 
   return (
     <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 shadow-sm space-y-4">
@@ -89,7 +101,7 @@ export default function TopCollegesChart({
           </p>
         </div>
 
-        <div className="flex items-center gap-3 text-xs">
+        <div className="flex flex-wrap items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5 text-zinc-300">
             <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500" />
             <span>IEEE Members</span>
@@ -102,7 +114,7 @@ export default function TopCollegesChart({
       </div>
 
       {/* ── Horizontal Bar Chart ── */}
-      <div className="h-[320px] w-full pt-2">
+      <div className="h-[300px] sm:h-[320px] w-full pt-2">
         {collegeData.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-zinc-500 space-y-1">
             <Building2 className="h-6 w-6 text-zinc-600" />
@@ -113,7 +125,7 @@ export default function TopCollegesChart({
             <BarChart
               layout="vertical"
               data={collegeData}
-              margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+              margin={{ top: 5, right: isMobile ? 12 : 30, left: 0, bottom: 5 }}
             >
               <CartesianGrid
                 strokeDasharray="3 3"
@@ -132,10 +144,10 @@ export default function TopCollegesChart({
                 type="category"
                 dataKey="shortName"
                 stroke="#a1a1aa"
-                fontSize={11}
+                fontSize={isMobile ? 10 : 11}
                 tickLine={false}
                 axisLine={false}
-                width={170}
+                width={isMobile ? 105 : 170}
               />
               <Tooltip
                 content={({ active, payload }) => {

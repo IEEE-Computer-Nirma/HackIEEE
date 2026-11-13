@@ -138,7 +138,7 @@ export default function SunburstDiagram({ registrations }: SunburstDiagramProps)
         </div>
 
         {/* Ring Legend Pills */}
-        <div className="flex items-center gap-3 text-xs">
+        <div className="flex flex-wrap items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5 text-zinc-300">
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
             <span>State</span>
@@ -157,12 +157,12 @@ export default function SunburstDiagram({ registrations }: SunburstDiagramProps)
       {/* ── Sunburst Chart & Center Readout ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center pt-2">
         {/* Left: SVG Radial Canvas */}
-        <div className="lg:col-span-7 flex items-center justify-center relative min-h-[400px]">
+        <div className="lg:col-span-7 flex items-center justify-center relative min-h-[320px] sm:min-h-[400px]">
           {!rootNode ? (
             <div className="text-xs text-zinc-500">No hierarchy data available yet.</div>
           ) : (
-            <div className="relative">
-              <svg width={400} height={400} className="select-none overflow-visible">
+            <div className="relative w-full max-w-[340px] sm:max-w-[400px] aspect-square flex items-center justify-center mx-auto">
+              <svg viewBox="0 0 400 400" className="w-full h-full select-none overflow-visible">
                 <g>
                   {rootNode.descendants().map((d, idx) => {
                     // Skip root node from outer arcs
@@ -193,6 +193,15 @@ export default function SunburstDiagram({ registrations }: SunburstDiagramProps)
                         stroke="#18181b"
                         strokeWidth={1.5}
                         className="transition-all hover:opacity-90 cursor-pointer"
+                        onClick={() => {
+                          const val = d.value || 0;
+                          setHoveredNode({
+                            name: d.data.name,
+                            category: categoryName,
+                            value: val,
+                            percent: ((val / totalCount) * 100).toFixed(1) + "%",
+                          });
+                        }}
                         onMouseEnter={() => {
                           const val = d.value || 0;
                           setHoveredNode({
@@ -212,15 +221,14 @@ export default function SunburstDiagram({ registrations }: SunburstDiagramProps)
               {/* Center Readout Disc */}
               <div
                 className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center"
-                style={{ width: 400, height: 400 }}
               >
-                <div className="h-[96px] w-[96px] rounded-full bg-zinc-950/95 border border-zinc-700/80 shadow-2xl flex flex-col items-center justify-center p-2 backdrop-blur">
+                <div className="h-[84px] w-[84px] sm:h-[96px] sm:w-[96px] rounded-full bg-zinc-950/95 border border-zinc-700/80 shadow-2xl flex flex-col items-center justify-center p-2 backdrop-blur">
                   {hoveredNode ? (
                     <>
                       <Badge variant="outline" className="text-[8px] px-1 py-0 border-zinc-700 text-cyan-400">
                         {hoveredNode.category}
                       </Badge>
-                      <span className="text-xs font-bold text-zinc-100 truncate max-w-[80px]" title={hoveredNode.name}>
+                      <span className="text-xs font-bold text-zinc-100 truncate max-w-[76px] sm:max-w-[80px]" title={hoveredNode.name}>
                         {hoveredNode.name}
                       </span>
                       <span className="text-[11px] font-mono text-emerald-400 font-semibold">
@@ -229,7 +237,7 @@ export default function SunburstDiagram({ registrations }: SunburstDiagramProps)
                     </>
                   ) : (
                     <>
-                      <span className="text-xl font-bold font-mono tracking-tight text-zinc-100">
+                      <span className="text-lg sm:text-xl font-bold font-mono tracking-tight text-zinc-100">
                         {totalCount}
                       </span>
                       <span className="text-[9px] text-zinc-400 font-medium">

@@ -144,11 +144,11 @@ export default function DemographicsDonutChart({
         </div>
 
         {/* Mode Toggle Pills */}
-        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-zinc-950/80 border border-zinc-800 text-xs">
+        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-zinc-950/80 border border-zinc-800 text-xs w-full sm:w-auto justify-between sm:justify-start">
           <button
             onClick={() => setMode("ieee")}
             className={cn(
-              "px-2.5 py-1 rounded-md font-medium transition-colors text-xs flex items-center gap-1.5",
+              "px-2 sm:px-2.5 py-1 rounded-md font-medium transition-colors text-xs flex-1 sm:flex-initial flex items-center justify-center gap-1.5",
               mode === "ieee"
                 ? "bg-zinc-800 text-zinc-100 shadow-sm"
                 : "text-zinc-400 hover:text-zinc-200"
@@ -160,7 +160,7 @@ export default function DemographicsDonutChart({
           <button
             onClick={() => setMode("year")}
             className={cn(
-              "px-2.5 py-1 rounded-md font-medium transition-colors text-xs flex items-center gap-1.5",
+              "px-2 sm:px-2.5 py-1 rounded-md font-medium transition-colors text-xs flex-1 sm:flex-initial flex items-center justify-center gap-1.5",
               mode === "year"
                 ? "bg-zinc-800 text-zinc-100 shadow-sm"
                 : "text-zinc-400 hover:text-zinc-200"
@@ -172,7 +172,7 @@ export default function DemographicsDonutChart({
           <button
             onClick={() => setMode("degree")}
             className={cn(
-              "px-2.5 py-1 rounded-md font-medium transition-colors text-xs flex items-center gap-1.5",
+              "px-2 sm:px-2.5 py-1 rounded-md font-medium transition-colors text-xs flex-1 sm:flex-initial flex items-center justify-center gap-1.5",
               mode === "degree"
                 ? "bg-zinc-800 text-zinc-100 shadow-sm"
                 : "text-zinc-400 hover:text-zinc-200"
@@ -187,7 +187,7 @@ export default function DemographicsDonutChart({
       {/* ── Donut Chart Canvas & Legend ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         {/* Left: Donut Circle with Center Badge */}
-        <div className="relative h-[220px] w-full flex items-center justify-center">
+        <div className="relative h-[200px] sm:h-[220px] w-full flex items-center justify-center">
           {data.length === 0 ? (
             <div className="text-xs text-zinc-500">No demographic data available</div>
           ) : (
@@ -212,10 +212,13 @@ export default function DemographicsDonutChart({
                     data={data}
                     cx="50%"
                     cy="50%"
-                    innerRadius={65}
-                    outerRadius={92}
+                    innerRadius={58}
+                    outerRadius={86}
                     paddingAngle={3}
                     dataKey="value"
+                    onClick={(_, index: number) => {
+                      if (data[index]) setActiveSlice(data[index]);
+                    }}
                     onMouseEnter={(_, index: number) => {
                       if (data[index]) setActiveSlice(data[index]);
                     }}
@@ -237,10 +240,10 @@ export default function DemographicsDonutChart({
               <div className="absolute flex flex-col items-center justify-center pointer-events-none text-center">
                 {activeSlice ? (
                   <>
-                    <span className="text-2xl font-bold font-mono tracking-tight text-zinc-100">
+                    <span className="text-xl sm:text-2xl font-bold font-mono tracking-tight text-zinc-100">
                       {activeSlice.percentage}%
                     </span>
-                    <span className="text-[10px] text-zinc-400 font-medium truncate max-w-[100px]" title={activeSlice.name}>
+                    <span className="text-[10px] text-zinc-400 font-medium truncate max-w-[90px] sm:max-w-[100px]" title={activeSlice.name}>
                       {activeSlice.name}
                     </span>
                     <span className="text-[10px] font-mono text-zinc-500">
@@ -249,7 +252,7 @@ export default function DemographicsDonutChart({
                   </>
                 ) : (
                   <>
-                    <span className="text-xl font-bold font-mono text-zinc-100">
+                    <span className="text-lg sm:text-xl font-bold font-mono text-zinc-100">
                       {totalCount}
                     </span>
                     <span className="text-[10px] text-zinc-500">Attendees</span>
@@ -265,12 +268,13 @@ export default function DemographicsDonutChart({
           <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500 px-1">
             Cohort Summary
           </p>
-          <div className="space-y-1.5 max-h-[190px] overflow-y-auto pr-1">
+          <div className="space-y-1.5 max-h-[160px] sm:max-h-[190px] overflow-y-auto pr-1">
             {data.map((item) => {
               const isSelected = activeSlice?.name === item.name;
               return (
                 <div
                   key={item.name}
+                  onClick={() => setActiveSlice(item)}
                   onMouseEnter={() => setActiveSlice(item)}
                   className={cn(
                     "flex items-center justify-between p-2 rounded-lg border text-xs cursor-pointer transition-all",

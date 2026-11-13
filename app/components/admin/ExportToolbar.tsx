@@ -183,9 +183,9 @@ export default function ExportToolbar({
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2.5">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-900/50 p-3 sm:px-4 sm:py-2.5">
       {/* Scope Selector */}
-      <div className="flex items-center gap-2 text-xs">
+      <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="text-zinc-400 font-medium">Export Scope:</span>
         <div className="inline-flex rounded-md border border-zinc-800 bg-zinc-950 p-0.5">
           <button
@@ -212,16 +212,17 @@ export default function ExportToolbar({
       </div>
 
       {/* Export Action Buttons */}
-      <div className="flex items-center gap-2">
+      <div className="grid grid-cols-3 sm:flex items-center gap-2 w-full sm:w-auto">
         <Button
           variant="outline"
           size="sm"
           onClick={exportToExcel}
           disabled={targetData.length === 0}
-          className="text-xs h-8 border-zinc-800 hover:bg-zinc-800 hover:text-emerald-400"
+          className="text-xs h-8 px-2 sm:px-3 border-zinc-800 hover:bg-zinc-800 hover:text-emerald-400 justify-center"
         >
-          <FileSpreadsheet className="mr-1.5 h-3.5 w-3.5 text-emerald-400" />
-          Excel (.xlsx)
+          <FileSpreadsheet className="mr-1 sm:mr-1.5 h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+          <span>Excel</span>
+          <span className="hidden md:inline"> (.xlsx)</span>
         </Button>
 
         <Button
@@ -229,10 +230,10 @@ export default function ExportToolbar({
           size="sm"
           onClick={exportToCSV}
           disabled={targetData.length === 0}
-          className="text-xs h-8 border-zinc-800 hover:bg-zinc-800 hover:text-sky-400"
+          className="text-xs h-8 px-2 sm:px-3 border-zinc-800 hover:bg-zinc-800 hover:text-sky-400 justify-center"
         >
-          <FileText className="mr-1.5 h-3.5 w-3.5 text-sky-400" />
-          CSV
+          <FileText className="mr-1 sm:mr-1.5 h-3.5 w-3.5 text-sky-400 flex-shrink-0" />
+          <span>CSV</span>
         </Button>
 
         <Button
@@ -240,10 +241,11 @@ export default function ExportToolbar({
           size="sm"
           onClick={exportToPDF}
           disabled={targetData.length === 0}
-          className="text-xs h-8 border-zinc-800 hover:bg-zinc-800 hover:text-zinc-100"
+          className="text-xs h-8 px-2 sm:px-3 border-zinc-800 hover:bg-zinc-800 hover:text-zinc-100 justify-center"
         >
-          <Printer className="mr-1.5 h-3.5 w-3.5 text-zinc-400" />
-          Print / PDF
+          <Printer className="mr-1 sm:mr-1.5 h-3.5 w-3.5 text-zinc-400 flex-shrink-0" />
+          <span>PDF</span>
+          <span className="hidden md:inline"> / Print</span>
         </Button>
       </div>
     </div>
