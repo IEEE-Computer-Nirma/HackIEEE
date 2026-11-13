@@ -565,7 +565,7 @@ export default function RegisterPage() {
                   isDark ? "text-[#ffa64d]" : "text-[#c06820]"
                 }`}
               >
-                HackIEEE 2027
+                hackieee 2027
               </span>
             </div>
 
@@ -574,7 +574,7 @@ export default function RegisterPage() {
                 isDark ? "text-white" : "text-[#231b12]"
               }`}
             >
-              join HackIEEE
+              join hackieee
             </h1>
 
             <p
