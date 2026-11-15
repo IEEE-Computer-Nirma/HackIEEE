@@ -12,8 +12,8 @@ export async function sendRegistrationConfirmationEmail(data: RegistrationEmailD
 
   try {
     const { subject, html, text } = renderRegistrationEmail(data);
-    const fromAddress = process.env.RESEND_FROM_EMAIL?.trim() || "HackIEEE <noreply@hack.ieeenirma.org>";
-    const replyTo = process.env.RESEND_REPLY_TO?.trim() || undefined;
+    const fromAddress = process.env.RESEND_FROM_EMAIL?.trim() || "HackIEEE <noreply@ieeenirma.org>";
+    const replyTo = process.env.RESEND_REPLY_TO?.trim() || "deep@computer.org";
 
     console.log(`[Email Service] Dispatching confirmation email to ${data.email} via Resend from ${fromAddress}...`);
 
