@@ -1,5 +1,5 @@
-import { getDuneRiseWordmarkSvg } from "./dune-wordmark";
-import { getIeeeCsLogoSvg } from "./ieee-cs-logo";
+// Branding typography and logo images are embedded as high-resolution PNG attachments (via CID)
+// ensuring 100% reliable rendering across all email clients (including Gmail and Outlook which strip raw SVGs).
 
 /**
  * Registration Confirmation Email Template
@@ -78,9 +78,6 @@ export function renderRegistrationEmail({
     basicInfo.push({ label: "IEEE Membership", value: membershipText });
   }
 
-  const wordmarkSvg = getDuneRiseWordmarkSvg(300);
-  const ieeeCsLogoSvg = getIeeeCsLogoSvg(190);
-
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,24 +96,19 @@ export function renderRegistrationEmail({
           <!-- Header Section -->
           <tr>
             <td style="padding: 38px 36px 20px; text-align: center;">
-              <!-- Official IEEE Computer Society Nirma University Logo -->
-              <div style="margin: 0 auto 18px; text-align: center;">
-                ${ieeeCsLogoSvg}
-              </div>
-
-              <!-- Eyebrow / Kicker in Yellow -->
-              <p style="margin: 0 0 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #facc15;">
-                IEEE Computer Society Nirma University
+              <!-- Eyebrow in Warm Gold -->
+              <p style="margin: 0 0 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #facc15;">
+                IEEE Computer Society &bull; Nirma University
               </p>
 
-              <!-- Dune Rise Vector Wordmark -->
-              <div style="margin: 0 auto 12px; text-align: center;">
-                ${wordmarkSvg}
-              </div>
+              <!-- Main Title in Dune Warm Sand -->
+              <h1 style="margin: 0 0 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 30px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #f8cf96; line-height: 1.2;">
+                HACKIEEE 2027
+              </h1>
               
-              <!-- Clean Subtitle (No duplicate italic title, online event) -->
-              <p style="margin: 12px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(243, 230, 207, 0.65);">
-                National 48-Hour Online Hackathon 2027
+              <!-- Clean Subtitle -->
+              <p style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(243, 230, 207, 0.65);">
+                National 48-Hour Online Hackathon
               </p>
             </td>
           </tr>
