@@ -1,9 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdminClient } from "@/app/lib/supabase/server";
+import { isRegistrationOpen } from "@/app/flags";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
+  const active = await isRegistrationOpen();
+  if (!active) {
+    return NextResponse.json(
+      {
+        error: "HackIEEE registrations are currently closed.",
+      },
+      { status: 404 }
+    );
+  }
+
   try {
     const body = await req.json().catch(() => ({}));
     const rawPersonal = typeof body.personalEmail === "string" ? body.personalEmail.trim().toLowerCase() : "";

@@ -61,12 +61,15 @@ export default async function Hero() {
   }
 
   let registrationActive = false;
+  let loginActive = false;
   try {
     const mode = await authNavMode();
     registrationActive = mode === "registration_only" || mode === "both";
+    loginActive = mode === "login_only" || mode === "both";
   } catch {
     const fallbackMode = getFallbackAuthNavMode();
     registrationActive = fallbackMode === "registration_only" || fallbackMode === "both";
+    loginActive = fallbackMode === "login_only" || fallbackMode === "both";
   }
 
   const currentYear = 2027;
@@ -127,6 +130,19 @@ export default async function Hero() {
                   style={{ color: "#1d130a" }}
                 >
                   <span className="!text-[#1d130a]">Register for HackIEEE</span> <ArrowRight size={18} strokeWidth={1.75} className="!text-[#1d130a]" />
+                </Link>
+                <SmoothLink href="#tracks" className="btn btn-ghost w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center">
+                  Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />
+                </SmoothLink>
+              </>
+            ) : loginActive ? (
+              <>
+                <Link
+                  href="/login"
+                  className="btn btn-sand w-full max-w-[280px] sm:max-w-none sm:w-auto font-medium !text-[#1d130a] justify-center"
+                  style={{ color: "#1d130a" }}
+                >
+                  <span className="!text-[#1d130a]">Sign In to Portal</span> <ArrowRight size={18} strokeWidth={1.75} className="!text-[#1d130a]" />
                 </Link>
                 <SmoothLink href="#tracks" className="btn btn-ghost w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center">
                   Tracks & Challenges <ArrowRight size={18} strokeWidth={1.75} />

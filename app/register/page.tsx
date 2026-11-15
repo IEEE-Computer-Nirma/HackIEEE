@@ -18,6 +18,7 @@ import Step4Additional from "@/app/components/registration/Step4Additional";
 import Step5Review from "@/app/components/registration/Step5Review";
 import RegistrationSuccess from "@/app/components/registration/RegistrationSuccess";
 import GradientASCII from "@/app/components/GradientASCII";
+import { useAuthNav } from "@/app/components/AuthProvider";
 import {
   ArrowLeft,
   ArrowRight,
@@ -102,6 +103,7 @@ const STEP_THEMES: Record<
 };
 
 export default function RegisterPage() {
+  const { loginOpen } = useAuthNav();
   const [currentStep, setCurrentStep] = useState(1);
   const [maxAccessibleStep, setMaxAccessibleStep] = useState(1);
   const [formData, setFormData] = useState<RegistrationFormData>(initialRegistrationFormData);
@@ -438,16 +440,18 @@ export default function RegisterPage() {
           </div>
 
           {/* Simple Login Button */}
-          <Link
-            href="/login"
-            className={`inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border backdrop-blur-xl text-xs sm:text-sm font-semibold transition-all shrink-0 ${
-              isDark
-                ? "bg-[#18110b]/85 border-[rgba(248,207,150,0.22)] text-[#f3e6cf] hover:text-white hover:border-[#ffa64d]/60 shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
-                : "bg-[#fefcf8]/90 border-[#eddccb] text-[#2b2318] hover:text-[#c06820] hover:border-[#c06820]/50 hover:bg-[#faefe3] shadow-[0_6px_20px_rgba(40,25,10,0.06)]"
-            }`}
-          >
-            Login
-          </Link>
+          {loginOpen && (
+            <Link
+              href="/login"
+              className={`inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border backdrop-blur-xl text-xs sm:text-sm font-semibold transition-all shrink-0 ${
+                isDark
+                  ? "bg-[#18110b]/85 border-[rgba(248,207,150,0.22)] text-[#f3e6cf] hover:text-white hover:border-[#ffa64d]/60 shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
+                  : "bg-[#fefcf8]/90 border-[#eddccb] text-[#2b2318] hover:text-[#c06820] hover:border-[#c06820]/50 hover:bg-[#faefe3] shadow-[0_6px_20px_rgba(40,25,10,0.06)]"
+              }`}
+            >
+              Login
+            </Link>
+          )}
         </div>
       </header>
 
@@ -876,21 +880,23 @@ export default function RegisterPage() {
                   </div>
 
                   {/* Footer Link */}
-                  <p
-                    className={`text-center text-xs pt-1 ${
-                      isDark ? "text-[#f3e6cf]/60" : "text-[#7a6f62]"
-                    }`}
-                  >
-                    Already registered?{" "}
-                    <Link
-                      href="/login"
-                      className={`font-bold hover:underline ${
-                        isDark ? "text-[#ffa64d] hover:text-[#f8cf96]" : "text-[#c06820] hover:text-[#9e4e10]"
+                  {loginOpen && (
+                    <p
+                      className={`text-center text-xs pt-1 ${
+                        isDark ? "text-[#f3e6cf]/60" : "text-[#7a6f62]"
                       }`}
                     >
-                      Log in now
-                    </Link>
-                  </p>
+                      Already registered?{" "}
+                      <Link
+                        href="/login"
+                        className={`font-bold hover:underline ${
+                          isDark ? "text-[#ffa64d] hover:text-[#f8cf96]" : "text-[#c06820] hover:text-[#9e4e10]"
+                        }`}
+                      >
+                        Log in now
+                      </Link>
+                    </p>
+                  )}
                 </div>
               </form>
             )}
