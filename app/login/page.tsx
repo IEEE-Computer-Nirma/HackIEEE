@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/app/lib/supabase/client";
 import { ArrowRight, Lock, Mail, ShieldAlert, Loader2 } from "lucide-react";
+import { useAuthNav } from "@/app/components/AuthProvider";
 
 function GoogleIcon() {
   return (
@@ -39,6 +40,7 @@ function GithubIcon() {
 
 function LoginFormContent() {
   const searchParams = useSearchParams();
+  const { registrationOpen } = useAuthNav();
   const errorParam = searchParams.get("error");
 
   const [email, setEmail] = useState("");
@@ -217,10 +219,16 @@ function LoginFormContent() {
         </form>
 
         <p className="text-center text-xs text-white/50 pt-2 border-t border-white/10">
-          Haven&apos;t registered yet?{" "}
-          <Link href="/register" className="text-white hover:underline font-semibold">
-            Register for HackIEEE
-          </Link>
+          {registrationOpen ? (
+            <>
+              Haven&apos;t registered yet?{" "}
+              <Link href="/register" className="text-white hover:underline font-semibold">
+                Register for HackIEEE
+              </Link>
+            </>
+          ) : (
+            <span>Registration for HackIEEE 2027 is currently closed.</span>
+          )}
         </p>
       </div>
     </div>

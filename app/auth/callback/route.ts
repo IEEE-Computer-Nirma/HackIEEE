@@ -1,24 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { authNavMode, getFallbackAuthNavMode } from "@/app/flags";
+import { isLoginOpen, isRegistrationOpen } from "@/app/flags";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const next = searchParams.get("next") || "/register?step=confirmed";
   const isAdminAuth = next.startsWith("/admin");
 
-  let active = false;
-  try {
-    const mode = await authNavMode();
-    active = mode === "registration_only" || mode === "both";
-  } catch {
-    const fallbackMode = getFallbackAuthNavMode();
-    active = fallbackMode === "registration_only" || fallbackMode === "both";
-  }
+  // Participant auth route checking
+  if (!isAdminAuth) {
+    const isRegisterTarget = next.startsWith("/register") || next.startsWith("/registration");
+    const isLoginTarget = next.startsWith("/login");
 
-  // Allow admin login callback regardless of public registration flag
-  if (!active && !isAdminAuth) {
-    return NextResponse.redirect(`${origin}/`);
+    const [regOpen, logOpen] = await Promise.all([
+      isRegistrationOpen(),
+      isLoginOpen(),
+    ]);
+
+    if (isRegisterTarget && !regOpen) {
+      return NextResponse.redirect(`${origin}/`);
+    }
+
+    if (isLoginTarget && !logOpen) {
+      return NextResponse.redirect(`${origin}/`);
+    }
+
+    if (!regOpen && !logOpen) {
+      return NextResponse.redirect(`${origin}/`);
+    }
   }
 
   const code = searchParams.get("code");

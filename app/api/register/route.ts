@@ -4,7 +4,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { getSupabaseAdminClient } from "@/app/lib/supabase/server";
 import { sendRegistrationConfirmationEmail } from "@/services/email";
-import { authNavMode, getFallbackAuthNavMode } from "@/app/flags";
+import { isRegistrationOpen } from "@/app/flags";
+
+export const dynamic = "force-dynamic";
 
 const REGISTRATIONS_FILE = path.join(process.cwd(), ".data", "registrations.json");
 
@@ -133,24 +135,15 @@ async function generateUniqueRegistrationId(
 }
 
 export async function POST(req: NextRequest) {
-  // Gate backend registration behind Vercel feature flag
-  let active = false;
-  try {
-    const mode = await authNavMode();
-    active = mode === "registration_only" || mode === "both";
-  } catch {
-    const fallbackMode = getFallbackAuthNavMode();
-    active = fallbackMode === "registration_only" || fallbackMode === "both";
-  }
-
-  const isDev = process.env.NODE_ENV === "development";
-  if (!active && !isDev) {
+  // Gate backend registration strictly behind feature flag
+  const active = await isRegistrationOpen();
+  if (!active) {
     return NextResponse.json(
       {
         success: false,
         error: "HackIEEE registrations are currently closed. Please check back later.",
       },
-      { status: 403 }
+      { status: 404 }
     );
   }
 

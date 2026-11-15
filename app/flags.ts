@@ -8,6 +8,10 @@ export type AuthNavMode = "registration_only" | "both" | "login_only" | "none";
  * Supports explicit AUTH_NAV_MODE values, with backward-compatibility for IS_REGISTRATION_ACTIVE.
  */
 export function getFallbackAuthNavMode(): AuthNavMode {
+  // If explicitly disabled via master toggle IS_REGISTRATION_ACTIVE="false", force "none"
+  if (process.env.IS_REGISTRATION_ACTIVE === "false") {
+    return "none";
+  }
   const envMode = process.env.AUTH_NAV_MODE?.trim() as AuthNavMode | undefined;
   if (
     envMode === "registration_only" ||
@@ -17,14 +21,43 @@ export function getFallbackAuthNavMode(): AuthNavMode {
   ) {
     return envMode;
   }
-  // Backward compatibility with legacy IS_REGISTRATION_ACTIVE toggle
-  if (process.env.IS_REGISTRATION_ACTIVE === "false") {
-    return "none";
-  }
   if (process.env.IS_REGISTRATION_ACTIVE === "true") {
     return "registration_only";
   }
   return "registration_only";
+}
+
+/**
+ * Helper to check if registration is currently open.
+ * Registration is ONLY open when mode is "registration_only" or "both".
+ * It is CLOSED when mode is "none" or "login_only", or when IS_REGISTRATION_ACTIVE="false".
+ */
+export async function isRegistrationOpen(): Promise<boolean> {
+  if (process.env.IS_REGISTRATION_ACTIVE === "false") {
+    return false;
+  }
+  try {
+    const mode = await authNavMode();
+    return mode === "registration_only" || mode === "both";
+  } catch {
+    const fallback = getFallbackAuthNavMode();
+    return fallback === "registration_only" || fallback === "both";
+  }
+}
+
+/**
+ * Helper to check if attendee login is currently open.
+ * Login is ONLY open when mode is "login_only" or "both".
+ * It is CLOSED when mode is "none" or "registration_only".
+ */
+export async function isLoginOpen(): Promise<boolean> {
+  try {
+    const mode = await authNavMode();
+    return mode === "login_only" || mode === "both";
+  } catch {
+    const fallback = getFallbackAuthNavMode();
+    return fallback === "login_only" || fallback === "both";
+  }
 }
 
 /**

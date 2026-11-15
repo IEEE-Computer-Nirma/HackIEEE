@@ -20,10 +20,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - **Primary Flag: `AUTH_NAV_MODE` (String)**
   The navigation bar and authentication state are controlled via `AUTH_NAV_MODE` defined in `app/flags.ts`.
   It supports 4 distinct variants:
-  - `"both"`: Displays `[Login]` button on the left and `[Register]` CTA on the right corner.
-  - `"registration_only"`: Displays `[Register]` CTA on the right corner only (Default active state).
-  - `"login_only"`: Displays `[Login]` button on the right corner only.
-  - `"none"`: Displays `[Contact Us]` only (Registration closed; routes `/register` and `POST /api/register` return 403 Forbidden).
+  - `"both"`: Both login and registration are enabled (close neither). Routes `/login`, `/register`, `/registration`, and registration APIs are open. Navbar displays `[Login]` and `[Register]`.
+  - `"registration_only"`: Only registration is enabled (closes login route). Route `/login` returns custom 404 Not Found. Routes `/register` and `/registration` are open. Navbar displays `[Register]`.
+  - `"login_only"`: Login is enabled (turns off registration route). Routes `/register`, `/registration`, and backend registration APIs return custom 404 Not Found. Route `/login` is open. Navbar displays `[Login]`.
+  - `"none"`: Neither is selected (closes both login and registration routes). Routes `/login`, `/register`, `/registration`, and backend registration APIs return custom 404 Not Found. Navbar displays `[Contact Us]`.
 
 - **Backward Compatibility: `IS_REGISTRATION_ACTIVE` (Boolean)**
   - Legacy toggle: `IS_REGISTRATION_ACTIVE="false"` automatically maps to `AUTH_NAV_MODE="none"`.
